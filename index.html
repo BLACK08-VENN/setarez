@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="Setarez Technologies creates immersive spaces for learning, leadership and shared ideas.">
+  <title>Setarez Technologies — An Immersive Village</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand sound-target" href="#" aria-label="Setarez Technologies home">
+      <span class="brand-mark"><i></i><i></i><i></i></span>
+      <span>SETAREZ <em>TECHNOLOGIES</em></span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a class="sound-target" href="#village">The village</a>
+      <a class="sound-target" href="#approach">Our approach</a>
+      <a class="sound-target" href="mailto:hello@setarez.com">Let’s talk</a>
+    </nav>
+    <button class="sound-toggle sound-target" type="button" aria-pressed="false">
+      <span class="sound-dot"></span><span class="sound-label">Sound off</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="village" id="village" aria-labelledby="hero-title">
+      <img class="village-world" src="assets/immersive-village.png" alt="">
+      <div class="aurora" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span>01</span> Choose your destination</p>
+        <h1 id="hero-title">An immersive<br><i>village.</i></h1>
+        <p class="intro">Step inside a new way to meet, learn and imagine. Pick a room to begin your virtual visit.</p>
+      </div>
+
+      <div class="orb-field" aria-label="Virtual rooms">
+        <button class="orb orb-classroom sound-target" data-room="classroom" style="--x: 15%; --y: 60%; --delay: -2s" aria-label="Explore classroom">
+          <span class="orb-shell"><span class="orb-scene scene-classroom"><i></i><i></i><i></i></span></span>
+          <span class="orb-label"><b>01</b> Classroom</span>
+        </button>
+        <button class="orb orb-boardroom sound-target" data-room="boardroom" style="--x: 39%; --y: 45%; --delay: -4.4s" aria-label="Explore boardroom">
+          <span class="orb-shell"><span class="orb-scene scene-boardroom"><i></i><i></i><i></i></span></span>
+          <span class="orb-label"><b>02</b> Boardroom</span>
+        </button>
+        <button class="orb orb-office sound-target" data-room="office" style="--x: 65%; --y: 50%; --delay: -1.2s" aria-label="Explore executive office">
+          <span class="orb-shell"><span class="orb-scene scene-office"><i></i><i></i><i></i></span></span>
+          <span class="orb-label"><b>03</b> Executive office</span>
+        </button>
+        <button class="orb orb-auditorium sound-target" data-room="auditorium" style="--x: 86%; --y: 64%; --delay: -3.2s" aria-label="Explore auditorium">
+          <span class="orb-shell"><span class="orb-scene scene-auditorium"><i></i><i></i><i></i></span></span>
+          <span class="orb-label"><b>04</b> Auditorium</span>
+        </button>
+      </div>
+
+      <div class="scroll-note"><span></span> Move to explore</div>
+      <div class="coordinates">1.2921° S &nbsp; 36.8219° E</div>
+    </section>
+
+    <section class="approach" id="approach">
+      <p class="eyebrow"><span>02</span> Built around people</p>
+      <h2>Technology should disappear.<br><i>Connection should remain.</i></h2>
+      <div class="approach-grid">
+        <p>We shape intelligent rooms and immersive systems that make every participant feel present—wherever they are.</p>
+        <div class="metrics">
+          <div><strong>360°</strong><span>Room intelligence</span></div>
+          <div><strong>01</strong><span>Seamless ecosystem</span></div>
+          <div><strong>∞</strong><span>Ways to connect</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="room-panel" role="dialog" aria-modal="true" aria-labelledby="room-title" hidden>
+    <button class="panel-close sound-target" aria-label="Close room preview">×</button>
+    <div class="panel-visual"><div class="portal"><span></span></div></div>
+    <div class="panel-copy">
+      <p class="eyebrow"><span class="panel-number">01</span> Virtual destination</p>
+      <h2 id="room-title">Classroom</h2>
+      <p class="panel-description"></p>
+      <ul class="panel-features"></ul>
+      <a href="mailto:hello@setarez.com" class="enter-button sound-target">Plan this space <span>↗</span></a>
+    </div>
+  </div>
+  <div class="panel-backdrop" hidden></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <script src="script.js"></script>
+</body>
+</html>
