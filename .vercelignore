@@ -3,5 +3,4 @@
 .tools
 .themes
 node_modules
-assets
 npm-debug.log*
