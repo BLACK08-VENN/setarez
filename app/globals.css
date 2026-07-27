@@ -32,12 +32,6 @@ nav a:hover { color: var(--lilac); }
 .room-slide.active { opacity: 1; visibility: visible; transform: scale(1); }
 .room-image { object-fit: cover; transform: scale(1.025); transition: transform 1s cubic-bezier(.16, 1, .3, 1), filter .8s; }
 .room-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(7, 7, 7, .87), rgba(7, 7, 7, .1) 56%, rgba(7, 7, 7, .25)), linear-gradient(180deg, rgba(7, 7, 7, .45), transparent 35%, rgba(7, 7, 7, .55)); transition: .7s; }
-.twin.digital .room-image { filter: saturate(.55) brightness(.55) contrast(1.15); }
-.twin.digital .room-shade { background: linear-gradient(rgba(17, 8, 24, .4), rgba(10, 5, 15, .6)); box-shadow: inset 0 0 180px rgba(185, 147, 242, .14); }
-.scan-plane { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(185, 147, 242, .05) 6px); transition: .5s; }
-.twin.digital .scan-plane { opacity: 1; }
-.twin.digital .scan-plane::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: var(--lilac); box-shadow: 0 0 25px var(--lilac); animation: scan 5s ease-in-out infinite; }
-@keyframes scan { from { top: 5%; } 50% { top: 92%; } to { top: 5%; } }
 .twin-title { position: absolute; z-index: 5; left: 5vw; top: 17%; width: 72vw; text-shadow: 0 3px 35px #000; }
 .twin-title p { font: 300 9px DM Mono; letter-spacing: .18em; color: var(--lilac); }
 .twin-title h1 { max-width: 1050px; margin: 26px 0; font-size: clamp(60px, 7.1vw, 116px); line-height: .85; letter-spacing: -.065em; }
@@ -51,14 +45,8 @@ nav a:hover { color: var(--lilac); }
 .hotspot span { position: absolute; left: 39px; top: 12px; font: 300 8px DM Mono; }
 .hotspot:hover { transform: scale(1.2); background: var(--lilac); color: #0a090b; }
 .display { right: 17%; top: 39%; } .camera { right: 22.5%; top: 23%; } .audio { left: 43%; top: 17%; } .control { right: 31%; bottom: 22%; }
-.board-display { left: 35%; top: 41%; } .rally-bar { left: 38%; top: 52%; } .sight { left: 51%; top: 63%; } .tap { left: 55%; top: 79%; }
+.board-display { right: 13%; top: 27%; } .rally-bar { right: 19%; top: 48%; } .sight { left: 21%; top: 66%; } .tap { left: 55%; top: 31%; }
 @keyframes pulse { 50% { transform: scale(1.25); opacity: 0; } }
-.room-nav { position: absolute; z-index: 14; right: 3vw; top: 96px; display: flex; align-items: center; gap: 10px; padding: 7px; border: 1px solid var(--line); border-radius: 30px; background: rgba(12, 12, 11, .62); backdrop-filter: blur(14px); }
-.room-nav > button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: transparent; }
-.room-nav > button:hover { background: var(--lilac); color: #0a090b; }
-.room-nav > div { min-width: 125px; padding: 0 8px; display: grid; grid-template-columns: auto 1fr; align-items: end; }
-.room-nav strong { font: 400 17px DM Mono; } .room-nav span { font: 300 8px DM Mono; opacity: .45; }
-.room-nav small { grid-column: 1/3; margin-top: 2px; font: 300 7px DM Mono; letter-spacing: .13em; }
 .telemetry { position: absolute; z-index: 7; right: 3vw; bottom: 4vh; width: min(510px, 45vw); display: grid; grid-template-columns: 1.1fr 1.4fr 1fr; border: 1px solid var(--line); background: rgba(10, 11, 10, .66); backdrop-filter: blur(18px); }
 .telemetry div { padding: 13px; border-right: 1px solid var(--line); }
 .telemetry div:last-child { border-right: 0; }

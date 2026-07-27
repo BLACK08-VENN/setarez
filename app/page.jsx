@@ -5,27 +5,27 @@ import { useEffect, useRef, useState } from "react";
 
 const rooms = [
   {
-    label: "LEARNING",
-    kicker: "INTERACTIVE LEARNING / 01",
+    label: "AUDITORIUM",
+    kicker: "CONNECTED AUDITORIUM / 01",
     image: "/assets/digital-twin-classroom.png",
-    alt: "A modern connected university learning space",
+    alt: "A modern connected auditorium with a large-format display",
     points: [
-      { key: "display", code: "01 / INTERACTIVE", title: "Interactive display", description: "A high-clarity teaching surface for content, annotation and shared ideas.", features: ["Interactive flat panel", "Digital classroom software", "Wireless content sharing"] },
-      { key: "camera", code: "02 / HYBRID", title: "Connected classroom", description: "Camera and collaboration technology that brings remote participants into the room.", features: ["Intelligent camera", "Hybrid participation", "Simple teacher workflow"] },
-      { key: "audio", code: "03 / AUDIO", title: "Room-wide clarity", description: "Classroom audio designed around every learner and every teaching position.", features: ["Clear reinforcement", "Voice capture", "Conferencing integration"] },
-      { key: "control", code: "04 / SUPPORT", title: "Confident adoption", description: "Onboarding, training and technical support that keep the room useful beyond installation day.", features: ["Teacher training", "Preventive maintenance", "Local technical support"] }
+      { key: "display", code: "01 / VISUAL", title: "Large-format visual canvas", description: "A high-impact display for presentations, live content and clear communication at auditorium scale.", features: ["Large-format LED or display", "High visual clarity", "Multiple content sources"] },
+      { key: "camera", code: "02 / CAPTURE", title: "Intelligent room capture", description: "Professional camera coverage for recording, streaming and hybrid participation.", features: ["Presenter tracking", "Lecture capture", "Remote participation"] },
+      { key: "audio", code: "03 / AUDIO", title: "Room-wide clarity", description: "Microphone and reinforcement systems designed so every participant can hear and be heard.", features: ["Voice reinforcement", "Audience coverage", "Conferencing integration"] },
+      { key: "control", code: "04 / CONTROL", title: "One-room control", description: "Simple control of displays, sources, audio and room modes from one consistent interface.", features: ["Central room control", "Source management", "System monitoring"] }
     ]
   },
   {
-    label: "COLLABORATION",
-    kicker: "HYBRID COLLABORATION / 02",
-    image: "/assets/final-boardroom.png",
-    alt: "A connected executive boardroom with professional collaboration technology",
+    label: "CLASSROOM",
+    kicker: "INTERACTIVE CLASSROOM / 02",
+    image: "/assets/interactive-learning.png",
+    alt: "A teacher using an interactive display in a connected classroom",
     points: [
-      { key: "board-display", code: "01 / VISUAL", title: "Collaborative canvas", description: "A shared visual surface for wireless presentation, annotation and clearer decisions.", features: ["Interactive whiteboard", "Wireless presentation", "Content sharing"] },
-      { key: "rally-bar", code: "02 / VIDEO", title: "Professional video", description: "An integrated camera, speaker and microphone system for dependable hybrid meetings.", features: ["AI-powered video", "Integrated room audio", "Automatic framing"] },
-      { key: "sight", code: "03 / PRESENCE", title: "Inclusive presence", description: "Room coverage that gives remote participants a natural view of everyone at the table.", features: ["Table-level perspective", "Multi-participant framing", "Platform integration"] },
-      { key: "tap", code: "04 / CONTROL", title: "Simple room control", description: "One-touch meeting control, room scheduling and a clean, consistent experience.", features: ["One-touch join", "Room booking", "Clean integration"] }
+      { key: "board-display", code: "01 / INTERACTIVE", title: "Interactive teaching surface", description: "A responsive canvas for teaching, annotation, multimedia and shared classroom ideas.", features: ["Interactive flat panel", "Digital whiteboarding", "Precision multi-touch"] },
+      { key: "rally-bar", code: "02 / CONTENT", title: "Connected learning content", description: "Digital classroom software and wireless sharing that keep lessons fluid and engaging.", features: ["Classroom software", "Wireless content sharing", "Cloud resources"] },
+      { key: "sight", code: "03 / HYBRID", title: "Inclusive participation", description: "Camera and audio coverage that brings remote learners naturally into the classroom.", features: ["Hybrid learning", "Clear voice capture", "Platform integration"] },
+      { key: "tap", code: "04 / ENABLE", title: "Teacher confidence", description: "Onboarding, training and support that help educators use the room every day.", features: ["Teacher onboarding", "Practical training", "Ongoing support"] }
     ]
   }
 ];
@@ -56,7 +56,6 @@ const reasons = [
 
 export default function Home() {
   const [room, setRoom] = useState(0);
-  const [digital, setDigital] = useState(false);
   const [point, setPoint] = useState(null);
   const closeRef = useRef(null);
 
@@ -67,8 +66,8 @@ export default function Home() {
     return () => document.removeEventListener("keydown", onKey);
   }, [point]);
 
-  const changeRoom = (direction) => {
-    setRoom((current) => (current + direction + rooms.length) % rooms.length);
+  const changeRoom = (index) => {
+    setRoom(index);
     setPoint(null);
   };
 
@@ -82,7 +81,7 @@ export default function Home() {
       </header>
 
       <main id="main">
-        <section className={`twin${digital ? " digital" : ""}`} id="twin" aria-label="Interactive room explorer">
+        <section className="twin" id="twin" aria-label="Interactive room explorer">
           {rooms.map((item, index) => (
             <div className={`room-slide${index === room ? " active" : ""}`} aria-hidden={index !== room} key={item.label}>
               <Image className="room-image" src={item.image} alt={item.alt} fill priority={index === 0} sizes="100vw" />
@@ -91,14 +90,9 @@ export default function Home() {
               ))}
             </div>
           ))}
-          <div className="room-shade" /><div className="scan-plane" />
+          <div className="room-shade" />
           <div className="twin-title"><p>{rooms[room].kicker}</p><h1>Technology that<br /><em>connects people and ideas.</em></h1></div>
-          <div className="view-toggle" role="group" aria-label="View mode"><span>VIEW MODE</span><button className={!digital ? "active" : ""} aria-pressed={!digital} onClick={() => setDigital(false)}>Physical</button><button className={digital ? "active" : ""} aria-pressed={digital} onClick={() => setDigital(true)}>Integrated</button></div>
-          <div className="room-nav">
-            <button onClick={() => changeRoom(-1)} aria-label="Previous room">←</button>
-            <div><strong>0{room + 1}</strong><span>/ 02</span><small>{rooms[room].label}</small></div>
-            <button onClick={() => changeRoom(1)} aria-label="Next room">→</button>
-          </div>
+          <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span><button className={room === 0 ? "active" : ""} aria-pressed={room === 0} onClick={() => changeRoom(0)}>Auditorium</button><button className={room === 1 ? "active" : ""} aria-pressed={room === 1} onClick={() => changeRoom(1)}>Classroom</button></div>
           <div className="telemetry" aria-label="Setarez solution model">
             <div><span>OUR ROLE</span><b><i /> UNDERSTAND</b></div><div><span>INTEGRATION</span><b>DESIGN + DELIVER</b></div><div><span>LIFECYCLE</span><b>SUPPORT</b></div>
           </div>
