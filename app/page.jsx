@@ -10,10 +10,10 @@ const rooms = [
     image: "/assets/teachmint-classroom.png",
     alt: "A Teachmint connected classroom with an interactive display and student tablets",
     points: [
-      { key: "display", code: "01 / TEACHMINT X", title: "Interactive teaching surface", description: "A responsive visual canvas for teaching, annotation, multimedia and shared classroom ideas.", features: ["Interactive flat panel", "Digital whiteboarding", "Precision multi-touch"] },
-      { key: "camera", code: "02 / HYBRID", title: "Connected classroom camera", description: "Professional room capture for live classes, recording and remote participation.", features: ["Live classes", "Lesson capture", "Remote participation"] },
-      { key: "audio", code: "03 / LEARNING", title: "Digital classroom platform", description: "Connected teacher and learner tools that keep lessons, assignments and participation in one flow.", features: ["Smart classes", "Assignments and tests", "Student devices"] },
-      { key: "control", code: "04 / ENABLE", title: "Teacher confidence", description: "Onboarding, practical training and support that help educators use the room every day.", features: ["Teacher onboarding", "Practical training", "Ongoing support"] }
+      { key: "display", code: "01 / TEACHMINT X", title: "75″ or 86″ interactive display", description: "Teachmint X combines a True 4K UHD teaching canvas with zero-bonded glass and a response time of 5ms or less.", features: ["40-point multi-touch", "3.2mm 9H hardened glass", "Blue-light filter"] },
+      { key: "camera", code: "02 / TEACHMINT X", title: "Integrated AI classroom camera", description: "An inbuilt 48MP 4K camera supports wide-angle capture and AI-based motion tracking for connected lessons.", features: ["48MP 4K camera", "AI motion tracking", "Wide-angle room view"] },
+      { key: "audio", code: "03 / TEACHMINT X", title: "Room-ready classroom audio", description: "Integrated sound and voice capture keep teaching clear without separate front-of-room devices.", features: ["40W inbuilt speakers", "8-array omni-directional mic", "Mid-to-large classroom coverage"] },
+      { key: "control", code: "04 / TEACHMINT X", title: "EDLA-certified performance", description: "The current Teachmint X platform pairs Android 16 EDLA with an octa-core processor and onboard AI acceleration.", features: ["8GB RAM + 128GB storage", "NFC secure login", "Dual-band Wi-Fi"] }
     ]
   },
   {
@@ -22,10 +22,22 @@ const rooms = [
     image: "/assets/teachmint-boardroom.png",
     alt: "A Teachmint connected boardroom with an interactive meeting display and touch controller",
     points: [
-      { key: "board-display", code: "01 / MEETING DISPLAY", title: "Collaborative visual canvas", description: "A shared surface for wireless presentation, interactive whiteboarding and clearer decisions.", features: ["Interactive whiteboard", "Wireless screen sharing", "4K presentation"] },
-      { key: "rally-bar", code: "02 / VIDEO", title: "Professional hybrid meetings", description: "Integrated camera, speaker and microphone technology for dependable collaboration.", features: ["HD video conferencing", "Automatic framing", "Room-wide audio"] },
-      { key: "sight", code: "03 / TABLE AUDIO", title: "Inclusive room presence", description: "Table-level audio and meeting controls that make every participant easy to hear and involve.", features: ["Clear voice capture", "Multi-participant meetings", "Platform integration"] },
-      { key: "tap", code: "04 / ROOM CONTROL", title: "One-touch room control", description: "A dedicated touch interface for joining meetings, sharing content and controlling the room.", features: ["One-touch join", "Wireless sharing", "Simple room workflow"] }
+      { key: "board-display", code: "01 / TEACHMINT X", title: "Interactive 4K collaboration surface", description: "A large-format Teachmint X display gives teams a precise, shared surface for presenting and annotating content.", features: ["75″ or 86″ True 4K UHD", "40-point multi-touch", "5ms or less response"] },
+      { key: "rally-bar", code: "02 / LOGITECH RALLY BAR", title: "All-in-one video collaboration", description: "Designed for medium-to-large rooms, Rally Bar integrates a motorised PTZ camera, AI Viewfinder and room audio in one device.", features: ["4K camera + 15× HD zoom", "6 beamforming microphones", "2 integrated speakers"] },
+      { key: "sight", code: "03 / LOGITECH SIGHT", title: "Tabletop participant camera", description: "Sight works with the front-of-room camera to use video and AI to detect and frame people around the table.", features: ["Dual-lens 4K camera", "315° horizontal field of view", "7 beamforming microphones"] },
+      { key: "tap", code: "04 / LOGITECH TAP IP", title: "Network meeting-room controller", description: "A dedicated touch controller connects over the network and keeps meeting-room operation simple and consistent.", features: ["10.1″ 1280 × 800 touchscreen", "Power over Ethernet", "Teams, Zoom Rooms + Google Meet"] }
+    ]
+  },
+  {
+    label: "AUDITORIUM",
+    kicker: "CONNECTED AUDITORIUM / 03",
+    image: "/assets/digital-twin-classroom.png",
+    alt: "A connected auditorium with a large presentation display and tiered seating",
+    points: [
+      { key: "aud-display", code: "01 / TEACHMINT X", title: "Large-format interactive stage display", description: "The 86-inch Teachmint X brings True 4K content and responsive annotation to teaching, training and presentation spaces.", features: ["86″ True 4K UHD", "40-point multi-touch", "60,000+ hour working life"] },
+      { key: "aud-camera", code: "02 / LOGITECH RALLY BAR", title: "AI-enabled front-of-room video", description: "Rally Bar combines 4K capture, motorised pan and tilt, and RightSight intelligent framing for hybrid sessions.", features: ["15× HD zoom", "132.1° total horizontal coverage", "AI Viewfinder"] },
+      { key: "aud-audio", code: "03 / RALLY MIC PODS", title: "Expandable voice coverage", description: "Rally Bar supports additional Rally Mic Pods to extend clear voice pickup through larger collaboration spaces.", features: ["Up to 4 additional Mic Pods", "AEC and voice activity detection", "AI noise suppression"] },
+      { key: "aud-control", code: "04 / LOGITECH TAP IP", title: "Simple session control", description: "Tap IP provides a purpose-built network controller for starting calls and managing supported room platforms.", features: ["10-point multi-touch", "PoE connectivity", "Logitech Sync management"] }
     ]
   }
 ];
@@ -92,7 +104,7 @@ export default function Home() {
           ))}
           <div className="room-shade" />
           <div className="twin-title"><p>{rooms[room].kicker}</p><h1>Technology that<br /><em>connects people and ideas.</em></h1></div>
-          <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span><button className={room === 0 ? "active" : ""} aria-pressed={room === 0} onClick={() => changeRoom(0)}>Classroom</button><button className={room === 1 ? "active" : ""} aria-pressed={room === 1} onClick={() => changeRoom(1)}>Boardroom</button></div>
+          <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span>{rooms.map((item, index) => <button className={room === index ? "active" : ""} aria-pressed={room === index} onClick={() => changeRoom(index)} key={item.label}>{item.label}</button>)}</div>
           <div className="telemetry" aria-label="Setarez solution model">
             <div><span>OUR ROLE</span><b><i /> UNDERSTAND</b></div><div><span>INTEGRATION</span><b>DESIGN + DELIVER</b></div><div><span>LIFECYCLE</span><b>SUPPORT</b></div>
           </div>

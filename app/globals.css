@@ -48,6 +48,7 @@ nav a:hover { color: var(--lilac); }
 .hotspot:hover { transform: scale(1.2); background: var(--lilac); color: #0a090b; }
 .display { right: 34%; top: 38%; } .camera { right: 42%; top: 19%; } .audio { left: 25%; bottom: 20%; } .control { right: 16%; bottom: 18%; }
 .board-display { left: 39%; top: 37%; } .rally-bar { left: 38%; top: 28%; } .sight { left: 58%; top: 66%; } .tap { left: 53%; top: 76%; }
+.aud-display { left: 49%; top: 38%; } .aud-camera { left: 49%; top: 24%; } .aud-audio { left: 29%; top: 61%; } .aud-control { right: 22%; top: 66%; }
 @keyframes pulse { 50% { transform: scale(1.25); opacity: 0; } }
 .telemetry { position: absolute; z-index: 7; right: 3vw; bottom: 4vh; width: min(510px, 45vw); display: grid; grid-template-columns: 1.1fr 1.4fr 1fr; border: 1px solid var(--line); background: rgba(10, 11, 10, .66); backdrop-filter: blur(18px); }
 .telemetry div { padding: 13px; border-right: 1px solid var(--line); }
