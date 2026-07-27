@@ -104,6 +104,37 @@ nav a:hover { color: var(--lilac); }
 .portfolio-grid strong { margin-top: 55px; font: 400 32px Georgia; }
 .portfolio-grid p { margin-top: auto; max-width: 480px; font: 300 9px/1.7 DM Mono; opacity: .7; }
 
+.finder { padding: 130px 6vw; background: #0f0d10; }
+.finder-head { display: grid; grid-template-columns: .55fr 1.2fr .75fr; gap: 4vw; align-items: end; margin-bottom: 75px; }
+.finder-head > p:first-child { align-self: start; color: var(--lilac); font: 300 9px DM Mono; letter-spacing: .14em; }
+.finder-head h2 { margin: 0; font-size: clamp(48px, 6vw, 84px); line-height: .92; letter-spacing: -.055em; }
+.finder-head > p:last-child { margin: 0; font-size: 12px; line-height: 1.8; opacity: .68; }
+.finder-tool { display: grid; grid-template-columns: minmax(280px, .68fr) 1.32fr; border: 1px solid var(--line); }
+.finder-form { padding: clamp(28px, 4vw, 60px); background: #19151b; }
+.finder-form fieldset { padding: 0; margin: 0 0 50px; border: 0; }
+.finder-form legend, .finder-form label > span { display: block; margin-bottom: 18px; font: 300 8px DM Mono; letter-spacing: .14em; color: var(--lilac); }
+.finder-options { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.finder-options button { min-height: 50px; padding: 10px; border: 1px solid var(--line); background: transparent; font-size: 10px; }
+.finder-options button.active { border-color: var(--lilac); background: var(--lilac); color: var(--black); }
+.finder-form label { display: block; margin-top: 45px; }
+.finder-form label strong { display: block; margin-bottom: 24px; font: 400 42px Georgia; }
+.finder-form input[type="range"] { width: 100%; accent-color: var(--lilac); }
+.finder-form small { display: block; margin-top: 12px; font: 300 8px DM Mono; opacity: .5; }
+.finder-result { padding: clamp(28px, 4vw, 60px); }
+.result-intro > span { font: 300 8px DM Mono; letter-spacing: .14em; color: var(--lilac); }
+.result-intro h3 { margin: 20px 0 12px; font: 400 clamp(35px, 4vw, 58px)/1 Georgia; }
+.result-intro p { max-width: 680px; font-size: 12px; line-height: 1.7; opacity: .67; }
+.equipment-list { margin-top: 42px; border-top: 1px solid var(--line); }
+.equipment-list article { display: grid; grid-template-columns: 1fr 1.25fr auto; gap: 25px; align-items: center; min-height: 132px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.equipment-list span { font: 300 8px DM Mono; letter-spacing: .12em; color: var(--lilac); text-transform: uppercase; }
+.equipment-list h4 { margin: 8px 0 5px; font: 400 24px Georgia; }
+.equipment-list p { margin: 0; font-size: 9px; line-height: 1.7; opacity: .65; }
+.equipment-list a { padding-bottom: 5px; border-bottom: 1px solid var(--lilac); white-space: nowrap; font: 300 8px DM Mono; }
+.finder-note { margin-top: 35px; padding: 22px; border: 1px solid rgba(185, 147, 242, .35); background: rgba(106, 69, 160, .1); }
+.finder-note strong { font: 400 10px DM Mono; color: var(--lilac); }
+.finder-note p { font-size: 9px; line-height: 1.7; opacity: .65; }
+.finder-note a { font: 300 9px DM Mono; border-bottom: 1px solid var(--lilac); }
+
 .sectors { padding: 130px 6vw; background: var(--paper); color: #141215; }
 .sectors h2 { margin: 48px 0 90px; }
 .sectors h2 em { color: var(--purple); }
@@ -161,7 +192,8 @@ footer small { grid-column: 2/-1; font: 300 8px DM Mono; opacity: .45; }
 
 @media (max-width: 920px) {
   header nav { display: none; }
-  .about, .section-head, .portfolio-head { grid-template-columns: 1fr; }
+  .about, .section-head, .portfolio-head, .finder-head { grid-template-columns: 1fr; }
+  .finder-tool { grid-template-columns: 1fr; }
   .about-lead { margin-top: 25px; }
   .process-grid { grid-template-columns: repeat(2, 1fr); }
   .why { grid-template-columns: 1fr; }
@@ -182,13 +214,15 @@ footer small { grid-column: 2/-1; font: 300 8px DM Mono; opacity: .45; }
   .telemetry b { font-size: 7px; }
   .hint { left: 20px; bottom: 45px; }
   .point-card { left: 14px; right: 14px; top: auto; bottom: 18px; width: auto; max-height: 75vh; overflow: auto; }
-  .about, .solutions, .portfolio, .sectors, .process { padding: 90px 20px; }
+  .about, .solutions, .portfolio, .finder, .sectors, .process { padding: 90px 20px; }
   .about, .capability { grid-template-columns: 1fr; }
   .capability { min-height: 0; }
   .capability:nth-child(even) .capability-image { order: 0; }
   .capability-image { min-height: 66vw; }
   .capability-copy { padding: 45px 24px; }
   .portfolio-grid, .sector-list, .process-grid { grid-template-columns: 1fr; }
+  .equipment-list article { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
+  .equipment-list a { justify-self: start; }
   .sector-list div:nth-child(odd) { border-right: 0; }
   .sector-list div:nth-child(even) { padding-left: 0; }
   .why-copy { padding: 80px 20px; }

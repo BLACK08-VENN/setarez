@@ -66,10 +66,51 @@ const reasons = [
   ["Long-term value", "Maintenance and upgrades protect every investment."]
 ];
 
+const productLinks = {
+  teachmint: "https://www.teachmint.com/en-mea/products/digital-board-for-teaching",
+  rallyMini: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rallybarmini.html",
+  rallyBar: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rallybar.html",
+  rallyPlus: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rally.html",
+  sight: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/sight.html",
+  tap: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/tap-ip.html",
+  absen: "https://www.absen.com/product/x-series/"
+};
+
+const equipment = {
+  teachmint75: { brand: "Teachmint", name: "Teachmint X 75″", role: "Interactive learning display", specs: "True 4K UHD · 40-point touch · ≤5ms response · 40W speakers", link: productLinks.teachmint },
+  teachmint86: { brand: "Teachmint", name: "Teachmint X 86″", role: "Large classroom display", specs: "48MP 4K camera · 8-array microphone · 8GB/128GB · Android 16 EDLA", link: productLinks.teachmint },
+  rallyMini: { brand: "Logitech", name: "Rally Bar Mini", role: "Small-room video bar", specs: "4K camera · 120° diagonal field of view · 6 beamforming microphones", link: productLinks.rallyMini },
+  rallyBar: { brand: "Logitech", name: "Rally Bar", role: "Medium-to-large-room video bar", specs: "4K PTZ camera · 15× HD zoom · 7m microphone pickup", link: productLinks.rallyBar },
+  rallyPlus: { brand: "Logitech", name: "Rally Plus", role: "Expandable large-room conference system", specs: "Ultra-HD camera · 2 speakers · 2 Rally Mic Pods · expandable audio", link: productLinks.rallyPlus },
+  tap: { brand: "Logitech", name: "Tap IP", role: "Room touch controller", specs: "10.1″ 1280 × 800 display · 10-point touch · Power over Ethernet", link: productLinks.tap },
+  sight: { brand: "Logitech", name: "Sight", role: "Tabletop companion camera", specs: "Dual-lens 4K · 315° horizontal view · 7 beamforming microphones", link: productLinks.sight },
+  absen108: { brand: "Absen", name: "Absen X Series 108″", role: "All-in-one Micro LED display", specs: "Optional 20-point touch · 1mm touch accuracy · 2 × 15W speakers", link: productLinks.absen },
+  absen136: { brand: "Absen", name: "Absen X Series 136″", role: "Lecture theatre / conference display", specs: "Micro LED · Android 11 · 4GB/32GB · complete installation kit", link: productLinks.absen },
+  absen163: { brand: "Absen", name: "Absen X Series 163″", role: "Auditorium-scale presentation display", specs: "Micro LED · 100,000-hour service life · optional interactive touch", link: productLinks.absen }
+};
+
+function recommendEquipment(useCase, area, seats) {
+  if (useCase === "education") {
+    if (area <= 55 && seats <= 35) return { size: "Standard classroom", summary: "A focused interactive teaching setup for clear visibility and everyday lesson delivery.", products: [equipment.teachmint75] };
+    if (area <= 90 && seats <= 60) return { size: "Large classroom", summary: "A larger teaching surface with integrated camera and audio for in-person or hybrid learning.", products: [equipment.teachmint86, equipment.rallyMini] };
+    const display = area > 160 || seats > 120 ? equipment.absen163 : area > 110 || seats > 80 ? equipment.absen136 : equipment.absen108;
+    return { size: "Lecture hall / auditorium", summary: "A large-format teaching and presentation system with expandable hybrid-learning coverage.", products: [display, equipment.rallyPlus, equipment.tap] };
+  }
+
+  if (area <= 25 && seats <= 8) return { size: "Huddle / small meeting room", summary: "A compact one-touch conferencing setup suited to a short table and close camera distance.", products: [equipment.rallyMini, equipment.tap] };
+  if (area <= 55 && seats <= 14) return { size: "Medium boardroom", summary: "An all-in-one system with optical zoom and room-wide audio for a longer meeting table.", products: [equipment.rallyBar, equipment.tap, ...(seats >= 10 ? [equipment.sight] : [])] };
+  const display = area > 140 || seats > 30 ? equipment.absen163 : area > 85 || seats > 20 ? equipment.absen136 : equipment.absen108;
+  return { size: "Large boardroom / conference room", summary: "An expandable conferencing system with a seamless large-format presentation canvas.", products: [equipment.rallyPlus, equipment.sight, equipment.tap, display] };
+}
+
 export default function Home() {
   const [room, setRoom] = useState(0);
   const [point, setPoint] = useState(null);
+  const [finderUse, setFinderUse] = useState("conferencing");
+  const [finderArea, setFinderArea] = useState(20);
+  const [finderSeats, setFinderSeats] = useState(6);
   const closeRef = useRef(null);
+  const recommendation = recommendEquipment(finderUse, Number(finderArea) || 1, Number(finderSeats) || 1);
 
   useEffect(() => {
     if (point) closeRef.current?.focus();
@@ -88,7 +129,7 @@ export default function Home() {
       <a className="skip-link" href="#main">Skip to content</a>
       <header>
         <a className="brand-logo brand-logo-header" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} priority /></a>
-        <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#process">How we work</a><a href="#contact">Contact</a></nav>
+        <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#finder">Solution finder</a><a href="#process">How we work</a><a href="#contact">Contact</a></nav>
         <div className="theme-id"><i />NAIROBI / EAST AFRICA</div>
       </header>
 
@@ -138,20 +179,36 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="finder" id="finder" aria-labelledby="finder-title">
+          <div className="finder-head"><p>04 / SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
+          <div className="finder-tool">
+            <form className="finder-form" onSubmit={(event) => event.preventDefault()}>
+              <fieldset><legend>01 / ROOM PURPOSE</legend><div className="finder-options"><button type="button" className={finderUse === "conferencing" ? "active" : ""} aria-pressed={finderUse === "conferencing"} onClick={() => setFinderUse("conferencing")}>Video conferencing</button><button type="button" className={finderUse === "education" ? "active" : ""} aria-pressed={finderUse === "education"} onClick={() => setFinderUse("education")}>Education</button></div></fieldset>
+              <label><span>02 / FLOOR AREA</span><strong>{finderArea || 0} m²</strong><input type="range" min="8" max="220" step="1" value={finderArea} onChange={(event) => setFinderArea(event.target.value)} aria-label="Room floor area in square metres" /><small>Approximate length × width</small></label>
+              <label><span>03 / PEOPLE</span><strong>{finderSeats}</strong><input type="range" min="2" max="150" step="1" value={finderSeats} onChange={(event) => setFinderSeats(event.target.value)} aria-label="Maximum number of people" /><small>Maximum expected capacity</small></label>
+            </form>
+            <div className="finder-result" aria-live="polite">
+              <div className="result-intro"><span>STARTING RECOMMENDATION</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
+              <div className="equipment-list">{recommendation.products.map((product) => <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><a href={product.link} target="_blank" rel="noreferrer" aria-label={`View official specifications for ${product.name}`}>Official specifications ↗</a></article>)}</div>
+              <div className="finder-note"><strong>Planning guidance, not a final specification.</strong><p>Room shape, viewing distance, acoustics, lighting, platform licences, network and mounting must be confirmed through a Setarez site survey.</p><a href="#contact">Request a room assessment ↗</a></div>
+            </div>
+          </div>
+        </section>
+
         <section className="sectors" aria-labelledby="sectors-title">
-          <p className="eyebrow"><span>04</span> WHO WE SERVE</p><h2 id="sectors-title">Solutions shaped around<br /><em>each environment.</em></h2>
+          <p className="eyebrow"><span>05</span> WHO WE SERVE</p><h2 id="sectors-title">Solutions shaped around<br /><em>each environment.</em></h2>
           <div className="sector-list">{["Schools & universities", "Corporate organisations", "Government & parastatals", "NGOs & development partners", "Hotels & conference centres", "Retail & commercial spaces", "Healthcare facilities", "Architects & consultants"].map((sector, index) => <div key={sector}><span>{String(index + 1).padStart(2, "0")}</span>{sector}</div>)}</div>
           <p className="sector-note">From a single room to a multi-site rollout.</p>
         </section>
 
         <section className="process" id="process" aria-labelledby="process-title">
-          <div className="section-head"><p>05 / HOW WE WORK</p><h2 id="process-title">A disciplined path<br /><em>to lasting value.</em></h2></div>
+          <div className="section-head"><p>06 / HOW WE WORK</p><h2 id="process-title">A disciplined path<br /><em>to lasting value.</em></h2></div>
           <div className="process-grid">{process.map(([number, title, copy]) => <article key={title}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
         </section>
 
         <section className="why" aria-labelledby="why-title">
           <div className="why-image"><Image src="/assets/solutions-showroom.png" alt="Immersive Setarez technology experience centre" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
-          <div className="why-copy"><p>06 / WHY SETAREZ</p><h2 id="why-title">Technology, innovation<br /><em>and guidance.</em></h2><div>{reasons.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div>
+          <div className="why-copy"><p>07 / WHY SETAREZ</p><h2 id="why-title">Technology, innovation<br /><em>and guidance.</em></h2><div>{reasons.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div>
         </section>
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
