@@ -1,13 +1,21 @@
 # Setarez Technologies
 
-Immersive single-page concept for Setarez Technologies.
+Production Next.js website for Setarez Technologies.
 
-## Preview
-
-Open `index.html` directly, or run:
+## Local development
 
 ```bash
-python3 -m http.server 8080
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:8080`.
+Open `http://localhost:3000`.
+
+## Production
+
+Set `NEXT_PUBLIC_SITE_URL` to the canonical production origin, then run:
+
+```bash
+npm run build
+npm start
+```
