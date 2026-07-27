@@ -75,7 +75,7 @@ export default function Home() {
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <header>
-        <a className="brand" href="#main" aria-label="Setarez Technologies home"><b>SETAREZ</b><span>TECHNOLOGY · INNOVATION · GUIDANCE</span></a>
+        <a className="brand-logo brand-logo-header" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} priority /></a>
         <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#process">How we work</a><a href="#contact">Contact</a></nav>
         <div className="theme-id"><i />NAIROBI / EAST AFRICA</div>
       </header>
@@ -149,7 +149,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer><a className="brand" href="#main"><b>SETAREZ</b><span>TECHNOLOGY · INNOVATION · GUIDANCE</span></a><p>Interactive learning, workplace collaboration and professional visual communication across Kenya and East Africa.</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:sales@setarez.com">Contact</a></div><small>© {new Date().getFullYear()} Setarez Technologies. Nairobi, Kenya.</small></footer>
+      <footer><a className="brand-logo brand-logo-footer" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} /></a><p>Interactive learning, workplace collaboration and professional visual communication across Kenya and East Africa.</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:sales@setarez.com">Contact</a></div><small>© {new Date().getFullYear()} Setarez Technologies. Nairobi, Kenya.</small></footer>
     </>
   );
 }
