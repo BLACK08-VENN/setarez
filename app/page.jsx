@@ -5,27 +5,27 @@ import { useEffect, useRef, useState } from "react";
 
 const rooms = [
   {
-    label: "AUDITORIUM",
-    kicker: "CONNECTED AUDITORIUM / 01",
-    image: "/assets/digital-twin-classroom.png",
-    alt: "A modern connected auditorium with a large-format display",
+    label: "CLASSROOM",
+    kicker: "INTERACTIVE CLASSROOM / 01",
+    image: "/assets/teachmint-classroom.png",
+    alt: "A Teachmint connected classroom with an interactive display and student tablets",
     points: [
-      { key: "display", code: "01 / VISUAL", title: "Large-format visual canvas", description: "A high-impact display for presentations, live content and clear communication at auditorium scale.", features: ["Large-format LED or display", "High visual clarity", "Multiple content sources"] },
-      { key: "camera", code: "02 / CAPTURE", title: "Intelligent room capture", description: "Professional camera coverage for recording, streaming and hybrid participation.", features: ["Presenter tracking", "Lecture capture", "Remote participation"] },
-      { key: "audio", code: "03 / AUDIO", title: "Room-wide clarity", description: "Microphone and reinforcement systems designed so every participant can hear and be heard.", features: ["Voice reinforcement", "Audience coverage", "Conferencing integration"] },
-      { key: "control", code: "04 / CONTROL", title: "One-room control", description: "Simple control of displays, sources, audio and room modes from one consistent interface.", features: ["Central room control", "Source management", "System monitoring"] }
+      { key: "display", code: "01 / TEACHMINT X", title: "Interactive teaching surface", description: "A responsive visual canvas for teaching, annotation, multimedia and shared classroom ideas.", features: ["Interactive flat panel", "Digital whiteboarding", "Precision multi-touch"] },
+      { key: "camera", code: "02 / HYBRID", title: "Connected classroom camera", description: "Professional room capture for live classes, recording and remote participation.", features: ["Live classes", "Lesson capture", "Remote participation"] },
+      { key: "audio", code: "03 / LEARNING", title: "Digital classroom platform", description: "Connected teacher and learner tools that keep lessons, assignments and participation in one flow.", features: ["Smart classes", "Assignments and tests", "Student devices"] },
+      { key: "control", code: "04 / ENABLE", title: "Teacher confidence", description: "Onboarding, practical training and support that help educators use the room every day.", features: ["Teacher onboarding", "Practical training", "Ongoing support"] }
     ]
   },
   {
-    label: "CLASSROOM",
-    kicker: "INTERACTIVE CLASSROOM / 02",
-    image: "/assets/interactive-learning.png",
-    alt: "A teacher using an interactive display in a connected classroom",
+    label: "BOARDROOM",
+    kicker: "CONNECTED BOARDROOM / 02",
+    image: "/assets/teachmint-boardroom.png",
+    alt: "A Teachmint connected boardroom with an interactive meeting display and touch controller",
     points: [
-      { key: "board-display", code: "01 / INTERACTIVE", title: "Interactive teaching surface", description: "A responsive canvas for teaching, annotation, multimedia and shared classroom ideas.", features: ["Interactive flat panel", "Digital whiteboarding", "Precision multi-touch"] },
-      { key: "rally-bar", code: "02 / CONTENT", title: "Connected learning content", description: "Digital classroom software and wireless sharing that keep lessons fluid and engaging.", features: ["Classroom software", "Wireless content sharing", "Cloud resources"] },
-      { key: "sight", code: "03 / HYBRID", title: "Inclusive participation", description: "Camera and audio coverage that brings remote learners naturally into the classroom.", features: ["Hybrid learning", "Clear voice capture", "Platform integration"] },
-      { key: "tap", code: "04 / ENABLE", title: "Teacher confidence", description: "Onboarding, training and support that help educators use the room every day.", features: ["Teacher onboarding", "Practical training", "Ongoing support"] }
+      { key: "board-display", code: "01 / MEETING DISPLAY", title: "Collaborative visual canvas", description: "A shared surface for wireless presentation, interactive whiteboarding and clearer decisions.", features: ["Interactive whiteboard", "Wireless screen sharing", "4K presentation"] },
+      { key: "rally-bar", code: "02 / VIDEO", title: "Professional hybrid meetings", description: "Integrated camera, speaker and microphone technology for dependable collaboration.", features: ["HD video conferencing", "Automatic framing", "Room-wide audio"] },
+      { key: "sight", code: "03 / TABLE AUDIO", title: "Inclusive room presence", description: "Table-level audio and meeting controls that make every participant easy to hear and involve.", features: ["Clear voice capture", "Multi-participant meetings", "Platform integration"] },
+      { key: "tap", code: "04 / ROOM CONTROL", title: "One-touch room control", description: "A dedicated touch interface for joining meetings, sharing content and controlling the room.", features: ["One-touch join", "Wireless sharing", "Simple room workflow"] }
     ]
   }
 ];
@@ -92,7 +92,7 @@ export default function Home() {
           ))}
           <div className="room-shade" />
           <div className="twin-title"><p>{rooms[room].kicker}</p><h1>Technology that<br /><em>connects people and ideas.</em></h1></div>
-          <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span><button className={room === 0 ? "active" : ""} aria-pressed={room === 0} onClick={() => changeRoom(0)}>Auditorium</button><button className={room === 1 ? "active" : ""} aria-pressed={room === 1} onClick={() => changeRoom(1)}>Classroom</button></div>
+          <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span><button className={room === 0 ? "active" : ""} aria-pressed={room === 0} onClick={() => changeRoom(0)}>Classroom</button><button className={room === 1 ? "active" : ""} aria-pressed={room === 1} onClick={() => changeRoom(1)}>Boardroom</button></div>
           <div className="telemetry" aria-label="Setarez solution model">
             <div><span>OUR ROLE</span><b><i /> UNDERSTAND</b></div><div><span>INTEGRATION</span><b>DESIGN + DELIVER</b></div><div><span>LIFECYCLE</span><b>SUPPORT</b></div>
           </div>

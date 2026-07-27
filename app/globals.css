@@ -46,8 +46,8 @@ nav a:hover { color: var(--lilac); }
 .hotspot i { position: absolute; width: 5px; height: 5px; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; background: var(--lilac); box-shadow: 0 0 10px var(--lilac); }
 .hotspot span { position: absolute; left: 39px; top: 12px; font: 300 8px DM Mono; }
 .hotspot:hover { transform: scale(1.2); background: var(--lilac); color: #0a090b; }
-.display { right: 17%; top: 39%; } .camera { right: 22.5%; top: 23%; } .audio { left: 43%; top: 17%; } .control { right: 31%; bottom: 22%; }
-.board-display { right: 13%; top: 27%; } .rally-bar { right: 19%; top: 48%; } .sight { left: 21%; top: 66%; } .tap { left: 55%; top: 31%; }
+.display { right: 34%; top: 38%; } .camera { right: 42%; top: 19%; } .audio { left: 25%; bottom: 20%; } .control { right: 16%; bottom: 18%; }
+.board-display { left: 39%; top: 37%; } .rally-bar { left: 38%; top: 28%; } .sight { left: 58%; top: 66%; } .tap { left: 53%; top: 76%; }
 @keyframes pulse { 50% { transform: scale(1.25); opacity: 0; } }
 .telemetry { position: absolute; z-index: 7; right: 3vw; bottom: 4vh; width: min(510px, 45vw); display: grid; grid-template-columns: 1.1fr 1.4fr 1fr; border: 1px solid var(--line); background: rgba(10, 11, 10, .66); backdrop-filter: blur(18px); }
 .telemetry div { padding: 13px; border-right: 1px solid var(--line); }
