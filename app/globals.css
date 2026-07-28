@@ -245,7 +245,7 @@ footer small { grid-column: 2/-1; font: 300 8px DM Mono; opacity: .45; }
   .twin-title { left: 20px; top: 14%; width: 92vw; }
   .twin-title h1 { font-size: 14.5vw; }
   .room-image { object-position: 62% center; }
-  .view-toggle { left: 20px; top: 49%; }
+  .view-toggle { left: 20px; top: 56%; }
   .hotspot { width: 42px; height: 42px; }
   .hotspot span { left: 46px; top: 13px; }
   .audio { left: 45%; }
