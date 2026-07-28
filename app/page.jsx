@@ -119,6 +119,7 @@ export default function Home() {
   const [finderArea, setFinderArea] = useState(20);
   const [finderSeats, setFinderSeats] = useState(6);
   const closeRef = useRef(null);
+  const audioRef = useRef(null);
   const recommendation = recommendEquipment(finderUse, Number(finderArea) || 1, Number(finderSeats) || 1);
 
   useEffect(() => {
@@ -131,6 +132,26 @@ export default function Home() {
   const changeRoom = (index) => {
     setRoom(index);
     setPoint(null);
+  };
+
+  const playHotspotSound = () => {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const context = audioRef.current || new AudioContext();
+    audioRef.current = context;
+    if (context.state === "suspended") context.resume();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(520, context.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(720, context.currentTime + .07);
+    gain.gain.setValueAtTime(.0001, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.028, context.currentTime + .012);
+    gain.gain.exponentialRampToValueAtTime(.0001, context.currentTime + .11);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + .12);
   };
 
   const stepPoint = (direction) => {
@@ -156,7 +177,11 @@ export default function Home() {
               {item.points.map((itemPoint, pointIndex) => (
                 <button
                   className={`hotspot ${itemPoint.key}${point?.key === itemPoint.key ? " selected" : ""}`}
-                  onClick={() => setPoint({ ...itemPoint, roomLabel: item.label, pointNumber: pointIndex + 1 })}
+                  onClick={() => {
+                    playHotspotSound();
+                    setPoint({ ...itemPoint, roomLabel: item.label, pointNumber: pointIndex + 1 });
+                  }}
+                  onMouseEnter={playHotspotSound}
                   aria-label={`Explore ${itemPoint.title}`}
                   aria-expanded={point?.key === itemPoint.key}
                   aria-controls="technology-detail"
