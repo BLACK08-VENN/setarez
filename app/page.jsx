@@ -66,35 +66,26 @@ const reasons = [
   ["Long-term value", "Maintenance and upgrades protect every investment."]
 ];
 
-const productLinks = {
-  teachmint: "https://www.teachmint.com/en-mea/products/digital-board-for-teaching",
-  rallyMini: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rallybarmini.html",
-  rallyBar: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rallybar.html",
-  rallyPlus: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rally.html",
-  sight: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/sight.html",
-  tap: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/tap-ip.html",
-  micPod: "https://www.logitech.com/en-us/products/video-conferencing/accessories/mic-pod-for-rally.989-000430.html",
-  scribe: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/scribe.html",
-  scheduler: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/tap-scheduler.html",
-  swytch: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/swytch.html",
-  absen: "https://www.absen.com/product/x-series/"
+const enquiryContact = {
+  email: "sales@setarez.com",
+  phone: "+254759013661"
 };
 
 const equipment = {
-  teachmint75: { brand: "Teachmint", name: "Teachmint X 75″", role: "Interactive learning display", specs: "True 4K UHD · 40-point touch · ≤5ms response · 40W speakers", link: productLinks.teachmint },
-  teachmint86: { brand: "Teachmint", name: "Teachmint X 86″", role: "Large classroom display", specs: "48MP 4K camera · 8-array microphone · 8GB/128GB · Android 16 EDLA", link: productLinks.teachmint },
-  rallyMini: { brand: "Logitech", name: "Rally Bar Mini", role: "Small-room video bar", specs: "4K camera · 120° diagonal field of view · 6 beamforming microphones", link: productLinks.rallyMini },
-  rallyBar: { brand: "Logitech", name: "Rally Bar", role: "Medium-to-large-room video bar", specs: "4K PTZ camera · 15× HD zoom · 7m microphone pickup", link: productLinks.rallyBar },
-  rallyPlus: { brand: "Logitech", name: "Rally Plus", role: "Expandable large-room conference system", specs: "Ultra-HD camera · 2 speakers · 2 Rally Mic Pods · expandable audio", link: productLinks.rallyPlus },
-  tap: { brand: "Logitech", name: "Tap IP", role: "Room touch controller", specs: "10.1″ 1280 × 800 display · 10-point touch · Power over Ethernet", link: productLinks.tap },
-  sight: { brand: "Logitech", name: "Sight", role: "Tabletop companion camera", specs: "Dual-lens 4K · 315° horizontal view · 7 beamforming microphones", link: productLinks.sight },
-  micPod: { brand: "Logitech", name: "Rally Mic Pod", role: "Expandable table microphone", specs: "4.5m pickup range · 4 beamforming microphones · AEC and AI noise suppression", link: productLinks.micPod },
-  scribe: { brand: "Logitech", name: "Scribe", role: "AI whiteboard camera", specs: "1080p AI-enhanced output · presenter removal · supports boards up to 1.2 × 1.8m", link: productLinks.scribe },
-  scheduler: { brand: "Logitech", name: "Tap Scheduler", role: "Room booking panel", specs: "10.1″ touchscreen · calendar integration · remote management with Logitech Sync", link: productLinks.scheduler },
-  swytch: { brand: "Logitech", name: "Swytch", role: "Bring-your-own-laptop room connection", specs: "Single USB connection · uses the room display, camera and speakers · up to 4K output", link: productLinks.swytch },
-  absen108: { brand: "Absen", name: "Absen X Series 108″", role: "All-in-one Micro LED display", specs: "Optional 20-point touch · 1mm touch accuracy · 2 × 15W speakers", link: productLinks.absen },
-  absen136: { brand: "Absen", name: "Absen X Series 136″", role: "Lecture theatre / conference display", specs: "Micro LED · Android 11 · 4GB/32GB · complete installation kit", link: productLinks.absen },
-  absen163: { brand: "Absen", name: "Absen X Series 163″", role: "Auditorium-scale presentation display", specs: "Micro LED · 100,000-hour service life · optional interactive touch", link: productLinks.absen }
+  teachmint75: { brand: "Teachmint", name: "Teachmint X 75″", role: "Interactive learning display", specs: "True 4K UHD · 40-point touch · ≤5ms response · 40W speakers" },
+  teachmint86: { brand: "Teachmint", name: "Teachmint X 86″", role: "Large classroom display", specs: "48MP 4K camera · 8-array microphone · 8GB/128GB · Android 16 EDLA" },
+  rallyMini: { brand: "Logitech", name: "Rally Bar Mini", role: "Small-room video bar", specs: "4K camera · 120° diagonal field of view · 6 beamforming microphones" },
+  rallyBar: { brand: "Logitech", name: "Rally Bar", role: "Medium-to-large-room video bar", specs: "4K PTZ camera · 15× HD zoom · 7m microphone pickup" },
+  rallyPlus: { brand: "Logitech", name: "Rally Plus", role: "Expandable large-room conference system", specs: "Ultra-HD camera · 2 speakers · 2 Rally Mic Pods · expandable audio" },
+  tap: { brand: "Logitech", name: "Tap IP", role: "Room touch controller", specs: "10.1″ 1280 × 800 display · 10-point touch · Power over Ethernet" },
+  sight: { brand: "Logitech", name: "Sight", role: "Tabletop companion camera", specs: "Dual-lens 4K · 315° horizontal view · 7 beamforming microphones" },
+  micPod: { brand: "Logitech", name: "Rally Mic Pod", role: "Expandable table microphone", specs: "4.5m pickup range · 4 beamforming microphones · AEC and AI noise suppression" },
+  scribe: { brand: "Logitech", name: "Scribe", role: "AI whiteboard camera", specs: "1080p AI-enhanced output · presenter removal · supports boards up to 1.2 × 1.8m" },
+  scheduler: { brand: "Logitech", name: "Tap Scheduler", role: "Room booking panel", specs: "10.1″ touchscreen · calendar integration · remote management with Logitech Sync" },
+  swytch: { brand: "Logitech", name: "Swytch", role: "Bring-your-own-laptop room connection", specs: "Single USB connection · uses the room display, camera and speakers · up to 4K output" },
+  absen108: { brand: "Absen", name: "Absen X Series 108″", role: "All-in-one Micro LED display", specs: "Optional 20-point touch · 1mm touch accuracy · 2 × 15W speakers" },
+  absen136: { brand: "Absen", name: "Absen X Series 136″", role: "Lecture theatre / conference display", specs: "Micro LED · Android 11 · 4GB/32GB · complete installation kit" },
+  absen163: { brand: "Absen", name: "Absen X Series 163″", role: "Auditorium-scale presentation display", specs: "Micro LED · 100,000-hour service life · optional interactive touch" }
 };
 
 function recommendEquipment(useCase, area, seats) {
@@ -112,13 +103,12 @@ function recommendEquipment(useCase, area, seats) {
   return { size: "Large boardroom / conference room", summary: "An expandable conferencing system with equitable participant framing, extended voice pickup and a seamless large-format presentation canvas.", products: [equipment.rallyPlus, equipment.sight, equipment.micPod, equipment.tap, equipment.swytch, equipment.scheduler, equipment.scribe, display] };
 }
 
-function officialLinkForPoint(item) {
-  if (item.code.includes("TEACHMINT")) return productLinks.teachmint;
-  if (item.code.includes("SIGHT")) return productLinks.sight;
-  if (item.code.includes("TAP")) return productLinks.tap;
-  if (item.code.includes("MIC POD")) return productLinks.micPod;
-  if (item.code.includes("RALLY BAR")) return productLinks.rallyBar;
-  return "#contact";
+function enquiryLinks(subject) {
+  const message = `Hello Setarez Technologies, I would like to enquire about ${subject}.`;
+  return {
+    email: `mailto:${enquiryContact.email}?subject=${encodeURIComponent(`Enquiry: ${subject}`)}&body=${encodeURIComponent(message)}`,
+    text: `sms:${enquiryContact.phone}?body=${encodeURIComponent(message)}`
+  };
 }
 
 export default function Home() {
@@ -191,8 +181,8 @@ export default function Home() {
             <p>{point.description}</p>
             <ul>{point.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
             <div className="point-actions">
-              <a href={officialLinkForPoint(point)} target="_blank" rel="noreferrer">Official specifications ↗</a>
-              <a href="#contact" onClick={() => setPoint(null)}>Discuss this solution ↗</a>
+              <a href={enquiryLinks(point.title).email}>Email enquiry ↗</a>
+              <a href={enquiryLinks(point.title).text}>Text enquiry ↗</a>
             </div>
             <div className="point-pagination" aria-label="Browse technology points">
               <button onClick={() => stepPoint(-1)} aria-label="Previous technology point">←</button>
@@ -235,7 +225,10 @@ export default function Home() {
             </form>
             <div className="finder-result" aria-live="polite">
               <div className="result-intro"><span>STARTING RECOMMENDATION · {recommendation.products.length} COMPONENT SYSTEM</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
-              <div className="equipment-list">{recommendation.products.map((product) => <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><a href={product.link} target="_blank" rel="noreferrer" aria-label={`View official specifications for ${product.name}`}>Official specifications ↗</a></article>)}</div>
+              <div className="equipment-list">{recommendation.products.map((product) => {
+                const links = enquiryLinks(product.name);
+                return <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><div className="equipment-enquiry"><a href={links.email} aria-label={`Email an enquiry about ${product.name}`}>Email enquiry ↗</a><a href={links.text} aria-label={`Text an enquiry about ${product.name}`}>Text enquiry ↗</a></div></article>;
+              })}</div>
               <div className="finder-note"><strong>Planning guidance, not a final specification.</strong><p>Room shape, viewing distance, acoustics, lighting, platform licences, network and mounting must be confirmed through a Setarez site survey.</p><a href="#contact">Request a room assessment ↗</a></div>
             </div>
           </div>
@@ -267,7 +260,7 @@ export default function Home() {
       <aside className={`support-widget${chatOpen ? " open" : ""}`} aria-label="WhatsApp support">
         <div className="support-panel" aria-hidden={!chatOpen}>
           <div className="support-panel-head">
-            <span className="support-avatar" aria-hidden="true"><i /><i /></span>
+            <span className="support-avatar" aria-hidden="true"><i /><i /><b>⌣</b></span>
             <div><strong>Setarez Support</strong><small><i /> Online on WhatsApp</small></div>
             <button onClick={() => setChatOpen(false)} aria-label="Close WhatsApp support">×</button>
           </div>
@@ -279,8 +272,8 @@ export default function Home() {
           <a href="https://wa.me/254759013661?text=Hello%20Setarez%20Technologies%2C%20I%27d%20like%20to%20talk%20about%20a%20technology%20solution." target="_blank" rel="noreferrer">Start WhatsApp chat <span>↗</span></a>
         </div>
         <button className="support-tab" onClick={() => setChatOpen((open) => !open)} aria-expanded={chatOpen} aria-label={`${chatOpen ? "Close" : "Open"} WhatsApp support`}>
-          <span className="support-tab-robot" aria-hidden="true"><i /><i /></span>
-          <span><strong>WhatsApp support</strong><small><i /> We’re here to help</small></span>
+          <span className="support-tab-robot" aria-hidden="true"><i /><i /><b>⌣</b></span>
+          <span><strong>Tech robot · WhatsApp</strong><small><i /> Tap Boop for support</small></span>
           <b aria-hidden="true">{chatOpen ? "×" : "↑"}</b>
         </button>
       </aside>
