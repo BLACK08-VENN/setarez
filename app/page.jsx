@@ -73,6 +73,10 @@ const productLinks = {
   rallyPlus: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/rally.html",
   sight: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/sight.html",
   tap: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/tap-ip.html",
+  micPod: "https://www.logitech.com/en-us/products/video-conferencing/accessories/mic-pod-for-rally.989-000430.html",
+  scribe: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/scribe.html",
+  scheduler: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/tap-scheduler.html",
+  swytch: "https://www.logitech.com/en-us/products/video-conferencing/room-solutions/swytch.html",
   absen: "https://www.absen.com/product/x-series/"
 };
 
@@ -84,6 +88,10 @@ const equipment = {
   rallyPlus: { brand: "Logitech", name: "Rally Plus", role: "Expandable large-room conference system", specs: "Ultra-HD camera · 2 speakers · 2 Rally Mic Pods · expandable audio", link: productLinks.rallyPlus },
   tap: { brand: "Logitech", name: "Tap IP", role: "Room touch controller", specs: "10.1″ 1280 × 800 display · 10-point touch · Power over Ethernet", link: productLinks.tap },
   sight: { brand: "Logitech", name: "Sight", role: "Tabletop companion camera", specs: "Dual-lens 4K · 315° horizontal view · 7 beamforming microphones", link: productLinks.sight },
+  micPod: { brand: "Logitech", name: "Rally Mic Pod", role: "Expandable table microphone", specs: "4.5m pickup range · 4 beamforming microphones · AEC and AI noise suppression", link: productLinks.micPod },
+  scribe: { brand: "Logitech", name: "Scribe", role: "AI whiteboard camera", specs: "1080p AI-enhanced output · presenter removal · supports boards up to 1.2 × 1.8m", link: productLinks.scribe },
+  scheduler: { brand: "Logitech", name: "Tap Scheduler", role: "Room booking panel", specs: "10.1″ touchscreen · calendar integration · remote management with Logitech Sync", link: productLinks.scheduler },
+  swytch: { brand: "Logitech", name: "Swytch", role: "Bring-your-own-laptop room connection", specs: "Single USB connection · uses the room display, camera and speakers · up to 4K output", link: productLinks.swytch },
   absen108: { brand: "Absen", name: "Absen X Series 108″", role: "All-in-one Micro LED display", specs: "Optional 20-point touch · 1mm touch accuracy · 2 × 15W speakers", link: productLinks.absen },
   absen136: { brand: "Absen", name: "Absen X Series 136″", role: "Lecture theatre / conference display", specs: "Micro LED · Android 11 · 4GB/32GB · complete installation kit", link: productLinks.absen },
   absen163: { brand: "Absen", name: "Absen X Series 163″", role: "Auditorium-scale presentation display", specs: "Micro LED · 100,000-hour service life · optional interactive touch", link: productLinks.absen }
@@ -91,21 +99,32 @@ const equipment = {
 
 function recommendEquipment(useCase, area, seats) {
   if (useCase === "education") {
-    if (area <= 55 && seats <= 35) return { size: "Standard classroom", summary: "A focused interactive teaching setup for clear visibility and everyday lesson delivery.", products: [equipment.teachmint75] };
-    if (area <= 90 && seats <= 60) return { size: "Large classroom", summary: "A larger teaching surface with integrated camera and audio for in-person or hybrid learning.", products: [equipment.teachmint86, equipment.rallyMini] };
+    if (area <= 55 && seats <= 35) return { size: "Standard classroom", summary: "A focused interactive and hybrid-ready teaching setup for clear visibility and everyday lesson delivery.", products: [equipment.teachmint75, equipment.rallyMini, equipment.tap] };
+    if (area <= 90 && seats <= 60) return { size: "Large classroom", summary: "A larger teaching surface with extended voice coverage and simple session control for in-person or hybrid learning.", products: [equipment.teachmint86, equipment.rallyBar, equipment.micPod, equipment.tap, equipment.scribe] };
     const display = area > 160 || seats > 120 ? equipment.absen163 : area > 110 || seats > 80 ? equipment.absen136 : equipment.absen108;
-    return { size: "Lecture hall / auditorium", summary: "A large-format teaching and presentation system with expandable hybrid-learning coverage.", products: [display, equipment.rallyPlus, equipment.tap] };
+    const micPods = seats > 100 ? [equipment.micPod, { ...equipment.micPod, name: "Rally Mic Pod — additional coverage" }] : [equipment.micPod];
+    return { size: "Lecture hall / auditorium", summary: "A large-format teaching and presentation system with expandable hybrid-learning, whiteboard and room-control coverage.", products: [display, equipment.rallyPlus, ...micPods, equipment.tap, equipment.scribe, equipment.scheduler] };
   }
 
-  if (area <= 25 && seats <= 8) return { size: "Huddle / small meeting room", summary: "A compact one-touch conferencing setup suited to a short table and close camera distance.", products: [equipment.rallyMini, equipment.tap] };
-  if (area <= 55 && seats <= 14) return { size: "Medium boardroom", summary: "An all-in-one system with optical zoom and room-wide audio for a longer meeting table.", products: [equipment.rallyBar, equipment.tap, ...(seats >= 10 ? [equipment.sight] : [])] };
+  if (area <= 25 && seats <= 8) return { size: "Huddle / small meeting room", summary: "A compact one-touch conferencing setup with flexible laptop connectivity for a short table and close camera distance.", products: [equipment.rallyMini, equipment.tap, equipment.swytch, equipment.scheduler] };
+  if (area <= 55 && seats <= 14) return { size: "Medium boardroom", summary: "An all-in-one system with optical zoom, table-level framing and expanded audio for a longer meeting table.", products: [equipment.rallyBar, equipment.tap, equipment.swytch, ...(seats >= 10 ? [equipment.sight, equipment.micPod] : [equipment.scheduler])] };
   const display = area > 140 || seats > 30 ? equipment.absen163 : area > 85 || seats > 20 ? equipment.absen136 : equipment.absen108;
-  return { size: "Large boardroom / conference room", summary: "An expandable conferencing system with a seamless large-format presentation canvas.", products: [equipment.rallyPlus, equipment.sight, equipment.tap, display] };
+  return { size: "Large boardroom / conference room", summary: "An expandable conferencing system with equitable participant framing, extended voice pickup and a seamless large-format presentation canvas.", products: [equipment.rallyPlus, equipment.sight, equipment.micPod, equipment.tap, equipment.swytch, equipment.scheduler, equipment.scribe, display] };
+}
+
+function officialLinkForPoint(item) {
+  if (item.code.includes("TEACHMINT")) return productLinks.teachmint;
+  if (item.code.includes("SIGHT")) return productLinks.sight;
+  if (item.code.includes("TAP")) return productLinks.tap;
+  if (item.code.includes("MIC POD")) return productLinks.micPod;
+  if (item.code.includes("RALLY BAR")) return productLinks.rallyBar;
+  return "#contact";
 }
 
 export default function Home() {
   const [room, setRoom] = useState(0);
   const [point, setPoint] = useState(null);
+  const [chatOpen, setChatOpen] = useState(false);
   const [finderUse, setFinderUse] = useState("conferencing");
   const [finderArea, setFinderArea] = useState(20);
   const [finderSeats, setFinderSeats] = useState(6);
@@ -124,6 +143,12 @@ export default function Home() {
     setPoint(null);
   };
 
+  const stepPoint = (direction) => {
+    const roomPoints = rooms[room].points;
+    const currentIndex = Math.max(0, roomPoints.findIndex((item) => item.key === point?.key));
+    setPoint(roomPoints[(currentIndex + direction + roomPoints.length) % roomPoints.length]);
+  };
+
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
@@ -139,7 +164,15 @@ export default function Home() {
             <div className={`room-slide${index === room ? " active" : ""}`} aria-hidden={index !== room} key={item.label}>
               <Image className="room-image" src={item.image} alt={item.alt} fill priority={index === 0} sizes="100vw" />
               {item.points.map((itemPoint, pointIndex) => (
-                <button className={`hotspot ${itemPoint.key}`} onClick={() => setPoint(itemPoint)} aria-label={`Explore ${itemPoint.title}`} tabIndex={index === room ? 0 : -1} key={itemPoint.key}><i /><span>{String(pointIndex + 1).padStart(2, "0")}</span></button>
+                <button
+                  className={`hotspot ${itemPoint.key}${point?.key === itemPoint.key ? " selected" : ""}`}
+                  onClick={() => setPoint({ ...itemPoint, roomLabel: item.label, pointNumber: pointIndex + 1 })}
+                  aria-label={`Explore ${itemPoint.title}`}
+                  aria-expanded={point?.key === itemPoint.key}
+                  aria-controls="technology-detail"
+                  tabIndex={index === room ? 0 : -1}
+                  key={itemPoint.key}
+                ><i /><span>{String(pointIndex + 1).padStart(2, "0")}</span></button>
               ))}
             </div>
           ))}
@@ -150,9 +183,22 @@ export default function Home() {
             <div><span>OUR ROLE</span><b><i /> UNDERSTAND</b></div><div><span>INTEGRATION</span><b>DESIGN + DELIVER</b></div><div><span>LIFECYCLE</span><b>SUPPORT</b></div>
           </div>
           <div className="hint">SELECT A TECHNOLOGY POINT <span>↗</span></div>
-          {point && <aside className="point-card" role="dialog" aria-modal="true" aria-labelledby="point-title">
+          {point && <aside className="point-card" id="technology-detail" key={`${room}-${point.key}`} role="dialog" aria-modal="true" aria-labelledby="point-title">
             <button className="point-close" ref={closeRef} onClick={() => setPoint(null)} aria-label="Close technology details">×</button>
-            <span className="point-code">{point.code}</span><h2 id="point-title">{point.title}</h2><p>{point.description}</p><ul>{point.features.map((feature) => <li key={feature}>{feature}</li>)}</ul><a href="#contact" onClick={() => setPoint(null)}>Discuss this solution ↗</a>
+            <span className="point-code">{point.code}</span>
+            <span className="point-status"><i /> TECHNICAL DETAIL AVAILABLE</span>
+            <h2 id="point-title">{point.title}</h2>
+            <p>{point.description}</p>
+            <ul>{point.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
+            <div className="point-actions">
+              <a href={officialLinkForPoint(point)} target="_blank" rel="noreferrer">Official specifications ↗</a>
+              <a href="#contact" onClick={() => setPoint(null)}>Discuss this solution ↗</a>
+            </div>
+            <div className="point-pagination" aria-label="Browse technology points">
+              <button onClick={() => stepPoint(-1)} aria-label="Previous technology point">←</button>
+              <span>{String(rooms[room].points.findIndex((item) => item.key === point.key) + 1).padStart(2, "0")} / {String(rooms[room].points.length).padStart(2, "0")}</span>
+              <button onClick={() => stepPoint(1)} aria-label="Next technology point">→</button>
+            </div>
           </aside>}
         </section>
 
@@ -188,7 +234,7 @@ export default function Home() {
               <label><span>03 / PEOPLE</span><strong>{finderSeats}</strong><input type="range" min="2" max="150" step="1" value={finderSeats} onChange={(event) => setFinderSeats(event.target.value)} aria-label="Maximum number of people" /><small>Maximum expected capacity</small></label>
             </form>
             <div className="finder-result" aria-live="polite">
-              <div className="result-intro"><span>STARTING RECOMMENDATION</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
+              <div className="result-intro"><span>STARTING RECOMMENDATION · {recommendation.products.length} COMPONENT SYSTEM</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
               <div className="equipment-list">{recommendation.products.map((product) => <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><a href={product.link} target="_blank" rel="noreferrer" aria-label={`View official specifications for ${product.name}`}>Official specifications ↗</a></article>)}</div>
               <div className="finder-note"><strong>Planning guidance, not a final specification.</strong><p>Room shape, viewing distance, acoustics, lighting, platform licences, network and mounting must be confirmed through a Setarez site survey.</p><a href="#contact">Request a room assessment ↗</a></div>
             </div>
@@ -217,6 +263,27 @@ export default function Home() {
           <div className="contact-details"><a href="tel:+254759013661">+254 759 013 661</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
         </section>
       </main>
+
+      <aside className={`support-widget${chatOpen ? " open" : ""}`} aria-label="WhatsApp support">
+        <div className="support-panel" aria-hidden={!chatOpen}>
+          <div className="support-panel-head">
+            <span className="support-avatar" aria-hidden="true"><i /><i /></span>
+            <div><strong>Setarez Support</strong><small><i /> Online on WhatsApp</small></div>
+            <button onClick={() => setChatOpen(false)} aria-label="Close WhatsApp support">×</button>
+          </div>
+          <div className="support-conversation">
+            <span>Boop! 👋</span>
+            <p>Hi, how can we help with your classroom, meeting room or display project?</p>
+            <small>Typically replies during business hours</small>
+          </div>
+          <a href="https://wa.me/254759013661?text=Hello%20Setarez%20Technologies%2C%20I%27d%20like%20to%20talk%20about%20a%20technology%20solution." target="_blank" rel="noreferrer">Start WhatsApp chat <span>↗</span></a>
+        </div>
+        <button className="support-tab" onClick={() => setChatOpen((open) => !open)} aria-expanded={chatOpen} aria-label={`${chatOpen ? "Close" : "Open"} WhatsApp support`}>
+          <span className="support-tab-robot" aria-hidden="true"><i /><i /></span>
+          <span><strong>WhatsApp support</strong><small><i /> We’re here to help</small></span>
+          <b aria-hidden="true">{chatOpen ? "×" : "↑"}</b>
+        </button>
+      </aside>
 
       <footer><a className="brand-logo brand-logo-footer" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} /></a><p>Interactive learning, workplace collaboration and professional visual communication across Kenya and East Africa.</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:sales@setarez.com">Contact</a></div><small>© {new Date().getFullYear()} Setarez Technologies. Nairobi, Kenya.</small></footer>
     </>
