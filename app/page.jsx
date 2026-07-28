@@ -157,7 +157,8 @@ export default function Home() {
   const stepPoint = (direction) => {
     const roomPoints = rooms[room].points;
     const currentIndex = Math.max(0, roomPoints.findIndex((item) => item.key === point?.key));
-    setPoint(roomPoints[(currentIndex + direction + roomPoints.length) % roomPoints.length]);
+    const nextIndex = (currentIndex + direction + roomPoints.length) % roomPoints.length;
+    setPoint({ ...roomPoints[nextIndex], roomLabel: rooms[room].label, pointNumber: nextIndex + 1 });
   };
 
   return (
@@ -185,6 +186,8 @@ export default function Home() {
                   aria-label={`Explore ${itemPoint.title}`}
                   aria-expanded={point?.key === itemPoint.key}
                   aria-controls="technology-detail"
+                  data-room={item.label}
+                  data-hotspot={pointIndex + 1}
                   tabIndex={index === room ? 0 : -1}
                   key={itemPoint.key}
                 ><i /><span>{String(pointIndex + 1).padStart(2, "0")}</span></button>
@@ -200,6 +203,7 @@ export default function Home() {
           <div className="hint">SELECT A TECHNOLOGY POINT <span>↗</span></div>
           {point && <aside className="point-card" id="technology-detail" key={`${room}-${point.key}`} role="dialog" aria-modal="true" aria-labelledby="point-title">
             <button className="point-close" ref={closeRef} onClick={() => setPoint(null)} aria-label="Close technology details">×</button>
+            <span className="point-hotspot">HOTSPOT {String(point.pointNumber).padStart(2, "0")} · {point.roomLabel}</span>
             <span className="point-code">{point.code}</span>
             <span className="point-status"><i /> TECHNICAL DETAIL AVAILABLE</span>
             <h2 id="point-title">{point.title}</h2>
@@ -211,7 +215,7 @@ export default function Home() {
             </div>
             <div className="point-pagination" aria-label="Browse technology points">
               <button onClick={() => stepPoint(-1)} aria-label="Previous technology point">←</button>
-              <span>{String(rooms[room].points.findIndex((item) => item.key === point.key) + 1).padStart(2, "0")} / {String(rooms[room].points.length).padStart(2, "0")}</span>
+              <span>{String(point.pointNumber).padStart(2, "0")} / {String(rooms[room].points.length).padStart(2, "0")}</span>
               <button onClick={() => stepPoint(1)} aria-label="Next technology point">→</button>
             </div>
           </aside>}

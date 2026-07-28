@@ -63,6 +63,7 @@ nav a:hover { color: var(--lilac); }
 .point-card:hover { border-color: rgba(185, 147, 242, .62); box-shadow: 0 30px 100px rgba(0, 0, 0, .62), 0 0 34px rgba(157, 92, 255, .32), 0 0 92px rgba(106, 69, 160, .22); }
 @keyframes cardin { from { opacity: 0; transform: translateX(30px); } }
 .point-close { position: absolute; right: 15px; top: 15px; border: 0; background: none; font-size: 20px; }
+.point-hotspot { display: block; margin-bottom: 10px; color: #fff; font: 400 8px DM Mono; letter-spacing: .14em; }
 .point-code { font: 300 9px DM Mono; color: var(--lilac); letter-spacing: .14em; }
 .point-status { display: flex; align-items: center; gap: 7px; margin-top: 13px; color: rgba(243, 240, 234, .58); font: 300 7px DM Mono; letter-spacing: .12em; }
 .point-status i { width: 6px; height: 6px; border-radius: 50%; background: #72f1b8; box-shadow: 0 0 9px #72f1b8; }
@@ -275,6 +276,10 @@ footer small { grid-column: 2/-1; font: 300 8px DM Mono; opacity: .45; }
   footer { grid-template-columns: 1fr; }
   footer small { grid-column: 1; }
   .support-widget { right: 12px; }
+  .support-widget:not(.open) { width: 66px; }
+  .support-widget:not(.open) .support-tab { min-height: 66px; display: block; padding: 8px 5px 6px; border-radius: 20px 20px 0 0; }
+  .support-widget:not(.open) .support-tab > span:nth-child(2), .support-widget:not(.open) .support-tab > b { display: none; }
+  .support-widget:not(.open) .support-tab-robot { margin: -20px auto 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
