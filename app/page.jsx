@@ -202,7 +202,7 @@ export default function Home() {
           </div>
           <div className="hint">SELECT A TECHNOLOGY POINT <span>↗</span></div>
           {point && <aside className="point-card" id="technology-detail" key={`${room}-${point.key}`} role="dialog" aria-modal="true" aria-labelledby="point-title">
-            <button className="point-close" ref={closeRef} onClick={() => setPoint(null)} aria-label="Close technology details">×</button>
+            <button className="point-close" type="button" ref={closeRef} onClick={() => setPoint(null)} aria-label="Close technology details">×</button>
             <span className="point-hotspot">HOTSPOT {String(point.pointNumber).padStart(2, "0")} · {point.roomLabel}</span>
             <span className="point-code">{point.code}</span>
             <span className="point-status"><i /> TECHNICAL DETAIL AVAILABLE</span>
