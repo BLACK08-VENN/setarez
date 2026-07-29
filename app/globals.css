@@ -38,7 +38,7 @@ nav a:hover { color: var(--lilac); }
 .twin-title.explored { opacity: 0; visibility: hidden; transform: translateY(-18px); }
 .twin-title p { font: 300 9px DM Mono; letter-spacing: .18em; color: var(--lilac); }
 .twin-title h1 { max-width: 1050px; margin: 26px 0; font-size: clamp(60px, 7.1vw, 116px); line-height: .85; letter-spacing: -.065em; }
-.view-toggle { position: absolute; z-index: 8; left: 5vw; top: 65%; display: flex; gap: 5px; align-items: center; padding: 5px; border: 1px solid var(--line); border-radius: 28px; background: rgba(8, 8, 8, .64); backdrop-filter: blur(15px); pointer-events: none; }
+.view-toggle { position: absolute; z-index: 12; left: 5vw; top: 65%; display: flex; gap: 5px; align-items: center; padding: 5px; border: 1px solid var(--line); border-radius: 28px; background: rgba(8, 8, 8, .64); backdrop-filter: blur(15px); pointer-events: none; }
 .view-toggle > span { margin: 0 10px; font: 300 8px DM Mono; letter-spacing: .13em; }
 .view-toggle button { height: 34px; padding: 0 14px; border: 0; border-radius: 20px; background: transparent; font-size: 8px; pointer-events: auto; }
 .view-toggle button.active { background: var(--lilac); color: #0a090b; }
