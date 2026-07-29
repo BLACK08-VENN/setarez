@@ -176,7 +176,7 @@ export default function Home() {
       <a className="skip-link" href="#main">Skip to content</a>
       <header>
         <a className="brand-logo brand-logo-header" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} priority /></a>
-        <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#finder">Solution finder</a><a href="#process">How we work</a><a href="#contact">Contact</a></nav>
+        <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#training">Training spaces</a><a href="#finder">Solution finder</a><a href="#process">How we work</a><a href="#contact">Contact</a></nav>
         <div className="theme-id"><i />NAIROBI / EAST AFRICA</div>
       </header>
 
@@ -251,8 +251,22 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="enablement" id="training" aria-labelledby="training-title">
+          <div className="enablement-intro">
+            <p>04 / LEARNING & ENABLEMENT</p>
+            <h2 id="training-title">Spaces built to teach,<br /><em>train and demonstrate.</em></h2>
+            <p>We help institutions and organisations turn technology into a practical learning environment—combining interactive displays, hybrid video, clear audio and simple control with installation, onboarding and ongoing support.</p>
+          </div>
+          <div className="enablement-grid">
+            <article><span>01 / EDUCATION</span><h3>Schools & universities</h3><p>Interactive classrooms, lecture theatres and hybrid learning spaces that help educators engage students in the room and online.</p><ul><li>Digital teaching and annotation</li><li>Remote and recorded lessons</li><li>Teacher training and adoption</li></ul></article>
+            <article><span>02 / WORKFORCE</span><h3>Corporate training</h3><p>Connected training rooms for onboarding employees, developing teams and sharing expertise across offices or regions.</p><ul><li>Staff onboarding programmes</li><li>Live workshops and webinars</li><li>Multi-site learning delivery</li></ul></article>
+            <article><span>03 / CUSTOMER</span><h3>Customer education</h3><p>Demonstration and experience spaces where organisations can teach customers, introduce products and deliver professional seminars.</p><ul><li>Product demonstrations</li><li>Customer workshops</li><li>Partner and community training</li></ul></article>
+          </div>
+          <div className="enablement-outcome"><span>FROM EQUIPMENT TO OUTCOMES</span><p>Setarez designs the room, integrates the technology and enables the people using it—so every investment supports confident teaching and measurable learning.</p><a href="#contact">Plan a learning space ↗</a></div>
+        </section>
+
         <section className="finder" id="finder" aria-labelledby="finder-title">
-          <div className="finder-head"><p>04 / SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
+          <div className="finder-head"><p>05 / SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
           <div className="finder-tool">
             <form className="finder-form" onSubmit={(event) => event.preventDefault()}>
               <fieldset><legend>01 / ROOM PURPOSE</legend><div className="finder-options"><button type="button" className={finderUse === "conferencing" ? "active" : ""} aria-pressed={finderUse === "conferencing"} onClick={() => setFinderUse("conferencing")}>Video conferencing</button><button type="button" className={finderUse === "education" ? "active" : ""} aria-pressed={finderUse === "education"} onClick={() => setFinderUse("education")}>Education</button></div></fieldset>
@@ -271,19 +285,19 @@ export default function Home() {
         </section>
 
         <section className="sectors" aria-labelledby="sectors-title">
-          <p className="eyebrow"><span>05</span> WHO WE SERVE</p><h2 id="sectors-title">Solutions shaped around<br /><em>each environment.</em></h2>
+          <p className="eyebrow"><span>06</span> WHO WE SERVE</p><h2 id="sectors-title">Solutions shaped around<br /><em>each environment.</em></h2>
           <div className="sector-list">{["Schools & universities", "Corporate organisations", "Government & parastatals", "NGOs & development partners", "Hotels & conference centres", "Retail & commercial spaces", "Healthcare facilities", "Architects & consultants"].map((sector, index) => <div key={sector}><span>{String(index + 1).padStart(2, "0")}</span>{sector}</div>)}</div>
           <p className="sector-note">From a single room to a multi-site rollout.</p>
         </section>
 
         <section className="process" id="process" aria-labelledby="process-title">
-          <div className="section-head"><p>06 / HOW WE WORK</p><h2 id="process-title">A disciplined path<br /><em>to lasting value.</em></h2></div>
+          <div className="section-head"><p>07 / HOW WE WORK</p><h2 id="process-title">A disciplined path<br /><em>to lasting value.</em></h2></div>
           <div className="process-grid">{process.map(([number, title, copy]) => <article key={title}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
         </section>
 
         <section className="why" aria-labelledby="why-title">
           <div className="why-image"><Image src="/assets/solutions-showroom.png" alt="Immersive Setarez technology experience centre" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
-          <div className="why-copy"><p>07 / WHY SETAREZ</p><h2 id="why-title">Technology, innovation<br /><em>and guidance.</em></h2><div>{reasons.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div>
+          <div className="why-copy"><p>08 / WHY SETAREZ</p><h2 id="why-title">Technology, innovation<br /><em>and guidance.</em></h2><div>{reasons.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div>
         </section>
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
