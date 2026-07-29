@@ -15,7 +15,11 @@ export const metadata = {
     images: [{ url: "/assets/digital-twin-classroom.png", width: 1672, height: 941, alt: "Setarez connected learning space" }]
   },
   twitter: { card: "summary_large_image", title: "Setarez Technologies — Technology That Connects People and Ideas", description: "Integrated AV solutions for learning, collaboration and visual communication across East Africa.", images: ["/assets/digital-twin-classroom.png"] },
-  icons: { icon: "/icon.svg" }
+  icons: {
+    icon: [{ url: "/setarez-logo-white.png", type: "image/png" }],
+    shortcut: "/setarez-logo-white.png",
+    apple: "/setarez-logo-white.png"
+  }
 };
 
 export const viewport = { themeColor: "#0c0c0b", colorScheme: "dark" };
