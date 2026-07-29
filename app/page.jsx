@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-const rooms = [
+const roomCatalog = [
   {
     label: "CLASSROOM",
-    kicker: "INTERACTIVE CLASSROOM / 01",
+    kicker: "INTERACTIVE CLASSROOM / 02",
     image: "/assets/teachmint-classroom.png",
     alt: "A Teachmint connected classroom with an interactive display and student tablets",
     points: [
@@ -18,7 +18,7 @@ const rooms = [
   },
   {
     label: "BOARDROOM",
-    kicker: "CONNECTED BOARDROOM / 02",
+    kicker: "CONNECTED BOARDROOM / 03",
     image: "/assets/teachmint-boardroom.png",
     alt: "A Teachmint connected boardroom with an interactive meeting display and touch controller",
     points: [
@@ -30,7 +30,7 @@ const rooms = [
   },
   {
     label: "AUDITORIUM",
-    kicker: "CONNECTED AUDITORIUM / 03",
+    kicker: "CONNECTED AUDITORIUM / 01",
     image: "/assets/digital-twin-classroom.png",
     alt: "A connected auditorium with a large presentation display and tiered seating",
     points: [
@@ -41,6 +41,8 @@ const rooms = [
     ]
   }
 ];
+
+const rooms = [roomCatalog[2], roomCatalog[0], roomCatalog[1]];
 
 const capabilities = [
   { number: "01", tag: "TEACH", title: "Interactive learning", image: "/assets/interactive-learning.png", alt: "Teacher using an interactive display in a Kenyan classroom", description: "Practical digital classrooms that teachers can use confidently.", items: ["Interactive flat panels", "Digital classroom software", "Wireless content sharing", "Teacher onboarding and training"] },
@@ -114,6 +116,7 @@ function enquiryLinks(subject) {
 export default function Home() {
   const [room, setRoom] = useState(0);
   const [point, setPoint] = useState(null);
+  const [hasExploredRooms, setHasExploredRooms] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [finderUse, setFinderUse] = useState("conferencing");
   const [finderArea, setFinderArea] = useState(20);
@@ -130,8 +133,15 @@ export default function Home() {
   }, [point]);
 
   const changeRoom = (index) => {
+    setHasExploredRooms(true);
     setRoom(index);
     setPoint(null);
+  };
+
+  const openPoint = (itemPoint, roomItem, pointIndex) => {
+    setHasExploredRooms(true);
+    playHotspotSound();
+    setPoint({ ...itemPoint, roomLabel: roomItem.label, pointNumber: pointIndex + 1 });
   };
 
   const playHotspotSound = () => {
@@ -178,10 +188,7 @@ export default function Home() {
               {item.points.map((itemPoint, pointIndex) => (
                 <button
                   className={`hotspot ${itemPoint.key}${point?.key === itemPoint.key ? " selected" : ""}`}
-                  onClick={() => {
-                    playHotspotSound();
-                    setPoint({ ...itemPoint, roomLabel: item.label, pointNumber: pointIndex + 1 });
-                  }}
+                  onClick={() => openPoint(itemPoint, item, pointIndex)}
                   onMouseEnter={playHotspotSound}
                   aria-label={`Explore ${itemPoint.title}`}
                   aria-expanded={point?.key === itemPoint.key}
@@ -195,7 +202,7 @@ export default function Home() {
             </div>
           ))}
           <div className="room-shade" />
-          <div className="twin-title"><p>{rooms[room].kicker}</p><h1>Technology that<br /><em>connects people and ideas.</em></h1></div>
+          <div className={`twin-title${hasExploredRooms ? " explored" : ""}`} aria-hidden={hasExploredRooms}><p>{rooms[room].kicker}</p><h1>Technology that<br /><em>connects people and ideas.</em></h1></div>
           <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span>{rooms.map((item, index) => <button className={room === index ? "active" : ""} aria-pressed={room === index} onClick={() => changeRoom(index)} key={item.label}>{item.label}</button>)}</div>
           <div className="telemetry" aria-label="Setarez solution model">
             <div><span>OUR ROLE</span><b><i /> UNDERSTAND</b></div><div><span>INTEGRATION</span><b>DESIGN + DELIVER</b></div><div><span>LIFECYCLE</span><b>SUPPORT</b></div>
