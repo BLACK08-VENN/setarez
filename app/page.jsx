@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
+const enquiryStorageKey = "setarez-product-enquiry";
 
 const roomCatalog = [
   {
@@ -60,17 +62,22 @@ const reasons = [
   ["Long-term value", "Maintenance and upgrades protect every investment."]
 ];
 
-const enquiryContact = {
-  email: "sales@setarez.com",
-  phone: "+254759013661"
-};
-
 const partnerBrands = [
-  { name: "Teachmint", accent: "#7c4dff" },
-  { name: "Logitech", accent: "#4d8dff" },
-  { name: "ViewSonic", accent: "#f05d5e" },
-  { name: "Absen", accent: "#2bb673" },
-  { name: "Yealink", accent: "#ff9f1c" }
+  { name: "Teachmint", logo: "/assets/logos/teachmint.svg", href: "/catalogue/teachmint" },
+  { name: "Logitech", logo: "/assets/logos/logitech.svg", href: "/catalogue/logitech" },
+  { name: "ViewSonic", logo: "/assets/logos/viewsonic.svg", href: "/catalogue/viewsonic" },
+  { name: "Absen", logo: "/assets/logos/absen.png", href: "/catalogue/absen" }
+];
+
+const heroSlides = [
+  { image: "/assets/interactive-learning.png", alt: "Teacher presenting with an interactive display in a modern classroom", label: "INTERACTIVE LEARNING", title: "Ideas become experiences.", description: "Connected classrooms designed for confident teaching, active participation and clearer learning." },
+  { image: "/assets/teachmint-classroom.png", alt: "Connected classroom with an interactive teaching display", label: "CONNECTED CLASSROOMS", title: "Teaching without technical friction.", description: "Integrated displays, classroom software and simple controls that educators can use with confidence." },
+  { image: "/assets/hybrid-collaboration.png", alt: "Professional hybrid meeting in a modern boardroom", label: "HYBRID COLLABORATION", title: "Every voice stays in the room.", description: "Purpose-built meeting spaces with intelligent framing, clear audio and effortless control." },
+  { image: "/assets/final-boardroom.png", alt: "Executive boardroom with professional conferencing technology", label: "EXECUTIVE BOARDROOMS", title: "Decisions deserve total clarity.", description: "Premium boardrooms designed around natural conversation, reliable presentation and one-touch meetings." },
+  { image: "/assets/digital-display.png", alt: "Large-format professional digital display installation", label: "VISUAL COMMUNICATION", title: "Make the message impossible to miss.", description: "High-impact LED and digital display environments for communication, information and brand presence." },
+  { image: "/assets/digital-twin-classroom.png", alt: "Large connected presentation and auditorium environment", label: "AUDITORIUM SYSTEMS", title: "Reach every seat in the room.", description: "Large-format visual, audio and hybrid systems for lecture theatres, halls and public presentation spaces." },
+  { image: "/assets/solutions-showroom.png", alt: "Immersive technology showroom and demonstration environment", label: "DESIGN & INTEGRATION", title: "One partner. The whole environment.", description: "From site survey and system design to installation, enablement and long-term support." },
+  { image: "/assets/av-support.png", alt: "AV specialist supporting an installed technology system", label: "LIFECYCLE SUPPORT", title: "Performance that lasts beyond installation.", description: "Commissioning, training, maintenance and responsive local support throughout the system lifecycle." }
 ];
 
 const equipment = {
@@ -105,132 +112,129 @@ function recommendEquipment(useCase, area, seats) {
   return { size: "Large boardroom / conference room", summary: "An expandable conferencing system with equitable participant framing, extended voice pickup and a seamless large-format presentation canvas.", products: [equipment.rallyPlus, equipment.sight, equipment.micPod, equipment.tap, equipment.swytch, equipment.scheduler, equipment.scribe, display] };
 }
 
-function enquiryLinks(subject) {
-  const message = `Hello Setarez Technologies, I would like to enquire about ${subject}.`;
-  return {
-    email: `mailto:${enquiryContact.email}?subject=${encodeURIComponent(`Enquiry: ${subject}`)}&body=${encodeURIComponent(message)}`,
-    text: `sms:${enquiryContact.phone}?body=${encodeURIComponent(message)}`
-  };
-}
-
 export default function Home() {
-  const [room, setRoom] = useState(0);
-  const [point, setPoint] = useState(null);
-  const [hasExploredRooms, setHasExploredRooms] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [finderUse, setFinderUse] = useState("conferencing");
   const [finderArea, setFinderArea] = useState(20);
   const [finderSeats, setFinderSeats] = useState(6);
-  const closeRef = useRef(null);
-  const audioRef = useRef(null);
+  const [activeHero, setActiveHero] = useState(1);
+  const [heroDirection, setHeroDirection] = useState(1);
+  const [contactStatus, setContactStatus] = useState("idle");
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [basketOpen, setBasketOpen] = useState(false);
+  const [enquiryStatus, setEnquiryStatus] = useState("idle");
   const recommendation = recommendEquipment(finderUse, Number(finderArea) || 1, Number(finderSeats) || 1);
 
   useEffect(() => {
-    if (point) closeRef.current?.focus();
-    const onKey = (event) => event.key === "Escape" && setPoint(null);
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [point]);
+    try {
+      const saved = JSON.parse(localStorage.getItem(enquiryStorageKey));
+      setSelectedProducts(Array.isArray(saved) ? saved : []);
+    } catch {
+      localStorage.removeItem(enquiryStorageKey);
+    }
+  }, []);
 
-  const changeRoom = (index) => {
-    setHasExploredRooms(true);
-    setRoom(index);
-    setPoint(null);
-  };
+  useEffect(() => {
+    if (heroDirection === 0) return undefined;
+    const timer = window.setInterval(() => setActiveHero((current) => (current + heroDirection + heroSlides.length) % heroSlides.length), 3000);
+    return () => window.clearInterval(timer);
+  }, [heroDirection]);
 
-  const openPoint = (itemPoint, roomItem, pointIndex) => {
-    setHasExploredRooms(true);
-    playHotspotSound();
-    setPoint({ ...itemPoint, roomLabel: roomItem.label, pointNumber: pointIndex + 1 });
-  };
+  function updateSelectedProducts(items) {
+    setSelectedProducts(items);
+    localStorage.setItem(enquiryStorageKey, JSON.stringify(items));
+  }
 
-  const playHotspotSound = () => {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const context = audioRef.current || new AudioContext();
-    audioRef.current = context;
-    if (context.state === "suspended") context.resume();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(520, context.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(720, context.currentTime + .07);
-    gain.gain.setValueAtTime(.0001, context.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.028, context.currentTime + .012);
-    gain.gain.exponentialRampToValueAtTime(.0001, context.currentTime + .11);
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start();
-    oscillator.stop(context.currentTime + .12);
-  };
+  function toggleRecommendedProduct(product) {
+    const id = `${product.brand.toLowerCase()}:${product.name}`;
+    const exists = selectedProducts.some((item) => item.id === id);
+    updateSelectedProducts(exists
+      ? selectedProducts.filter((item) => item.id !== id)
+      : [...selectedProducts, { id, name: product.name, brand: product.brand }]);
+  }
 
-  const stepPoint = (direction) => {
-    const roomPoints = rooms[room].points;
-    const currentIndex = Math.max(0, roomPoints.findIndex((item) => item.key === point?.key));
-    const nextIndex = (currentIndex + direction + roomPoints.length) % roomPoints.length;
-    setPoint({ ...roomPoints[nextIndex], roomLabel: rooms[room].label, pointNumber: nextIndex + 1 });
-  };
+  async function submitProductEnquiry(event) {
+    event.preventDefault();
+    setEnquiryStatus("sending");
+    const form = event.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+    const productList = selectedProducts.map((item, index) => `${index + 1}. ${item.brand} — ${item.name}`).join("\n");
+    const project = `Products requested:\n${productList}\n\nOrganisation: ${data.organisation || "Not provided"}\n\nProject details:\n${data.project}`;
+    try {
+      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: data.name, email: data.email, project }) });
+      if (!response.ok) throw new Error("Request failed");
+      form.reset();
+      updateSelectedProducts([]);
+      setEnquiryStatus("sent");
+    } catch {
+      setEnquiryStatus("error");
+    }
+  }
 
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
       <header>
         <a className="brand-logo brand-logo-header" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} priority /></a>
-        <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#solutions">Solutions</a><a href="#training">Training spaces</a><a href="#finder">Solution finder</a><a href="#contact">Contact</a></nav>
+        <nav aria-label="Primary navigation"><a href="#solutions">Solutions</a><a href="/catalogue">Catalogue</a><a href="#finder">Solution finder</a></nav>
         <div className="theme-id"><i />NAIROBI / EAST AFRICA</div>
       </header>
 
       <main id="main">
-        <section className="twin" id="twin" aria-label="Interactive room explorer">
-          {rooms.map((item, index) => (
-            <div className={`room-slide${index === room ? " active" : ""}`} aria-hidden={index !== room} key={item.label}>
-              <Image className="room-image" src={item.image} alt={item.alt} fill priority={index === 0} sizes="100vw" />
-              {item.points.map((itemPoint, pointIndex) => (
-                <button
-                  className={`hotspot ${itemPoint.key}${point?.key === itemPoint.key ? " selected" : ""}`}
-                  onClick={() => openPoint(itemPoint, item, pointIndex)}
-                  onMouseEnter={playHotspotSound}
-                  aria-label={`Explore ${itemPoint.title}`}
-                  aria-expanded={point?.key === itemPoint.key}
-                  aria-controls="technology-detail"
-                  data-room={item.label}
-                  data-hotspot={pointIndex + 1}
-                  tabIndex={index === room ? 0 : -1}
-                  key={itemPoint.key}
-                ><i /><span>{String(pointIndex + 1).padStart(2, "0")}</span></button>
-              ))}
+        <section className="hero-showcase" aria-label="Featured technology experiences">
+          <div className="hero-carousel" onPointerMove={(event) => {
+            if (event.pointerType !== "mouse") return;
+            const bounds = event.currentTarget.getBoundingClientRect();
+            const ratio = (event.clientX - bounds.left) / bounds.width;
+            setHeroDirection(ratio < .4 ? -1 : ratio > .6 ? 1 : 0);
+          }} onPointerLeave={() => setHeroDirection(1)}>
+            <div className="hero-cinematic">
+              <div className="hero-flip-deck" aria-label="Featured solution slides">{heroSlides.map((slide, index) => {
+                let offset = (index - activeHero + heroSlides.length) % heroSlides.length;
+                if (offset > heroSlides.length / 2) offset -= heroSlides.length;
+                const distance = Math.abs(offset);
+                return <button type="button" className={offset === 0 ? "active" : ""} data-offset={offset} key={slide.title} onFocus={() => { setActiveHero(index); setHeroDirection(0); }} onClick={() => { setActiveHero(index); setHeroDirection(0); }} aria-label={`Show ${slide.label}`} aria-pressed={offset === 0} style={{ "--card-y": "0px", "--card-rotate": "0deg", "--card-scale": offset === 0 ? 1 : .92, "--card-opacity": distance > 3 ? 0 : Math.max(.34, 1 - distance * .18), "--card-z": 20 - distance, pointerEvents: distance > 3 ? "none" : "auto" }}>
+                  <Image src={slide.image} alt={slide.alt} fill sizes="(max-width: 760px) 72vw, 34vw" />
+                  <div className="hero-card-label">{slide.label}</div>
+                </button>;
+              })}</div>
             </div>
-          ))}
-          <div className="room-shade" />
-          <div className={`twin-title${hasExploredRooms ? " explored" : ""}`} aria-hidden={hasExploredRooms}><p>{rooms[room].kicker}</p><h1>Future-ready technology designed around how your people work.</h1><p className="hero-subcopy">We create connected classrooms, boardrooms and presentation spaces with dependable AV, collaboration and display solutions for Kenya and East Africa.</p><div className="hero-actions"><a className="button primary" href="#contact">Book a site survey</a><a className="button secondary" href="#solutions">Explore solutions</a></div></div>
-          <div className="view-toggle" role="group" aria-label="Choose a room"><span>EXPLORE ROOM</span>{rooms.map((item, index) => <button className={room === index ? "active" : ""} aria-pressed={room === index} onClick={() => changeRoom(index)} key={item.label}>{item.label}</button>)}</div>
-          <div className="telemetry" aria-label="Setarez solution model">
-            <div><span>OUR ROLE</span><b><i /> UNDERSTAND</b></div><div><span>INTEGRATION</span><b>DESIGN + DELIVER</b></div><div><span>LIFECYCLE</span><b>SUPPORT</b></div>
           </div>
-          <div className="hint">SELECT A TECHNOLOGY POINT <span>↗</span></div>
-          {point && <aside className="point-card" id="technology-detail" key={`${room}-${point.key}`} role="dialog" aria-modal="true" aria-labelledby="point-title">
-            <button className="point-close" type="button" ref={closeRef} onClick={() => setPoint(null)} aria-label="Close technology details">×</button>
-            <span className="point-hotspot">HOTSPOT {String(point.pointNumber).padStart(2, "0")} · {point.roomLabel}</span>
-            <span className="point-code">{point.code}</span>
-            <span className="point-status"><i /> TECHNICAL DETAIL AVAILABLE</span>
-            <h2 id="point-title">{point.title}</h2>
-            <p>{point.description}</p>
-            <ul>{point.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-            <div className="point-actions">
-              <a href={enquiryLinks(point.title).email}>Email enquiry ↗</a>
-              <a href={enquiryLinks(point.title).text}>Text enquiry ↗</a>
+          <div className="hero-showcase-main compact-delivery">
+            <div className="hero-copy">
+              <p className="eyebrow"><span>01</span> WHAT WE DELIVER</p>
+              <h1>Smarter spaces, built around you.</h1>
+              <p className="hero-subcopy">Professional AV solutions for classrooms, meeting rooms and digital environments across East Africa.</p>
+              <div className="hero-actions">
+                <a className="button primary" href="#finder">Find your solution</a>
+                <a className="button secondary" href="#contact">Book a site survey</a>
+              </div>
             </div>
-            <div className="point-pagination" aria-label="Browse technology points">
-              <button onClick={() => stepPoint(-1)} aria-label="Previous technology point">←</button>
-              <span>{String(point.pointNumber).padStart(2, "0")} / {String(rooms[room].points.length).padStart(2, "0")}</span>
-              <button onClick={() => stepPoint(1)} aria-label="Next technology point">→</button>
-            </div>
-          </aside>}
+          </div>
         </section>
 
-        <section className="about" id="about" aria-labelledby="about-title">
-          <div><p className="eyebrow"><span>01</span> WHO WE ARE</p><p className="about-lead">Technology should make every space feel simpler, clearer and more connected.</p></div>
-          <div><h2 id="about-title">An integrated AV partner<br /><em>for East Africa.</em></h2><p>Setarez Technologies is an audio-visual and workplace technology solutions company. We design, supply, install and support interactive learning, conferencing, collaboration and digital display systems for organisations across Kenya and East Africa.</p><div className="partner-strip" aria-label="Technology partners"><p className="partner-label">TRUSTED BY LEADING TECHNOLOGY PARTNERS</p><div className="partner-grid">{partnerBrands.map((partner) => <div className="partner-pill" key={partner.name}><span className="partner-mark" style={{ backgroundColor: partner.accent }} aria-hidden="true">{partner.name.charAt(0)}</span><strong>{partner.name}</strong></div>)}</div></div><div className="role-line"><span>UNDERSTAND</span><span>DESIGN</span><span>INTEGRATE</span><span>SUPPORT</span></div></div>
+        <section className="finder" id="finder" aria-labelledby="finder-title">
+          <div className="finder-head"><p>02 / SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
+          <div className="finder-tool">
+            <form className="finder-form" onSubmit={(event) => event.preventDefault()}>
+              <fieldset><legend>01 / ROOM PURPOSE</legend><div className="finder-options"><button type="button" className={finderUse === "conferencing" ? "active" : ""} aria-pressed={finderUse === "conferencing"} onClick={() => setFinderUse("conferencing")}>Video conferencing</button><button type="button" className={finderUse === "education" ? "active" : ""} aria-pressed={finderUse === "education"} onClick={() => setFinderUse("education")}>Education</button></div></fieldset>
+              <label><span>02 / FLOOR AREA</span><strong>{finderArea || 0} m²</strong><input type="range" min="8" max="220" step="1" value={finderArea} onChange={(event) => setFinderArea(event.target.value)} aria-label="Room floor area in square metres" /><small>Approximate length × width</small></label>
+              <label><span>03 / PEOPLE</span><strong>{finderSeats}</strong><input type="range" min="2" max="150" step="1" value={finderSeats} onChange={(event) => setFinderSeats(event.target.value)} aria-label="Maximum number of people" /><small>Maximum expected capacity</small></label>
+            </form>
+            <div className="finder-result" aria-live="polite">
+              <div className="result-intro"><span>STARTING RECOMMENDATION · {recommendation.products.length} COMPONENT SYSTEM</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
+              <div className="equipment-list">{recommendation.products.map((product) => {
+                const id = `${product.brand.toLowerCase()}:${product.name}`;
+                const inBasket = selectedProducts.some((item) => item.id === id);
+                return <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><button type="button" className={inBasket ? "finder-enquiry-button selected" : "finder-enquiry-button"} onClick={() => toggleRecommendedProduct(product)} aria-pressed={inBasket}>{inBasket ? "Added ✓" : "Add to enquiry +"}</button></article>;
+              })}</div>
+              <div className="finder-note"><strong>Planning guidance, not a final specification.</strong><p>Room shape, viewing distance, acoustics, lighting, platform licences, network and mounting must be confirmed through a Setarez site survey.</p><a href="#contact">Request a room assessment ↗</a></div>
+            </div>
+          </div>
+          <div className="partner-strip partner-strip-finder" aria-label="Technology partners">
+            <p className="partner-label">TECHNOLOGY PARTNERS</p>
+            <div className="partner-grid">{partnerBrands.map((partner) => <a className="partner-pill" href={partner.href} aria-label={`View the ${partner.name} product catalogue`} title={`Explore ${partner.name} products`} key={partner.name}><Image src={partner.logo} alt={`${partner.name} logo`} width={120} height={36} /><span>View products →</span></a>)}</div>
+          </div>
         </section>
 
         <section className="solutions" id="solutions" aria-labelledby="solutions-title">
@@ -241,66 +245,41 @@ export default function Home() {
           </article>)}</div>
         </section>
 
-        <section className="portfolio" aria-labelledby="portfolio-title">
-          <div className="portfolio-head"><p>03 / SOLUTION PORTFOLIO</p><h2 id="portfolio-title">One partner across<br />the full AV environment.</h2></div>
-          <div className="portfolio-grid">
-            <article><span>EDUCATION</span><strong>Interactive classrooms</strong><p>Panels · Classroom software · Teacher training · Multi-room rollout</p></article>
-            <article><span>COLLABORATION</span><strong>Connected meetings</strong><p>Video conferencing · Boardrooms · Wireless presentation · Scheduling</p></article>
-            <article><span>VISUAL</span><strong>Powerful communication</strong><p>LED screens · Digital signage · Commercial displays · Content management</p></article>
-            <article><span>SERVICES</span><strong>Lifecycle confidence</strong><p>Consultation · Installation · Maintenance contracts · Upgrades</p></article>
+        <section className="audience-proof" id="sectors" aria-labelledby="audience-proof-title">
+          <div className="audience-proof-head"><p className="eyebrow"><span>03</span> WHO WE SERVE / WHY SETAREZ</p><h2 id="audience-proof-title">Built for your environment.<br /><em>Backed for the long term.</em></h2></div>
+          <div className="audience-proof-grid">
+            <div className="audience-list"><span>ENVIRONMENTS</span><div>{["Schools & universities", "Corporate organisations", "Government & parastatals", "NGOs & development partners", "Hotels & conference centres", "Retail & commercial spaces", "Healthcare facilities", "Architects & consultants"].map((sector, index) => <p key={sector}><small>{String(index + 1).padStart(2, "0")}</small>{sector}</p>)}</div><strong>From one room to a multi-site rollout.</strong></div>
+            <div className="proof-list"><span>THE SETAREZ DIFFERENCE · PROVEN CAPABILITIES</span><div>{reasons.map(([title, copy], index) => <article className="proof-badge" key={title}><div className="proof-medal" aria-hidden="true"><small>SETAREZ</small><b>{String(index + 1).padStart(2, "0")}</b><i>★</i></div><div><em>CAPABILITY BADGE</em><h3>{title}</h3><p>{copy}</p></div></article>)}</div></div>
           </div>
-        </section>
-
-        <section className="enablement" id="training" aria-labelledby="training-title">
-          <div className="enablement-intro">
-            <p>04 / LEARNING & ENABLEMENT</p>
-            <h2 id="training-title">Spaces built to teach,<br /><em>train and demonstrate.</em></h2>
-            <p>We help institutions and organisations turn technology into a practical learning environment—combining interactive displays, hybrid video, clear audio and simple control with installation, onboarding and ongoing support.</p>
-          </div>
-          <div className="enablement-grid">
-            <article><span>01 / EDUCATION</span><h3>Schools & universities</h3><p>Interactive classrooms, lecture theatres and hybrid learning spaces that help educators engage students in the room and online.</p><ul><li>Digital teaching and annotation</li><li>Remote and recorded lessons</li><li>Teacher training and adoption</li></ul></article>
-            <article><span>02 / WORKFORCE</span><h3>Corporate training</h3><p>Connected training rooms for onboarding employees, developing teams and sharing expertise across offices or regions.</p><ul><li>Staff onboarding programmes</li><li>Live workshops and webinars</li><li>Multi-site learning delivery</li></ul></article>
-            <article><span>03 / CUSTOMER</span><h3>Customer education</h3><p>Demonstration and experience spaces where organisations can teach customers, introduce products and deliver professional seminars.</p><ul><li>Product demonstrations</li><li>Customer workshops</li><li>Partner and community training</li></ul></article>
-          </div>
-          <div className="enablement-outcome"><span>FROM EQUIPMENT TO OUTCOMES</span><p>Setarez designs the room, integrates the technology and enables the people using it—so every investment supports confident teaching and measurable learning.</p><a href="#contact">Plan a learning space ↗</a></div>
-        </section>
-
-        <section className="finder" id="finder" aria-labelledby="finder-title">
-          <div className="finder-head"><p>05 / SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
-          <div className="finder-tool">
-            <form className="finder-form" onSubmit={(event) => event.preventDefault()}>
-              <fieldset><legend>01 / ROOM PURPOSE</legend><div className="finder-options"><button type="button" className={finderUse === "conferencing" ? "active" : ""} aria-pressed={finderUse === "conferencing"} onClick={() => setFinderUse("conferencing")}>Video conferencing</button><button type="button" className={finderUse === "education" ? "active" : ""} aria-pressed={finderUse === "education"} onClick={() => setFinderUse("education")}>Education</button></div></fieldset>
-              <label><span>02 / FLOOR AREA</span><strong>{finderArea || 0} m²</strong><input type="range" min="8" max="220" step="1" value={finderArea} onChange={(event) => setFinderArea(event.target.value)} aria-label="Room floor area in square metres" /><small>Approximate length × width</small></label>
-              <label><span>03 / PEOPLE</span><strong>{finderSeats}</strong><input type="range" min="2" max="150" step="1" value={finderSeats} onChange={(event) => setFinderSeats(event.target.value)} aria-label="Maximum number of people" /><small>Maximum expected capacity</small></label>
-            </form>
-            <div className="finder-result" aria-live="polite">
-              <div className="result-intro"><span>STARTING RECOMMENDATION · {recommendation.products.length} COMPONENT SYSTEM</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
-              <div className="equipment-list">{recommendation.products.map((product) => {
-                const links = enquiryLinks(product.name);
-                return <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><div className="equipment-enquiry"><a href={links.email} aria-label={`Email an enquiry about ${product.name}`}>Email enquiry ↗</a><a href={links.text} aria-label={`Text an enquiry about ${product.name}`}>Text enquiry ↗</a></div></article>;
-              })}</div>
-              <div className="finder-note"><strong>Planning guidance, not a final specification.</strong><p>Room shape, viewing distance, acoustics, lighting, platform licences, network and mounting must be confirmed through a Setarez site survey.</p><a href="#contact">Request a room assessment ↗</a></div>
-            </div>
-          </div>
-        </section>
-
-        <section className="sectors" aria-labelledby="sectors-title">
-          <p className="eyebrow"><span>06</span> WHO WE SERVE</p><h2 id="sectors-title">Solutions shaped around<br /><em>each environment.</em></h2>
-          <div className="sector-list">{["Schools & universities", "Corporate organisations", "Government & parastatals", "NGOs & development partners", "Hotels & conference centres", "Retail & commercial spaces", "Healthcare facilities", "Architects & consultants"].map((sector, index) => <div key={sector}><span>{String(index + 1).padStart(2, "0")}</span>{sector}</div>)}</div>
-          <p className="sector-note">From a single room to a multi-site rollout.</p>
-        </section>
-
-        <section className="why" aria-labelledby="why-title">
-          <div className="why-image"><Image src="/assets/solutions-showroom.png" alt="Immersive Setarez technology experience centre" fill sizes="(max-width: 760px) 100vw, 50vw" /></div>
-          <div className="why-copy"><p>08 / WHY SETAREZ</p><h2 id="why-title">Technology, innovation<br /><em>and guidance.</em></h2><div>{reasons.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div>
         </section>
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
           <p>START A CONVERSATION</p><h2 id="contact-title">Let’s build a<br />smarter space.</h2>
-          <form action="mailto:sales@setarez.com" method="post" encType="text/plain"><label>Name<input name="name" autoComplete="name" required /></label><label>Work email<input type="email" name="email" autoComplete="email" required /></label><label>Tell us about your space<textarea name="project" rows="4" required /></label><button type="submit">Talk to our team <span>↗</span></button></form>
+          <form onSubmit={async (event) => {
+            event.preventDefault();
+            setContactStatus("sending");
+            const form = event.currentTarget;
+            const data = Object.fromEntries(new FormData(form));
+            try {
+              const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+              if (!response.ok) throw new Error("Delivery failed");
+              form.reset();
+              setContactStatus("sent");
+            } catch {
+              setContactStatus("error");
+            }
+          }}><label>Name<input name="name" autoComplete="name" required /></label><label>Work email<input type="email" name="email" autoComplete="email" required /></label><label>Tell us about your space<textarea name="project" rows="4" required /></label><button type="submit" disabled={contactStatus === "sending"}>{contactStatus === "sending" ? "Sending…" : "Talk to our team"} <span>↗</span></button>{contactStatus === "sent" && <p className="contact-form-status success">Thank you. Your enquiry has been sent to our sales team.</p>}{contactStatus === "error" && <p className="contact-form-status error">We couldn’t send your enquiry. Please email sales@setarez.com directly.</p>}</form>
           <div className="contact-details"><a href="tel:+254759013661">+254 759 013 661</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
         </section>
       </main>
+
+      {selectedProducts.length > 0 && <button type="button" className="enquiry-basket-trigger home-enquiry-trigger" onClick={() => { setBasketOpen(true); setEnquiryStatus("idle"); }} aria-label={`Open enquiry with ${selectedProducts.length} selected products`}><span>{selectedProducts.length}</span> Review enquiry</button>}
+      {basketOpen && <div className="enquiry-basket-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setBasketOpen(false); }}><aside className="enquiry-basket" role="dialog" aria-modal="true" aria-labelledby="home-enquiry-title">
+        <button type="button" className="enquiry-close" onClick={() => setBasketOpen(false)} aria-label="Close enquiry">×</button>
+        <p>PRODUCT ENQUIRY</p><h2 id="home-enquiry-title">Request one quote.</h2><p>Your Solution Finder recommendations and catalogue selections can be sent together.</p>
+        <div className="enquiry-selected-list">{selectedProducts.map((item) => <div key={item.id}><span>{item.brand}</span><strong>{item.name}</strong><button type="button" onClick={() => updateSelectedProducts(selectedProducts.filter((selectedItem) => selectedItem.id !== item.id))} aria-label={`Remove ${item.name}`}>Remove</button></div>)}</div>
+        {enquiryStatus !== "sent" ? <form onSubmit={submitProductEnquiry}><label>Name<input name="name" autoComplete="name" required /></label><label>Work email<input type="email" name="email" autoComplete="email" required /></label><label>Organisation <small>Optional</small><input name="organisation" autoComplete="organization" /></label><label>Tell us about your room or project<textarea name="project" rows="4" required /></label><button type="submit" disabled={enquiryStatus === "sending" || selectedProducts.length === 0}>{enquiryStatus === "sending" ? "Sending…" : `Send enquiry for ${selectedProducts.length} product${selectedProducts.length === 1 ? "" : "s"}`} <span>↗</span></button>{enquiryStatus === "error" && <p className="enquiry-status error">We couldn’t send your enquiry. Please email sales@setarez.com directly.</p>}</form> : <div className="enquiry-success"><strong>Enquiry sent.</strong><p>Thank you. Our sales team will review your product list and contact you.</p><button type="button" onClick={() => setBasketOpen(false)}>Continue browsing</button></div>}
+      </aside></div>}
 
       <aside className={`support-widget${chatOpen ? " open" : ""}`} aria-label="WhatsApp support">
         <div className="support-panel" aria-hidden={!chatOpen}>
