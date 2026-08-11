@@ -26,6 +26,6 @@ export const metadata = {
 export const viewport = { themeColor: "#0c0c0b", colorScheme: "dark" };
 
 export default function RootLayout({ children }) {
-  const organization = { "@context": "https://schema.org", "@type": "Organization", name: "Setarez Technologies", url: siteUrl, email: "sales@setarez.com", telephone: "+254759013661", address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" }, areaServed: ["Kenya", "East Africa"] };
+  const organization = { "@context": "https://schema.org", "@type": "Organization", name: "Setarez Technologies", url: siteUrl, email: "sales@setarez.com", telephone: "+254713190778", address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" }, areaServed: ["Kenya", "East Africa"] };
   return <html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} /></head><body>{children}<Analytics /></body></html>;
 }

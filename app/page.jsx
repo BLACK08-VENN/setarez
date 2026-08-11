@@ -272,7 +272,7 @@ export default function Home() {
               setContactStatus("error");
             }
           }}><label>Name<input name="name" autoComplete="name" required /></label><label>Work email<input type="email" name="email" autoComplete="email" required /></label><label>Tell us about your space<textarea name="project" rows="4" required /></label><button type="submit" disabled={contactStatus === "sending"}>{contactStatus === "sending" ? "Sending…" : "Talk to our team"} <span>↗</span></button>{contactStatus === "sent" && <p className="contact-form-status success">Thank you. Your enquiry has been sent to our sales team.</p>}{contactStatus === "error" && <p className="contact-form-status error">We couldn’t send your enquiry. Please email sales@setarez.com directly.</p>}</form>
-          <div className="contact-details"><a href="tel:+254759013661">+254 759 013 661</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
+          <div className="contact-details"><a href="tel:+254713190778">0713 190 778</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
         </section>
       </main>
 
@@ -296,7 +296,7 @@ export default function Home() {
             <p>Hi, how can we help with your classroom, meeting room or display project?</p>
             <small>Typically replies during business hours</small>
           </div>
-          <a href="https://wa.me/254759013661?text=Hello%20Setarez%20Technologies%2C%20I%27d%20like%20to%20talk%20about%20a%20technology%20solution." target="_blank" rel="noreferrer">Start WhatsApp chat <span>↗</span></a>
+          <a href="https://wa.me/254713190778?text=Hello%20Setarez%20Technologies%2C%20I%27d%20like%20to%20talk%20about%20a%20technology%20solution." target="_blank" rel="noreferrer">Start WhatsApp chat <span>↗</span></a>
         </div>
         <button className="support-tab" onClick={() => setChatOpen((open) => !open)} aria-expanded={chatOpen} aria-label={`${chatOpen ? "Close" : "Open"} WhatsApp support`}>
           <span className="support-tab-robot" aria-hidden="true"><i /><i /><b>⌣</b></span>
