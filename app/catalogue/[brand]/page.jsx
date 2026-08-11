@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { brands } from "../page";
 import CatalogueProducts from "./CatalogueProducts";
+import SiteHeader from "../../SiteHeader";
 
 const brandImages = {
   teachmint: ["/assets/teachmint-classroom.png", "/assets/interactive-learning.png", "/assets/digital-twin-classroom.png"],
@@ -68,11 +69,7 @@ export default async function BrandCatalogue({ params }) {
   const usesOfficialProductImages = Boolean(productImages[brand.id]);
 
   return <>
-    <header className="catalogue-header">
-      <a className="brand-logo brand-logo-header" href="/" aria-label="Back to Setarez home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies" width={1848} height={1775} priority /></a>
-      <nav aria-label="Catalogue navigation"><a href="/">Home</a><a href="/catalogue">All brands</a><a href="/#finder">Solution finder</a></nav>
-      <div className="theme-id"><i />{brand.name.toUpperCase()} CATALOGUE</div>
-    </header>
+    <SiteHeader theme={`${brand.name.toUpperCase()} CATALOGUE`} links={[{ href: "/", label: "Home" }, { href: "/catalogue", label: "All brands" }, { href: "/#finder", label: "Solution finder" }]} />
     <main className="catalogue-page brand-catalogue-page">
       <section className="brand-catalogue-hero">
         <div><a href="/catalogue">← All catalogues</a><Image src={brand.logo} alt={`${brand.name} logo`} width={210} height={70} priority /><h1>{brand.strapline}.</h1><p>Products available through Setarez Technologies, with solution design, installation, training and local support.</p></div>

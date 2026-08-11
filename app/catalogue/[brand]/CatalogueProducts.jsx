@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const storageKey = "setarez-product-enquiry";
 
 export default function CatalogueProducts({ brand, images }) {
+  const [visibleCount, setVisibleCount] = useState(4);
   const [selected, setSelected] = useState([]);
   const [basketOpen, setBasketOpen] = useState(false);
   const [status, setStatus] = useState("idle");
@@ -58,11 +59,13 @@ export default function CatalogueProducts({ brand, images }) {
   return <>
     <div className="catalogue-products">{brand.products.map(([name, category, description], index) => {
       const inBasket = selected.some((item) => item.id === `${brand.id}:${name}`);
-      return <article key={name}>
-        <div className="catalogue-product-photo official"><Image src={images[index % images.length]} alt={`${name} product image`} fill sizes="(max-width: 760px) 100vw, 25vw" /><span>{String(index + 1).padStart(2, "0")}</span><div><Image src={brand.logo} alt="" width={105} height={34} /></div></div>
+      return <article className={index >= visibleCount ? "product-mobile-hidden" : ""} key={name}>
+        <div className="catalogue-product-photo official"><Image src={images[index % images.length]} alt={`${name} product image`} fill sizes="(max-width: 760px) 50vw, 25vw" quality={72} /><span>{String(index + 1).padStart(2, "0")}</span><div><Image src={brand.logo} alt="" width={105} height={34} /></div></div>
         <div className="catalogue-product-copy"><span>{category}</span><h2>{name}</h2><p>{description}</p><button type="button" className={inBasket ? "product-enquiry-button selected" : "product-enquiry-button"} onClick={() => toggleProduct(name)} aria-pressed={inBasket}>{inBasket ? "Added to enquiry ✓" : "Add to enquiry +"}</button></div>
       </article>;
     })}</div>
+
+    {visibleCount < brand.products.length && <button type="button" className="catalogue-load-more" onClick={() => setVisibleCount((count) => Math.min(count + 4, brand.products.length))}>Load more <span>{Math.min(4, brand.products.length - visibleCount)} products ↓</span></button>}
 
     {selected.length > 0 && <button type="button" className="enquiry-basket-trigger" onClick={() => { setBasketOpen(true); setStatus("idle"); }} aria-label={`Open enquiry with ${selected.length} selected products`}><span>{selected.length}</span> Review enquiry</button>}
 

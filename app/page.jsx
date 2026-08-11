@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import SiteHeader from "./SiteHeader";
 
 const enquiryStorageKey = "setarez-product-enquiry";
 
@@ -136,7 +137,12 @@ export default function Home() {
 
   useEffect(() => {
     if (heroDirection === 0) return undefined;
-    const timer = window.setInterval(() => setActiveHero((current) => (current + heroDirection + heroSlides.length) % heroSlides.length), 3000);
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const constrained = window.matchMedia("(prefers-reduced-motion: reduce)").matches || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || "");
+    if (constrained) return undefined;
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") setActiveHero((current) => (current + heroDirection + heroSlides.length) % heroSlides.length);
+    }, 4500);
     return () => window.clearInterval(timer);
   }, [heroDirection]);
 
@@ -174,11 +180,7 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <header>
-        <a className="brand-logo brand-logo-header" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} priority /></a>
-        <nav aria-label="Primary navigation"><a href="#solutions">Solutions</a><a href="/catalogue">Catalogue</a><a href="#finder">Solution finder</a></nav>
-        <div className="theme-id"><i />NAIROBI / EAST AFRICA</div>
-      </header>
+      <SiteHeader logoHref="#main" theme="NAIROBI / EAST AFRICA" links={[{ href: "#solutions", label: "Solutions" }, { href: "/catalogue", label: "Catalogue" }, { href: "/catalogue#brands", label: "Brands" }, { href: "#finder", label: "Solution finder" }]} />
 
       <main id="main">
         <section className="hero-showcase" aria-label="Featured technology experiences">
@@ -194,7 +196,7 @@ export default function Home() {
                 if (offset > heroSlides.length / 2) offset -= heroSlides.length;
                 const distance = Math.abs(offset);
                 return <button type="button" className={offset === 0 ? "active" : ""} data-offset={offset} key={slide.title} onFocus={() => { setActiveHero(index); setHeroDirection(0); }} onClick={() => { setActiveHero(index); setHeroDirection(0); }} aria-label={`Show ${slide.label}`} aria-pressed={offset === 0} style={{ "--card-y": "0px", "--card-rotate": "0deg", "--card-scale": offset === 0 ? 1 : .92, "--card-opacity": distance > 3 ? 0 : Math.max(.34, 1 - distance * .18), "--card-z": 20 - distance, pointerEvents: distance > 3 ? "none" : "auto" }}>
-                  <Image src={slide.image} alt={slide.alt} fill sizes="(max-width: 760px) 72vw, 34vw" />
+                  {distance <= 1 && <Image src={slide.image} alt={slide.alt} fill sizes="(max-width: 760px) 72vw, 34vw" quality={68} priority={index === 1} />}
                   <div className="hero-card-label">{slide.label}</div>
                 </button>;
               })}</div>
@@ -232,8 +234,8 @@ export default function Home() {
             </div>
           </div>
           <div className="partner-strip partner-strip-finder" aria-label="Technology partners">
-            <p className="partner-label">TECHNOLOGY PARTNERS</p>
-            <div className="partner-grid">{partnerBrands.map((partner) => <a className="partner-pill" href={partner.href} aria-label={`View the ${partner.name} product catalogue`} title={`Explore ${partner.name} products`} key={partner.name}><Image src={partner.logo} alt={`${partner.name} logo`} width={120} height={36} /><span>View products →</span></a>)}</div>
+            <div className="partner-strip-head"><p className="partner-label">TECHNOLOGY PARTNERS</p><p>Globally trusted platforms.<br />Locally designed and supported.</p></div>
+            <div className="partner-grid">{partnerBrands.map((partner, index) => <a className="partner-pill" href={partner.href} aria-label={`View the ${partner.name} product catalogue`} title={`Explore ${partner.name} products`} key={partner.name}><small>0{index + 1}</small><Image src={partner.logo} alt={`${partner.name} logo`} width={120} height={36} /><span>Explore catalogue <b>↗</b></span></a>)}</div>
           </div>
         </section>
 

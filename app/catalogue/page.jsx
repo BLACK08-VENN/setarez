@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SiteHeader from "../SiteHeader";
 
 export const metadata = {
   title: "AV Product Catalogue | Setarez Technologies",
@@ -65,21 +66,20 @@ export function enquiryLink(product) {
 
 export default function Catalogue() {
   return <>
-    <header className="catalogue-header">
-      <a className="brand-logo brand-logo-header" href="/" aria-label="Back to Setarez home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies" width={1848} height={1775} priority /></a>
-      <nav aria-label="Catalogue navigation"><a href="/">Home</a><a href="#brands">Brands</a><a href="/#finder">Solution finder</a></nav>
-      <div className="theme-id"><i />PRODUCT CATALOGUE</div>
-    </header>
+    <SiteHeader theme="PRODUCT CATALOGUE" links={[{ href: "/", label: "Home" }, { href: "#brands", label: "Brands" }, { href: "/#finder", label: "Solution finder" }]} />
     <main className="catalogue-page">
       <section className="catalogue-hero">
         <p>SETAREZ / PRODUCT CATALOGUE</p>
         <h1>Technology selected<br />for <em>better spaces.</em></h1>
         <div><p>Explore professional AV products available through Setarez Technologies. We help you choose, integrate and support the right system—not just purchase individual equipment.</p><a className="button primary" href="/#finder">Find the right system</a></div>
       </section>
-      <section className="catalogue-brand-selector" id="brands">{brands.map((brand, index) => <a href={`/catalogue/${brand.id}`} key={brand.id}>
-        <div className="catalogue-selector-image catalogue-selector-logo"><Image src={brand.logo} alt={`${brand.name} logo`} width={260} height={90} /></div>
-        <div><span>0{index + 1} / {brand.products.length} PRODUCTS</span><p>{brand.strapline}</p><strong>Explore {brand.name} →</strong></div>
-      </a>)}</section>
+      <section className="catalogue-brand-gallery" id="brands">
+        <div className="catalogue-brand-gallery-head"><p>OUR TECHNOLOGY PARTNERS</p><h2>Trusted brands.<br /><em>Expertly integrated.</em></h2><p>Explore professional platforms selected for performance, reliability and long-term support.</p></div>
+        <div className="catalogue-brand-selector">{brands.map((brand, index) => <a href={`/catalogue/${brand.id}`} key={brand.id}>
+          <div className="catalogue-selector-image catalogue-selector-logo"><span>0{index + 1}</span><Image src={brand.logo} alt={`${brand.name} logo`} width={260} height={90} /><small>SETAREZ PARTNER</small><b>OPEN CATALOGUE <i>↗</i></b></div>
+          <div><span>{brand.products.length} PRODUCTS / {brand.name.toUpperCase()}</span><p>{brand.strapline}</p><strong><span>View {brand.products.length} products</span><i>→</i></strong></div>
+        </a>)}</div>
+      </section>
       <section className="catalogue-cta"><p>NEED HELP CHOOSING?</p><h2>Tell us about your room.<br /><em>We’ll specify the system.</em></h2><a className="button primary" href="/#contact">Talk to our team</a></section>
     </main>
   </>;
