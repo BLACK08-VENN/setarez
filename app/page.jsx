@@ -195,11 +195,12 @@ export default function Home() {
                 let offset = (index - activeHero + heroSlides.length) % heroSlides.length;
                 if (offset > heroSlides.length / 2) offset -= heroSlides.length;
                 const distance = Math.abs(offset);
-                return <button type="button" className={offset === 0 ? "active" : ""} data-offset={offset} key={slide.title} onFocus={() => { setActiveHero(index); setHeroDirection(0); }} onClick={() => { setActiveHero(index); setHeroDirection(0); }} aria-label={`Show ${slide.label}`} aria-pressed={offset === 0} style={{ "--card-y": "0px", "--card-rotate": "0deg", "--card-scale": offset === 0 ? 1 : .92, "--card-opacity": distance > 3 ? 0 : Math.max(.34, 1 - distance * .18), "--card-z": 20 - distance, pointerEvents: distance > 3 ? "none" : "auto" }}>
+                return <button type="button" className={offset === 0 ? "active" : ""} data-offset={offset} key={slide.title} onFocus={() => { setActiveHero(index); setHeroDirection(0); }} onClick={() => { setActiveHero(offset === 0 ? (index + 1) % heroSlides.length : index); setHeroDirection(0); }} aria-label={offset === 0 ? `Next slide after ${slide.label}` : `Show ${slide.label}`} aria-pressed={offset === 0} style={{ "--card-y": "0px", "--card-rotate": "0deg", "--card-scale": offset === 0 ? 1 : .92, "--card-opacity": distance > 3 ? 0 : Math.max(.34, 1 - distance * .18), "--card-z": 20 - distance, pointerEvents: distance > 3 ? "none" : "auto" }}>
                   {distance <= 1 && <Image src={slide.image} alt={slide.alt} fill sizes="(max-width: 760px) 72vw, 34vw" quality={68} priority={index === 1} />}
                   <div className="hero-card-label">{slide.label}</div>
                 </button>;
               })}</div>
+              <div className="hero-carousel-controls" aria-label="Carousel controls"><button type="button" onClick={() => { setActiveHero((current) => (current - 1 + heroSlides.length) % heroSlides.length); setHeroDirection(0); }} aria-label="Previous slide">←</button><span>{String(activeHero + 1).padStart(2, "0")} / {String(heroSlides.length).padStart(2, "0")}</span><button type="button" onClick={() => { setActiveHero((current) => (current + 1) % heroSlides.length); setHeroDirection(0); }} aria-label="Next slide">→</button></div>
             </div>
           </div>
           <div className="hero-showcase-main compact-delivery">
