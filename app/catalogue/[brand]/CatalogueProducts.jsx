@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { openWhatsApp } from "../../../lib/whatsapp";
 
 const storageKey = "setarez-product-enquiry";
 
@@ -33,27 +34,16 @@ export default function CatalogueProducts({ brand, images }) {
       : [...selected, { id, name, brand: brand.name }]);
   }
 
-  async function submitEnquiry(event) {
+  function submitEnquiry(event) {
     event.preventDefault();
-    setStatus("sending");
     const form = event.currentTarget;
     const data = Object.fromEntries(new FormData(form));
     const productList = selected.map((item, index) => `${index + 1}. ${item.brand} — ${item.name}`).join("\n");
-    const project = `Products requested:\n${productList}\n\nOrganisation: ${data.organisation || "Not provided"}\n\nProject details:\n${data.project}`;
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: data.name, email: data.email, project })
-      });
-      if (!response.ok) throw new Error("Request failed");
-      form.reset();
-      updateSelection([]);
-      setStatus("sent");
-    } catch {
-      setStatus("error");
-    }
+    const message = `Hello Setarez Technologies,\n\nName: ${data.name}\nEmail: ${data.email}\nOrganisation: ${data.organisation || "Not provided"}\n\nProducts requested:\n${productList}\n\nProject details:\n${data.project}`;
+    openWhatsApp(message);
+    form.reset();
+    updateSelection([]);
+    setStatus("sent");
   }
 
   return <>
@@ -79,9 +69,8 @@ export default function CatalogueProducts({ brand, images }) {
           <label>Work email<input type="email" name="email" autoComplete="email" required /></label>
           <label>Organisation <small>Optional</small><input name="organisation" autoComplete="organization" /></label>
           <label>Tell us about your room or project<textarea name="project" rows="4" required /></label>
-          <button type="submit" disabled={status === "sending" || selected.length === 0}>{status === "sending" ? "Sending…" : `Send enquiry for ${selected.length} product${selected.length === 1 ? "" : "s"}`} <span>↗</span></button>
-          {status === "error" && <p className="enquiry-status error">We couldn’t send your enquiry. Please email sales@setarez.com directly.</p>}
-        </form> : <div className="enquiry-success"><strong>Enquiry sent.</strong><p>Thank you. Our sales team will review your product list and contact you.</p><button type="button" onClick={() => setBasketOpen(false)}>Continue browsing</button></div>}
+          <button type="submit" disabled={selected.length === 0}>Chat on WhatsApp for {selected.length} product{selected.length === 1 ? "" : "s"} <span>↗</span></button>
+        </form> : <div className="enquiry-success"><strong>WhatsApp opened.</strong><p>Send your message to reach our sales team.</p><button type="button" onClick={() => setBasketOpen(false)}>Continue browsing</button></div>}
       </aside>
     </div>}
   </>;

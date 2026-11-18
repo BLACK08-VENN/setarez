@@ -2,7 +2,10 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { brands } from "../page";
 import CatalogueProducts from "./CatalogueProducts";
+import BrochureFlipbook from "./BrochureFlipbook";
 import SiteHeader from "../../SiteHeader";
+
+const brochurePages = Array.from({ length: 8 }, (_, i) => `/assets/catalogue/teachmint/brochure/page-${String(i + 1).padStart(2, "0")}.jpg`);
 
 const brandImages = {
   teachmint: ["/assets/teachmint-classroom.png", "/assets/interactive-learning.png", "/assets/digital-twin-classroom.png"],
@@ -78,10 +81,13 @@ export default async function BrandCatalogue({ params }) {
           <h1>{brand.strapline}.</h1>
           <p>Products available through Setarez Technologies, with solution design, installation, training and local support.</p>
           {brand.id === "teachmint" && (
-            <div>
-              <a className="button primary" href="/brochures/teachmint.pdf">
-                View Teachmint brochure (PDF)
-              </a>
+            <div className="brochure-cta">
+              <BrochureFlipbook
+                pages={brochurePages}
+                pdfHref="/brochures/teachmint.pdf"
+                title="Teachmint brochure"
+                cta="Read the Teachmint brochure"
+              />
             </div>
           )}
         </div>

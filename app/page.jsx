@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, useId } from "react";
+import { useEffect, useState, useId, useRef } from "react";
 import SiteHeader from "./SiteHeader";
+import { openWhatsApp } from "../lib/whatsapp";
 
 const enquiryStorageKey = "setarez-product-enquiry";
 
@@ -120,6 +121,8 @@ export default function Home() {
   const [finderSeats, setFinderSeats] = useState(6);
   const [activeHero, setActiveHero] = useState(1);
   const [heroDirection, setHeroDirection] = useState(1);
+  const heroTouchX = useRef(null);
+  const heroSwipedAt = useRef(0);
   const [contactState, setContactState] = useState({ status: "idle", errors: null });
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [basketOpen, setBasketOpen] = useState(false);
@@ -167,28 +170,16 @@ export default function Home() {
       : [...selectedProducts, { id, name: product.name, brand: product.brand }]);
   }
 
-  async function submitProductEnquiry(event) {
+  function submitProductEnquiry(event) {
     event.preventDefault();
-    setEnquiryState({ status: "sending", errors: null });
     const form = event.currentTarget;
     const data = Object.fromEntries(new FormData(form));
     const productList = selectedProducts.map((item, index) => `${index + 1}. ${item.brand} — ${item.name}`).join("\n");
-    const project = `Products requested:\n${productList}\n\nOrganisation: ${data.organisation || "Not provided"}\n\nProject details:\n${data.project}`;
-    try {
-      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: data.name, email: data.email, project }) });
-      if (!response.ok) {
-        if (response.status === 400) {
-          const errorData = await response.json();
-          setEnquiryState({ status: "error", errors: errorData.issues?.fieldErrors || null });
-        } else throw new Error("Request failed");
-        return;
-      }
-      form.reset();
-      updateSelectedProducts([]);
-      setEnquiryState({ status: "sent", errors: null });
-    } catch {
-      setEnquiryState({ status: "error", errors: null });
-    }
+    const message = `Hello Setarez Technologies,\n\nName: ${data.name}\nEmail: ${data.email}\nOrganisation: ${data.organisation || "Not provided"}\n\nProducts requested:\n${productList}\n\nProject details:\n${data.project}`;
+    openWhatsApp(message);
+    form.reset();
+    updateSelectedProducts([]);
+    setEnquiryState({ status: "sent", errors: null });
   }
 
   return (
@@ -203,13 +194,21 @@ export default function Home() {
             const bounds = event.currentTarget.getBoundingClientRect();
             const ratio = (event.clientX - bounds.left) / bounds.width;
             setHeroDirection(ratio < .4 ? -1 : ratio > .6 ? 1 : 0);
-          }} onPointerLeave={() => setHeroDirection(1)}>
+          }} onPointerLeave={() => setHeroDirection(1)} onTouchStart={(event) => { heroTouchX.current = event.touches[0].clientX; }} onTouchEnd={(event) => {
+            if (heroTouchX.current === null) return;
+            const delta = event.changedTouches[0].clientX - heroTouchX.current;
+            heroTouchX.current = null;
+            if (Math.abs(delta) < 45) return;
+            heroSwipedAt.current = Date.now();
+            setActiveHero((current) => (current + (delta < 0 ? 1 : -1) + heroSlides.length) % heroSlides.length);
+            setHeroDirection(0);
+          }}>
             <div className="hero-cinematic">
               <div className="hero-flip-deck" aria-label="Featured solution slides">{heroSlides.map((slide, index) => {
                 let offset = (index - activeHero + heroSlides.length) % heroSlides.length;
                 if (offset > heroSlides.length / 2) offset -= heroSlides.length;
                 const distance = Math.abs(offset);
-                return <button type="button" className={offset === 0 ? "active" : ""} data-offset={offset} key={slide.title} onFocus={() => { setActiveHero(index); setHeroDirection(0); }} onClick={() => { setActiveHero(offset === 0 ? (index + 1) % heroSlides.length : index); setHeroDirection(0); }} aria-label={offset === 0 ? `Next slide after ${slide.label}` : `Show ${slide.label}`} aria-pressed={offset === 0} style={{ "--card-y": "0px", "--card-rotate": "0deg", "--card-scale": offset === 0 ? 1 : .92, "--card-opacity": distance > 3 ? 0 : Math.max(.34, 1 - distance * .18), "--card-z": 20 - distance, pointerEvents: distance > 3 ? "none" : "auto" }}>
+                return <button type="button" className={offset === 0 ? "active" : ""} data-offset={offset} key={slide.title} onFocus={() => { setActiveHero(index); setHeroDirection(0); }} onClick={() => { if (Date.now() - heroSwipedAt.current < 450) return; setActiveHero(offset === 0 ? (index + 1) % heroSlides.length : index); setHeroDirection(0); }} aria-label={offset === 0 ? `Next slide after ${slide.label}` : `Show ${slide.label}`} aria-pressed={offset === 0} style={{ "--card-y": "0px", "--card-rotate": "0deg", "--card-scale": offset === 0 ? 1 : .92, "--card-opacity": distance > 3 ? 0 : Math.max(.34, 1 - distance * .18), "--card-z": 20 - distance, pointerEvents: distance > 3 ? "none" : "auto" }}>
                   {distance <= 2 && <Image src={slide.image} alt={slide.alt} fill sizes="(max-width: 760px) 72vw, 42vw" quality={68} priority={index === 1} />}
                   <div className="hero-card-label">{slide.label}</div>
                 </button>;
@@ -272,27 +271,16 @@ export default function Home() {
 
         <section className="contact" id="contact" aria-labelledby="contact-title">
           <p>START A CONVERSATION</p><h2 id="contact-title">Let’s build a<br />smarter space.</h2>
-          <form onSubmit={async (event) => {
+          <form onSubmit={(event) => {
             event.preventDefault();
-            setContactState({ status: "sending", errors: null });
             const form = event.currentTarget;
             const data = Object.fromEntries(new FormData(form));
-            try {
-              const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-              if (!response.ok) {
-                if (response.status === 400) {
-                  const errorData = await response.json();
-                  setContactState({ status: "error", errors: errorData.issues?.fieldErrors || null });
-                } else throw new Error("Delivery failed");
-                return;
-              }
-              form.reset();
-              setContactState({ status: "sent", errors: null });
-            } catch {
-              setContactState({ status: "error", errors: null });
-            }
-          }}><label htmlFor={contactNameId}>Name<input id={contactNameId} name="name" autoComplete="name" required aria-invalid={!!contactState.errors?.name} aria-describedby={contactState.errors?.name ? `${contactNameId}-error` : undefined} />{contactState.errors?.name && <small id={`${contactNameId}-error`} className="form-error" role="alert">{contactState.errors.name[0]}</small>}</label><label htmlFor={contactEmailId}>Work email<input id={contactEmailId} type="email" name="email" autoComplete="email" required aria-invalid={!!contactState.errors?.email} aria-describedby={contactState.errors?.email ? `${contactEmailId}-error` : undefined} />{contactState.errors?.email && <small id={`${contactEmailId}-error`} className="form-error" role="alert">{contactState.errors.email[0]}</small>}</label><label htmlFor={contactProjectId}>Tell us about your space<textarea id={contactProjectId} name="project" rows="4" required aria-invalid={!!contactState.errors?.project} aria-describedby={contactState.errors?.project ? `${contactProjectId}-error` : undefined} />{contactState.errors?.project && <small id={`${contactProjectId}-error`} className="form-error" role="alert">{contactState.errors.project[0]}</small>}</label><button type="submit" disabled={contactState.status === "sending"}>{contactState.status === "sending" ? "Sending…" : "Talk to our team"} <span>↗</span></button>{contactState.status === "sent" && <p className="contact-form-status success">Thank you. Your enquiry has been sent to our sales team.</p>}{contactState.status === "error" && !contactState.errors && <p className="contact-form-status error">We couldn’t send your enquiry. Please email sales@setarez.com directly.</p>}</form>
-          <div className="contact-details"><a href="tel:+254713190778">0713 190 778</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
+            const message = `Hello Setarez Technologies,\n\nName: ${data.name}\nEmail: ${data.email}\n\nProject details:\n${data.project}`;
+            openWhatsApp(message);
+            form.reset();
+            setContactState({ status: "sent", errors: null });
+          }}><label htmlFor={contactNameId}>Name<input id={contactNameId} name="name" autoComplete="name" required aria-invalid={!!contactState.errors?.name} aria-describedby={contactState.errors?.name ? `${contactNameId}-error` : undefined} />{contactState.errors?.name && <small id={`${contactNameId}-error`} className="form-error" role="alert">{contactState.errors.name[0]}</small>}</label><label htmlFor={contactEmailId}>Work email<input id={contactEmailId} type="email" name="email" autoComplete="email" required aria-invalid={!!contactState.errors?.email} aria-describedby={contactState.errors?.email ? `${contactEmailId}-error` : undefined} />{contactState.errors?.email && <small id={`${contactEmailId}-error`} className="form-error" role="alert">{contactState.errors.email[0]}</small>}</label><label htmlFor={contactProjectId}>Tell us about your space<textarea id={contactProjectId} name="project" rows="4" required aria-invalid={!!contactState.errors?.project} aria-describedby={contactState.errors?.project ? `${contactProjectId}-error` : undefined} />{contactState.errors?.project && <small id={`${contactProjectId}-error`} className="form-error" role="alert">{contactState.errors.project[0]}</small>}</label><button type="submit">Chat on WhatsApp <span>↗</span></button>{contactState.status === "sent" && <p className="contact-form-status success">WhatsApp opened — send your message to reach our team.</p>}</form>
+          <div className="contact-details"><a href="tel:+254713190778">0713 190 778</a><a href="https://wa.me/254713190778" target="_blank" rel="noreferrer">WhatsApp</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
         </section>
       </main>
 
@@ -301,7 +289,7 @@ export default function Home() {
         <button type="button" className="enquiry-close" onClick={() => setBasketOpen(false)} aria-label="Close enquiry">×</button>
         <p>PRODUCT ENQUIRY</p><h2 id="home-enquiry-title">Request one quote.</h2><p>Your Solution Finder recommendations and catalogue selections can be sent together.</p>
         <div className="enquiry-selected-list">{selectedProducts.map((item) => <div key={item.id}><span>{item.brand}</span><strong>{item.name}</strong><button type="button" onClick={() => updateSelectedProducts(selectedProducts.filter((selectedItem) => selectedItem.id !== item.id))} aria-label={`Remove ${item.name}`}>Remove</button></div>)}</div>
-        {enquiryState.status !== "sent" ? <form onSubmit={submitProductEnquiry}><label htmlFor={enquiryNameId}>Name<input id={enquiryNameId} name="name" autoComplete="name" required aria-invalid={!!enquiryState.errors?.name} aria-describedby={enquiryState.errors?.name ? `${enquiryNameId}-error` : undefined} />{enquiryState.errors?.name && <small id={`${enquiryNameId}-error`} className="form-error" role="alert">{enquiryState.errors.name[0]}</small>}</label><label htmlFor={enquiryEmailId}>Work email<input id={enquiryEmailId} type="email" name="email" autoComplete="email" required aria-invalid={!!enquiryState.errors?.email} aria-describedby={enquiryState.errors?.email ? `${enquiryEmailId}-error` : undefined} />{enquiryState.errors?.email && <small id={`${enquiryEmailId}-error`} className="form-error" role="alert">{enquiryState.errors.email[0]}</small>}</label><label>Organisation <small>Optional</small><input name="organisation" autoComplete="organization" /></label><label htmlFor={enquiryProjectId}>Tell us about your room or project<textarea id={enquiryProjectId} name="project" rows="4" required aria-invalid={!!enquiryState.errors?.project} aria-describedby={enquiryState.errors?.project ? `${enquiryProjectId}-error` : undefined} />{enquiryState.errors?.project && <small id={`${enquiryProjectId}-error`} className="form-error" role="alert">{enquiryState.errors.project[0]}</small>}</label><button type="submit" disabled={enquiryState.status === "sending" || selectedProducts.length === 0}>{enquiryState.status === "sending" ? "Sending…" : `Send enquiry for ${selectedProducts.length} product${selectedProducts.length === 1 ? "" : "s"}`} <span>↗</span></button>{enquiryState.status === "error" && !enquiryState.errors && <p className="enquiry-status error">We couldn’t send your enquiry. Please email sales@setarez.com directly.</p>}</form> : <div className="enquiry-success"><strong>Enquiry sent.</strong><p>Thank you. Our sales team will review your product list and contact you.</p><button type="button" onClick={() => setBasketOpen(false)}>Continue browsing</button></div>}
+        {enquiryState.status !== "sent" ? <form onSubmit={submitProductEnquiry}><label htmlFor={enquiryNameId}>Name<input id={enquiryNameId} name="name" autoComplete="name" required aria-invalid={!!enquiryState.errors?.name} aria-describedby={enquiryState.errors?.name ? `${enquiryNameId}-error` : undefined} />{enquiryState.errors?.name && <small id={`${enquiryNameId}-error`} className="form-error" role="alert">{enquiryState.errors.name[0]}</small>}</label><label htmlFor={enquiryEmailId}>Work email<input id={enquiryEmailId} type="email" name="email" autoComplete="email" required aria-invalid={!!enquiryState.errors?.email} aria-describedby={enquiryState.errors?.email ? `${enquiryEmailId}-error` : undefined} />{enquiryState.errors?.email && <small id={`${enquiryEmailId}-error`} className="form-error" role="alert">{enquiryState.errors.email[0]}</small>}</label><label>Organisation <small>Optional</small><input name="organisation" autoComplete="organization" /></label><label htmlFor={enquiryProjectId}>Tell us about your room or project<textarea id={enquiryProjectId} name="project" rows="4" required aria-invalid={!!enquiryState.errors?.project} aria-describedby={enquiryState.errors?.project ? `${enquiryProjectId}-error` : undefined} />{enquiryState.errors?.project && <small id={`${enquiryProjectId}-error`} className="form-error" role="alert">{enquiryState.errors.project[0]}</small>}</label><button type="submit" disabled={selectedProducts.length === 0}>Chat on WhatsApp for {selectedProducts.length} product{selectedProducts.length === 1 ? "" : "s"} <span>↗</span></button></form> : <div className="enquiry-success"><strong>WhatsApp opened.</strong><p>Send your message to reach our sales team.</p><button type="button" onClick={() => setBasketOpen(false)}>Continue browsing</button></div>}
       </aside></div>}
 
       <aside className={`support-widget${chatOpen ? " open" : ""}`} aria-label="WhatsApp support">
