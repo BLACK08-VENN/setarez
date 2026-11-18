@@ -72,7 +72,19 @@ export default async function BrandCatalogue({ params }) {
     <SiteHeader theme={`${brand.name.toUpperCase()} CATALOGUE`} links={[{ href: "/", label: "Home" }, { href: "/catalogue", label: "All brands" }, { href: "/#finder", label: "Solution finder" }]} />
     <main className="catalogue-page brand-catalogue-page">
       <section className="brand-catalogue-hero">
-        <div><a href="/catalogue">← All catalogues</a><Image src={brand.logo} alt={`${brand.name} logo`} width={210} height={70} priority /><h1>{brand.strapline}.</h1><p>Products available through Setarez Technologies, with solution design, installation, training and local support.</p></div>
+        <div>
+          <a href="/catalogue">← All catalogues</a>
+          <Image src={brand.logo} alt={`${brand.name} logo`} width={210} height={70} priority />
+          <h1>{brand.strapline}.</h1>
+          <p>Products available through Setarez Technologies, with solution design, installation, training and local support.</p>
+          {brand.id === "teachmint" && (
+            <div>
+              <a className="button primary" href="https://setarez-teachmint-brochure.apollowriters2014.chatgpt.site/teachmint-brochure.pdf">
+                View Teachmint brochure (PDF)
+              </a>
+            </div>
+          )}
+        </div>
         <div className={`brand-catalogue-hero-image${usesOfficialProductImages ? " official" : ""}`}><Image src={images[0]} alt={`${brand.name} technology solution`} fill sizes="(max-width: 760px) 100vw, 50vw" priority /></div>
       </section>
       <section className="catalogue-brand standalone">
