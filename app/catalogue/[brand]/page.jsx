@@ -79,7 +79,7 @@ export default async function BrandCatalogue({ params }) {
           <p>Products available through Setarez Technologies, with solution design, installation, training and local support.</p>
           {brand.id === "teachmint" && (
             <div>
-              <a className="button primary" href="https://setarez-teachmint-brochure.apollowriters2014.chatgpt.site/teachmint-brochure.pdf">
+              <a className="button primary" href="/brochures/teachmint.pdf">
                 View Teachmint brochure (PDF)
               </a>
             </div>
