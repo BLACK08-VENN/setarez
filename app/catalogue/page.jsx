@@ -13,8 +13,6 @@ export const brands = [
       ["Teachmint 65″", "AI interactive display", "A 4K Google EDLA-certified teaching panel with Android 16, EduAI, 8GB/256GB memory, a 48MP 4K camera, eight-array microphone and 40W speakers."],
       ["Teachmint 75″", "AI interactive display", "A 75-inch connected classroom display with EduAI, Android 16, 4K resolution, integrated AI camera, microphone array and 40W room audio."],
       ["Teachmint 86″", "AI interactive display", "An 86-inch teaching canvas with 4K resolution, onboard AI acceleration, integrated 48MP camera, eight-array microphone and 40W speakers."],
-     
-      
       ["Click X", "Student response system", "A dedicated response device that enables live quizzes, participation and classroom learning insights."]
     ]
   },
