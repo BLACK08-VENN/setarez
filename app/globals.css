@@ -29,6 +29,7 @@ nav a:hover { color: var(--lilac); }
 .theme-id { justify-self: end; display: flex; align-items: center; gap: 8px; font: 300 13px DM Mono; letter-spacing: .13em; }
 .theme-id i { width: 7px; height: 7px; border-radius: 50%; background: var(--lilac); box-shadow: 0 0 12px var(--lilac); }
 .mobile-menu-toggle { display: none; }
+.mobile-menu-scrim { display: none; }
 
 .hero-showcase { padding-top: 76px; background: var(--black); }
 .hero-carousel { padding: 26px 0 34px; overflow: hidden; background: radial-gradient(circle at 50% 46%, rgba(135, 75, 220, .22), transparent 34%), #080709; }
@@ -323,13 +324,9 @@ nav a:hover { color: var(--lilac); }
 .support-tab small { font: 400 13px DM Mono; opacity: .6; }
 .support-tab small i, .support-panel-head small i { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: #25d366; box-shadow: 0 0 7px #25d366; }
 .support-tab > b { font: 400 17px Manrope; color: #7543b7; }
-.support-tab-robot, .support-avatar { position: relative; display: flex; justify-content: space-around; align-items: center; border: 2px solid #fff; border-radius: 17px; background: linear-gradient(145deg, #b982ff, #63329f); box-shadow: 0 5px 16px rgba(99, 50, 159, .42), 0 0 0 3px rgba(157, 92, 255, .17); }
-.support-tab-robot { width: 56px; height: 52px; margin-top: -22px; animation: support-boop 3.5s ease-in-out infinite; }
-.support-avatar { width: 38px; height: 38px; }
-.support-tab-robot::after, .support-avatar::after { content: ""; position: absolute; left: 50%; top: -10px; width: 3px; height: 11px; border-radius: 3px; background: #8f53d9; box-shadow: 0 -3px 0 2px #25d366; transform: translateX(-50%) rotate(8deg); }
-.support-tab-robot::before, .support-avatar::before { content: ""; position: absolute; inset: 8px 5px; border-radius: 8px; background: #211629; }
-.support-tab-robot i, .support-avatar i { position: relative; z-index: 1; width: 5px; height: 8px; border-radius: 50%; background: #fff; animation: support-blink 4s infinite; }
-.support-tab-robot b, .support-avatar b { position: absolute; z-index: 2; left: 50%; bottom: 7px; color: #fff; font: 400 16px/1 Manrope; transform: translateX(-50%); }
+.support-tab-avatar, .support-avatar { display: grid; place-items: center; border: 2px solid #fff; border-radius: 50%; background: linear-gradient(145deg, #b982ff, #63329f); box-shadow: 0 5px 16px rgba(99, 50, 159, .42), 0 0 0 3px rgba(157, 92, 255, .17); font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; line-height: 1; }
+.support-tab-avatar { width: 56px; height: 56px; margin-top: -22px; font-size: 32px; animation: support-boop 3.5s ease-in-out infinite; }
+.support-avatar { width: 38px; height: 38px; font-size: 23px; }
 .support-panel { margin-bottom: 8px; border-radius: 18px; overflow: hidden; background: #f5f2ed; opacity: 0; visibility: hidden; transform: translateY(18px) scale(.97); transform-origin: right bottom; transition: .3s cubic-bezier(.16, 1, .3, 1); }
 .support-widget.open .support-panel { opacity: 1; visibility: visible; transform: none; }
 .support-panel-head { min-height: 72px; display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 13px; background: #211529; color: #fff; }
@@ -342,7 +339,6 @@ nav a:hover { color: var(--lilac); }
 .support-conversation p { max-width: 260px; margin: 10px 0 18px; padding: 13px; border-radius: 4px 14px 14px 14px; background: #fff; font-size: 18px; line-height: 1.55; box-shadow: 0 4px 15px rgba(0, 0, 0, .06); }
 .support-conversation small { font: 300 11px DM Mono; opacity: .5; }
 .support-panel > a { display: flex; justify-content: space-between; margin: 0 18px 18px; padding: 14px 16px; border-radius: 24px; background: #25d366; color: #071d0f; font-size: 16px; font-weight: 600; }
-@keyframes support-blink { 0%, 45%, 49%, 100% { transform: scaleY(1); } 47% { transform: scaleY(.08); } }
 @keyframes support-boop { 0%, 72%, 100% { transform: translateY(0) rotate(0); } 78% { transform: translateY(-6px) rotate(-5deg); } 84% { transform: translateY(-3px) rotate(5deg); } 90% { transform: translateY(0) rotate(0); } }
 
 /* Product catalogue */
@@ -469,8 +465,9 @@ nav a:hover { color: var(--lilac); }
   .mobile-menu-toggle span { display: block; width: 16px; height: 1px; background: currentColor; transition: transform .25s ease; }
   .mobile-menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
   .mobile-menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
-  header .primary-nav.open { position: absolute; top: 76px; right: 0; left: 0; display: flex; flex-direction: column; gap: 0; padding: 8px 20px 20px; border-bottom: 1px solid var(--line); background: rgba(10, 9, 11, .97); backdrop-filter: blur(20px); }
+  header .primary-nav.open { position: absolute; z-index: 2; top: 76px; right: 0; left: 0; display: flex; flex-direction: column; gap: 0; padding: 8px 20px 20px; border-bottom: 1px solid var(--line); background: rgba(10, 9, 11, .97); backdrop-filter: blur(20px); }
   header .primary-nav.open a { padding: 17px 0; border-bottom: 1px solid var(--line); font: 300 16px DM Mono; letter-spacing: .12em; text-transform: uppercase; }
+  header .mobile-menu-scrim.open { display: block; position: fixed; z-index: 1; inset: 76px 0 0; background: rgba(4, 3, 5, .62); }
   .twin-title { width: calc(100% - 40px); left: 20px; top: 20%; }
   .twin-title h1 { max-width: 640px; }
   .hero-subcopy { max-width: 540px; font-size: 24px; }
@@ -652,7 +649,7 @@ nav a:hover { color: var(--lilac); }
   .support-widget:not(.open) { width: 66px; }
   .support-widget:not(.open) .support-tab { min-height: 66px; display: block; padding: 8px 5px 6px; border-radius: 20px 20px 0 0; }
   .support-widget:not(.open) .support-tab > span:nth-child(2), .support-widget:not(.open) .support-tab > b { display: none; }
-  .support-widget:not(.open) .support-tab-robot { margin: -20px auto 0; }
+  .support-widget:not(.open) .support-tab-avatar { margin: -20px auto 0; }
   .catalogue-hero { min-height: auto; padding: 58px 20px 52px; }
   .catalogue-hero h1 { font-size: clamp(52px, 15vw, 78px); }
   .catalogue-hero > div { display: block; margin-top: 18px; }

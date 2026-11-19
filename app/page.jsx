@@ -257,23 +257,23 @@ export default function Home() {
         {enquiryState.status !== "sent" ? <form onSubmit={submitProductEnquiry}><label htmlFor={enquiryNameId}>Name<input id={enquiryNameId} name="name" autoComplete="name" required aria-invalid={!!enquiryState.errors?.name} aria-describedby={enquiryState.errors?.name ? `${enquiryNameId}-error` : undefined} />{enquiryState.errors?.name && <small id={`${enquiryNameId}-error`} className="form-error" role="alert">{enquiryState.errors.name[0]}</small>}</label><label htmlFor={enquiryEmailId}>Work email<input id={enquiryEmailId} type="email" name="email" autoComplete="email" required aria-invalid={!!enquiryState.errors?.email} aria-describedby={enquiryState.errors?.email ? `${enquiryEmailId}-error` : undefined} />{enquiryState.errors?.email && <small id={`${enquiryEmailId}-error`} className="form-error" role="alert">{enquiryState.errors.email[0]}</small>}</label><label>Organisation <small>Optional</small><input name="organisation" autoComplete="organization" /></label><label htmlFor={enquiryProjectId}>Tell us about your room or project<textarea id={enquiryProjectId} name="project" rows="4" required aria-invalid={!!enquiryState.errors?.project} aria-describedby={enquiryState.errors?.project ? `${enquiryProjectId}-error` : undefined} />{enquiryState.errors?.project && <small id={`${enquiryProjectId}-error`} className="form-error" role="alert">{enquiryState.errors.project[0]}</small>}</label><button type="submit" disabled={selectedProducts.length === 0}>Chat on WhatsApp for {selectedProducts.length} product{selectedProducts.length === 1 ? "" : "s"} <span>↗</span></button></form> : <div className="enquiry-success"><strong>WhatsApp opened.</strong><p>Send your message to reach our sales team.</p><button type="button" onClick={() => setBasketOpen(false)}>Continue browsing</button></div>}
       </aside></div>}
 
-      <aside className={`support-widget${chatOpen ? " open" : ""}`} aria-label="WhatsApp support">
+      <aside className={`support-widget${chatOpen ? " open" : ""}`} aria-label="Steve on WhatsApp">
         <div className="support-panel" aria-hidden={!chatOpen}>
           <div className="support-panel-head">
-            <span className="support-avatar" aria-hidden="true"><i /><i /><b>⌣</b></span>
-            <div><strong>Setarez Support</strong><small><i /> Online on WhatsApp</small></div>
+            <span className="support-avatar" aria-hidden="true">👨🏿</span>
+            <div><strong>Steve · Setarez Support</strong><small><i /> Online on WhatsApp</small></div>
             <button onClick={() => setChatOpen(false)} aria-label="Close WhatsApp support">×</button>
           </div>
           <div className="support-conversation">
-            <span>Boop! 👋</span>
-            <p>Hi, how can we help with your classroom, meeting room or display project?</p>
+            <span>Hi 👋</span>
+            <p>I'm Steve. Tell me about your classroom, meeting room or display project.</p>
             <small>Typically replies during business hours</small>
           </div>
           <a href="https://wa.me/254713190778?text=Hello%20Setarez%20Technologies%2C%20I%27d%20like%20to%20talk%20about%20a%20technology%20solution." target="_blank" rel="noreferrer">Start WhatsApp chat <span>↗</span></a>
         </div>
-        <button className="support-tab" onClick={() => setChatOpen((open) => !open)} aria-expanded={chatOpen} aria-label={`${chatOpen ? "Close" : "Open"} WhatsApp support`}>
-          <span className="support-tab-robot" aria-hidden="true"><i /><i /><b>⌣</b></span>
-          <span><strong>Tech robot · WhatsApp</strong><small><i /> Tap Boop for support</small></span>
+        <button className="support-tab" onClick={() => setChatOpen((open) => !open)} aria-expanded={chatOpen} aria-label={`${chatOpen ? "Close" : "Open"} Steve on WhatsApp`}>
+          <span className="support-tab-avatar" aria-hidden="true">👨🏿</span>
+          <span><strong>Steve · WhatsApp</strong><small><i /> Tap to chat</small></span>
           <b aria-hidden="true">{chatOpen ? "×" : "↑"}</b>
         </button>
       </aside>
