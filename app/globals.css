@@ -28,6 +28,9 @@ nav { display: flex; gap: 30px; font-size: 16px; }
 nav a:hover { color: var(--lilac); }
 .theme-id { justify-self: end; display: flex; align-items: center; gap: 8px; font: 300 13px DM Mono; letter-spacing: .13em; }
 .theme-id i { width: 7px; height: 7px; border-radius: 50%; background: var(--lilac); box-shadow: 0 0 12px var(--lilac); }
+.header-actions { justify-self: end; display: flex; align-items: center; gap: 14px; }
+.theme-toggle { display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: rgba(255, 255, 255, .04); color: inherit; font: 400 17px/1 Manrope, sans-serif; touch-action: manipulation; }
+.theme-toggle:hover { border-color: var(--lilac); color: var(--lilac); }
 .mobile-menu-toggle { display: none; }
 .mobile-menu-scrim { display: none; }
 
@@ -459,7 +462,7 @@ nav a:hover { color: var(--lilac); }
 .catalogue-cta h2 { margin: 35px 0 48px; font-size: clamp(52px, 7vw, 100px); line-height: .9; letter-spacing: -.06em; }
 
 @media (max-width: 980px) {
-  header { height: 76px; padding: 0 20px; grid-template-columns: 1fr auto auto; gap: 18px; }
+  header { height: 76px; padding: 0 20px; grid-template-columns: 1fr auto; gap: 18px; }
   nav { display: none; }
   .mobile-menu-toggle { display: grid; place-content: center; gap: 6px; width: 42px; height: 42px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: rgba(255, 255, 255, .04); }
   .mobile-menu-toggle span { display: block; width: 16px; height: 1px; background: currentColor; transition: transform .25s ease; }
@@ -776,6 +779,8 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
   main > section:not(:first-child) { content-visibility: visible; }
   .catalogue-brand-gallery { scroll-margin-top: 140px; }
   .mobile-menu-toggle { width: 44px; height: 44px; }
+  .theme-id { display: none; }
+  .header-actions { gap: 8px; }
   .flipbook-nav { width: 44px; height: 44px; }
 
   .catalogue-products { grid-template-columns: 1fr; gap: 0; border: 0; border-top: 1px solid var(--line); background: transparent; }
@@ -843,3 +848,66 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
   .contact label { font-size: 12px; }
   .contact-details { gap: 14px; margin-top: 18px; font-size: 12px; }
 }
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --ink: #171219;
+  --black: #f5f2ed;
+  --panel: #fff;
+  --line: rgba(23, 18, 25, .16);
+  --lilac: #6a45a0;
+  --purple: #6a45a0;
+}
+html[data-theme="light"] :is(.hero-showcase, .twin, .partner-strip-finder, .support-panel-head, .enquiry-basket-backdrop, .success-modal) { --ink: #f3f0ea; --black: #0a090b; --line: rgba(243, 240, 234, .17); --lilac: #b993f2; color: var(--ink); }
+html[data-theme="light"] body { background: #f5f2ed; color: var(--ink); }
+html[data-theme="light"] .skip-link { color: #fff; }
+html[data-theme="light"] header { border-color: rgba(23, 18, 25, .14); background: rgba(245, 242, 237, .9); }
+html[data-theme="light"] .theme-toggle, html[data-theme="light"] .mobile-menu-toggle { border-color: rgba(23, 18, 25, .16); background: #fff; }
+html[data-theme="light"] header .primary-nav.open { color: #171219; background: rgba(245, 242, 237, .98); }
+html[data-theme="light"] header .primary-nav.open a { border-color: rgba(23, 18, 25, .12); }
+html[data-theme="light"] header .mobile-menu-scrim.open { background: rgba(23, 18, 25, .36); }
+html[data-theme="light"] .button.secondary { background: rgba(23, 18, 25, .05); }
+html[data-theme="light"] :is(.hero-showcase, .twin, .partner-strip-finder, .enquiry-basket-backdrop, .success-modal) .button.secondary { background: rgba(255, 255, 255, .06); }
+html[data-theme="light"] .finder { background: #fff; }
+html[data-theme="light"] .finder-form { background: #f5f2ed; }
+html[data-theme="light"] .finder-note { border-color: rgba(106, 69, 160, .24); background: #f1ecf8; }
+html[data-theme="light"] .finder-enquiry-button:hover, html[data-theme="light"] .finder-enquiry-button.selected { color: #fff; }
+html[data-theme="light"] .contact { background: #f5f2ed; }
+html[data-theme="light"] .contact input, html[data-theme="light"] .contact textarea { border-color: rgba(23, 18, 25, .18); background: #fff; color: #171219; }
+html[data-theme="light"] .contact form button { border-color: #171219; }
+html[data-theme="light"] .contact form button:hover { color: #fff; }
+html[data-theme="light"] .contact-form-status.success { color: #167a4a; }
+html[data-theme="light"] .contact-form-status.error { color: #a12626; }
+html[data-theme="light"] .catalogue-page { background: #f5f2ed; }
+html[data-theme="light"] .catalogue-hero { background: radial-gradient(circle at 78% 18%, rgba(145, 85, 230, .12), transparent 34%), #f5f2ed; }
+html[data-theme="light"] .catalogue-brand-nav { border-color: rgba(23, 18, 25, .14); background: #fff; }
+html[data-theme="light"] .catalogue-brand-nav a { background: #f5f2ed; }
+html[data-theme="light"] .catalogue-brand-nav a:hover { background: #ece5f6; }
+html[data-theme="light"] .catalogue-brand-nav img, html[data-theme="light"] .catalogue-brand-head img, html[data-theme="light"] .brand-catalogue-hero > div:first-child > img { filter: none; }
+html[data-theme="light"] .catalogue-brand-gallery { background: radial-gradient(circle at 92% 8%, rgba(119, 73, 180, .09), transparent 25%), #f5f2ed; }
+html[data-theme="light"] .catalogue-brand-selector > a { border-color: rgba(23, 18, 25, .14); background: #fff; box-shadow: 0 18px 45px rgba(23, 18, 25, .08); }
+html[data-theme="light"] .catalogue-selector-image::after { background: linear-gradient(90deg, transparent, rgba(245, 242, 237, .5)); }
+html[data-theme="light"] .catalogue-brand-selector strong { color: #fff; }
+html[data-theme="light"] .catalogue-brand-selector strong i { background: #fff; color: var(--lilac); }
+html[data-theme="light"] .brand-catalogue-hero { background: #fff; }
+html[data-theme="light"] .brand-catalogue-hero-image::after { background: linear-gradient(90deg, #fff, transparent 32%), linear-gradient(0deg, rgba(255, 255, 255, .45), transparent); }
+html[data-theme="light"] .brand-catalogue-hero-image.official::after { background: linear-gradient(90deg, #fff, transparent 25%); }
+html[data-theme="light"] .catalogue-brand { border-color: rgba(23, 18, 25, .14); }
+html[data-theme="light"] .catalogue-brand:nth-of-type(even) { background: #efeae4; }
+html[data-theme="light"] .catalogue-product-photo { background: #ece8e2; }
+html[data-theme="light"] .product-enquiry-button { color: var(--lilac); }
+html[data-theme="light"] .product-enquiry-button:hover { color: #3f2666; }
+html[data-theme="light"] .product-enquiry-button.selected { color: #fff; }
+html[data-theme="light"] .catalogue-product-copy:has(.product-enquiry-button.selected) { background: var(--lilac); color: #fff; }
+html[data-theme="light"] .catalogue-product-copy:has(.product-enquiry-button.selected) > span, html[data-theme="light"] .catalogue-product-copy:has(.product-enquiry-button.selected) p { color: #fff; }
+html[data-theme="light"] .catalogue-load-more { border-color: rgba(23, 18, 25, .16); background: #fff; color: var(--lilac); }
+html[data-theme="light"] .catalogue-cta { background: #e9e6df; }
+html[data-theme="light"] .enquiry-basket-trigger { border-color: rgba(23, 18, 25, .12); color: #fff; }
+html[data-theme="light"] .enquiry-basket-trigger span { background: #fff; color: var(--lilac); }
+html[data-theme="light"] .enquiry-basket { --lilac: #6a45a0; --line: rgba(23, 18, 25, .16); color: #171219; background: #fff; box-shadow: -24px 0 80px rgba(23, 18, 25, .2); }
+html[data-theme="light"] .enquiry-selected-list button { color: #6a45a0; }
+html[data-theme="light"] .enquiry-basket input, html[data-theme="light"] .enquiry-basket textarea { border-color: rgba(23, 18, 25, .18); background: #faf8f5; color: #171219; }
+html[data-theme="light"] .enquiry-basket form > button { color: #fff; }
+html[data-theme="light"] .enquiry-status.error { color: #a12626; }
+html[data-theme="light"] .enquiry-success { color: #fff; }
+html[data-theme="light"] .enquiry-success button { border-color: #fff; color: #fff; }

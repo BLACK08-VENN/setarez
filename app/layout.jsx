@@ -24,10 +24,10 @@ export const metadata = {
   }
 };
 
-export const viewport = { themeColor: "#0c0c0b", colorScheme: "dark" };
+export const viewport = { colorScheme: "light dark", themeColor: [{ media: "(prefers-color-scheme: light)", color: "#f5f2ed" }, { media: "(prefers-color-scheme: dark)", color: "#0a090b" }] };
 
 export default async function RootLayout({ children }) {
   const nonce = (await headers()).get("x-nonce");
   const organization = { "@context": "https://schema.org", "@type": "Organization", name: "Setarez Technologies", url: siteUrl, email: "sales@setarez.com", telephone: "+254713190778", address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" }, areaServed: ["Kenya", "East Africa"] };
-  return <html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" /><script nonce={nonce} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, "\\u003c") }} /></head><body>{children}<Analytics /></body></html>;
+  return <html lang="en" suppressHydrationWarning><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><script nonce={nonce} dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('setarez-theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}})();` }} /><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" /><script nonce={nonce} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, "\\u003c") }} /></head><body>{children}<Analytics /></body></html>;
 }

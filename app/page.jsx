@@ -149,7 +149,7 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <SiteHeader logoHref="#main" theme="NAIROBI / EAST AFRICA" links={[{ href: "#solutions", label: "Solutions" }, { href: "/catalogue", label: "Catalogue" }, { href: "/catalogue#brands", label: "Brands" }, { href: "#finder", label: "Solution finder" }]} />
+      <SiteHeader logoHref="#main" links={[{ href: "#solutions", label: "Solutions" }, { href: "/catalogue", label: "Catalogue" }, { href: "/catalogue#brands", label: "Brands" }, { href: "#finder", label: "Solution finder" }]} />
 
       <main id="main">
         <section className="hero-showcase" aria-label="Featured technology experiences">
