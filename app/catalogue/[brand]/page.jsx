@@ -19,8 +19,6 @@ const productImages = {
     "/assets/catalogue/teachmint/x2-neo-65.png",
     "/assets/catalogue/teachmint/x2-neo-75.png",
     "/assets/catalogue/teachmint/x2-neo-86.png",
-    "/assets/catalogue/teachmint/x2-star-65.png",
-    "/assets/catalogue/teachmint/x2-star-75.png",
     "/assets/catalogue/teachmint/click-x.webp"
   ],
   viewsonic: [
