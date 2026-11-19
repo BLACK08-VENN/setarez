@@ -149,7 +149,7 @@ export default function Home() {
   useEffect(() => {
     if (heroDirection === 0) return undefined;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const constrained = window.matchMedia("(prefers-reduced-motion: reduce)").matches || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || "");
+    const constrained = window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(max-width: 760px)").matches || connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || "");
     if (constrained) return undefined;
     const timer = window.setInterval(() => {
       if (document.visibilityState === "visible") setActiveHero((current) => (current + heroDirection + heroSlides.length) % heroSlides.length);

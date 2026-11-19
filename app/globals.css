@@ -836,3 +836,41 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
   .hero-flip-deck button[data-offset="3"] { --card-x: 57vw; }
   .hero-flip-deck button[data-offset="4"] { --card-x: 76vw; }
 }
+
+/* Mobile UX refinements */
+:where(section[id], main[id]) { scroll-margin-top: 96px; }
+.catalogue-brand-gallery { scroll-margin-top: 154px; }
+
+.mobile-menu-toggle,
+.hero-carousel-controls button,
+.finder-enquiry-button,
+.enquiry-close,
+.flipbook-bar-actions button { min-width: 44px; min-height: 44px; }
+.contact form button { min-height: 46px; }
+
+@media (max-width: 760px) {
+  main > section:not(:first-child), footer { content-visibility: visible; }
+  .catalogue-brand-gallery { scroll-margin-top: 140px; }
+  .mobile-menu-toggle { width: 44px; height: 44px; }
+  .hero-carousel-controls button { width: 44px; height: 44px; }
+  .flipbook-nav { width: 44px; height: 44px; }
+
+  .catalogue-products { grid-template-columns: 1fr; gap: 12px; border: 0; background: transparent; }
+  .catalogue-products article { min-height: 0; grid-template-columns: minmax(110px, 38%) minmax(0, 1fr); grid-template-rows: auto; border: 1px solid var(--line); border-radius: 16px; }
+  .catalogue-product-photo { min-height: 170px; }
+  .catalogue-product-photo > div { display: none; }
+  .catalogue-product-copy { min-height: 0; padding: 16px 15px 13px; }
+  .catalogue-product-copy > span { font-size: 11px; }
+  .catalogue-product-copy h2 { margin: 9px 0 7px; font-size: clamp(19px, 5.2vw, 23px); line-height: 1.05; overflow-wrap: normal; }
+  .catalogue-product-copy > p { display: -webkit-box; margin: 0; overflow: hidden; font-size: 13px; line-height: 1.45; opacity: .68; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  .product-enquiry-button { min-height: 44px; padding-top: 12px; font-size: 11px; }
+
+  .enquiry-basket-trigger { bottom: 82px; }
+  .enquiry-basket-trigger.home-enquiry-trigger { bottom: 14px; }
+  .catalogue-cta { padding-bottom: 120px; }
+  footer { padding-bottom: 100px; }
+
+  .contact input, .contact textarea { min-height: 48px; padding: 14px 12px; }
+  .contact textarea { min-height: 110px; }
+  .finder-form input[type="range"] { height: 32px; }
+}
