@@ -8,10 +8,10 @@ import { openWhatsApp } from "../lib/whatsapp";
 const enquiryStorageKey = "setarez-product-enquiry";
 
 const capabilities = [
-  { tag: "TEACH", title: "Interactive learning", image: "/assets/interactive-learning.png", alt: "Teacher using an interactive display in a Kenyan classroom", description: "Practical digital classrooms that teachers can use confidently.", items: ["Interactive flat panels", "Digital classroom software", "Wireless content sharing", "Teacher onboarding and training"] },
-  { tag: "MEET", title: "Hybrid collaboration", image: "/assets/hybrid-collaboration.png", alt: "Professional hybrid meeting in a modern boardroom", description: "Simple, professional meeting spaces for teams in the room and beyond.", items: ["Huddle rooms and boardrooms", "Video, camera and audio", "Teams, Zoom and Google Meet", "Room booking and control"] },
-  { tag: "DISPLAY", title: "Visual communication", image: "/assets/digital-display.png", alt: "Large-format LED display in a corporate environment", description: "High-impact visual environments that inform, engage and command attention.", items: ["Indoor and outdoor LED walls", "Fine-pitch corporate displays", "Digital signage networks", "Content management systems"] },
-  { tag: "SUPPORT", title: "Integration & lifecycle", image: "/assets/av-support.png", alt: "AV technician commissioning a professional meeting-room system", description: "Confidence from the first site survey through every day of operation.", items: ["Site surveys and system design", "Installation and commissioning", "User and teacher training", "Remote and on-site support"] }
+  { tag: "TEACH", title: "Interactive learning", image: "/assets/interactive-learning.png", alt: "Teacher using an interactive display in a Kenyan classroom", description: "Displays, classroom software and teacher training that make digital lessons work." },
+  { tag: "MEET", title: "Hybrid collaboration", image: "/assets/hybrid-collaboration.png", alt: "Professional hybrid meeting in a modern boardroom", description: "Video, audio and room control for meetings that work in person and online." },
+  { tag: "DISPLAY", title: "Visual communication", image: "/assets/digital-display.png", alt: "Large-format LED display in a corporate environment", description: "LED walls, fine-pitch displays and digital signage for spaces that need to be seen." },
+  { tag: "SUPPORT", title: "Integration & lifecycle", image: "/assets/av-support.png", alt: "AV technician commissioning a professional meeting-room system", description: "Survey, design, installation, training and ongoing support from one team." }
 ];
 
 const reasons = [
@@ -221,7 +221,7 @@ export default function Home() {
           <div className="section-head"><p>WHAT WE DO</p><h2 id="solutions-title">Four capabilities.<br /><em>One integrated partner.</em></h2></div>
           <div className="capability-list">{capabilities.map((capability) => <article className="capability" key={capability.tag}>
             <div className="capability-image"><Image src={capability.image} alt={capability.alt} fill sizes="(max-width: 760px) 100vw, 48vw" /></div>
-            <div className="capability-copy"><span>{capability.tag}</span><h3>{capability.title}</h3><p>{capability.description}</p><ul>{capability.items.map((item) => <li key={item}>{item}</li>)}</ul></div>
+            <div className="capability-copy"><span>{capability.tag}</span><h3>{capability.title}</h3><p>{capability.description}</p></div>
           </article>)}</div>
         </section>
 
