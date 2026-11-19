@@ -73,8 +73,8 @@ export default function Catalogue() {
       </section>
       <section className="catalogue-brand-gallery" id="brands">
         <div className="catalogue-brand-gallery-head"><p>OUR TECHNOLOGY PARTNERS</p><h2>Trusted brands.<br /><em>Expertly integrated.</em></h2><p>Explore professional platforms selected for performance, reliability and long-term support.</p></div>
-        <div className="catalogue-brand-selector">{brands.map((brand, index) => <a href={`/catalogue/${brand.id}`} key={brand.id}>
-          <div className="catalogue-selector-image catalogue-selector-logo"><span>0{index + 1}</span><Image src={brand.logo} alt={`${brand.name} logo`} width={260} height={90} /><small>SETAREZ PARTNER</small><b>OPEN CATALOGUE <i>↗</i></b></div>
+        <div className="catalogue-brand-selector">{brands.map((brand) => <a href={`/catalogue/${brand.id}`} key={brand.id}>
+          <div className="catalogue-selector-image catalogue-selector-logo"><Image src={brand.logo} alt={`${brand.name} logo`} width={260} height={90} /></div>
           <div><span>{brand.products.length} PRODUCTS / {brand.name.toUpperCase()}</span><p>{brand.strapline}</p><strong><span>View {brand.products.length} products</span><i>→</i></strong></div>
         </a>)}</div>
       </section>

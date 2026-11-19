@@ -50,7 +50,7 @@ export default function CatalogueProducts({ brand, images }) {
     <div className="catalogue-products">{brand.products.map(([name, category, description], index) => {
       const inBasket = selected.some((item) => item.id === `${brand.id}:${name}`);
       return <article className={index >= visibleCount ? "product-mobile-hidden" : ""} key={name}>
-        <div className="catalogue-product-photo official"><Image src={images[index % images.length]} alt={`${name} product image`} fill sizes="(max-width: 760px) 50vw, 25vw" quality={72} /><span>{String(index + 1).padStart(2, "0")}</span><div><Image src={brand.logo} alt="" width={105} height={34} /></div></div>
+        <div className="catalogue-product-photo official"><Image src={images[index % images.length]} alt={`${name} product image`} fill sizes="(max-width: 760px) 50vw, 25vw" quality={72} /><div><Image src={brand.logo} alt="" width={105} height={34} /></div></div>
         <div className="catalogue-product-copy"><span>{category}</span><h2>{name}</h2><p>{description}</p><button type="button" className={inBasket ? "product-enquiry-button selected" : "product-enquiry-button"} onClick={() => toggleProduct(name)} aria-pressed={inBasket}>{inBasket ? "Added to enquiry ✓" : "Add to enquiry +"}</button></div>
       </article>;
     })}</div>

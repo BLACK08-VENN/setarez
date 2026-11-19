@@ -7,52 +7,11 @@ import { openWhatsApp } from "../lib/whatsapp";
 
 const enquiryStorageKey = "setarez-product-enquiry";
 
-const roomCatalog = [
-  {
-    label: "CLASSROOM",
-    kicker: "INTERACTIVE CLASSROOM / 02",
-    image: "/assets/teachmint-classroom.png",
-    alt: "A Teachmint connected classroom with an interactive display and student tablets",
-    points: [
-      { key: "display", code: "01 / TEACHMINT X", title: "75″ or 86″ interactive display", description: "Teachmint X combines a True 4K UHD teaching canvas with zero-bonded glass and a response time of 5ms or less.", features: ["40-point multi-touch", "3.2mm 9H hardened glass", "Blue-light filter"] },
-      { key: "camera", code: "02 / TEACHMINT X", title: "Integrated AI classroom camera", description: "An inbuilt 48MP 4K camera supports wide-angle capture and AI-based motion tracking for connected lessons.", features: ["48MP 4K camera", "AI motion tracking", "Wide-angle room view"] },
-      { key: "audio", code: "03 / TEACHMINT X", title: "Room-ready classroom audio", description: "Integrated sound and voice capture keep teaching clear without separate front-of-room devices.", features: ["40W inbuilt speakers", "8-array omni-directional mic", "Mid-to-large classroom coverage"] },
-      { key: "control", code: "04 / TEACHMINT X", title: "EDLA-certified performance", description: "The current Teachmint X platform pairs Android 16 EDLA with an octa-core processor and onboard AI acceleration.", features: ["8GB RAM + 128GB storage", "NFC secure login", "Dual-band Wi-Fi"] }
-    ]
-  },
-  {
-    label: "BOARDROOM",
-    kicker: "CONNECTED BOARDROOM / 03",
-    image: "/assets/teachmint-boardroom.png",
-    alt: "A Teachmint connected boardroom with an interactive meeting display and touch controller",
-    points: [
-      { key: "board-display", code: "01 / TEACHMINT X", title: "Interactive 4K collaboration surface", description: "A large-format Teachmint X display gives teams a precise, shared surface for presenting and annotating content.", features: ["75″ or 86″ True 4K UHD", "40-point multi-touch", "5ms or less response"] },
-      { key: "rally-bar", code: "02 / LOGITECH RALLY BAR", title: "All-in-one video collaboration", description: "Designed for medium-to-large rooms, Rally Bar integrates a motorised PTZ camera, AI Viewfinder and room audio in one device.", features: ["4K camera + 15× HD zoom", "6 beamforming microphones", "2 integrated speakers"] },
-      { key: "sight", code: "03 / LOGITECH SIGHT", title: "Tabletop participant camera", description: "Sight works with the front-of-room camera to use video and AI to detect and frame people around the table.", features: ["Dual-lens 4K camera", "315° horizontal field of view", "7 beamforming microphones"] },
-      { key: "tap", code: "04 / LOGITECH TAP IP", title: "Network meeting-room controller", description: "A dedicated touch controller connects over the network and keeps meeting-room operation simple and consistent.", features: ["10.1″ 1280 × 800 touchscreen", "Power over Ethernet", "Teams, Zoom Rooms + Google Meet"] }
-    ]
-  },
-  {
-    label: "AUDITORIUM",
-    kicker: "CONNECTED AUDITORIUM / 01",
-    image: "/assets/digital-twin-classroom.png",
-    alt: "A connected auditorium with a large presentation display and tiered seating",
-    points: [
-      { key: "aud-display", code: "01 / TEACHMINT X", title: "Large-format interactive stage display", description: "The 86-inch Teachmint X brings True 4K content and responsive annotation to teaching, training and presentation spaces.", features: ["86″ True 4K UHD", "40-point multi-touch", "60,000+ hour working life"] },
-      { key: "aud-camera", code: "02 / LOGITECH RALLY BAR", title: "AI-enabled front-of-room video", description: "Rally Bar combines 4K capture, motorised pan and tilt, and RightSight intelligent framing for hybrid sessions.", features: ["15× HD zoom", "132.1° total horizontal coverage", "AI Viewfinder"] },
-      { key: "aud-audio", code: "03 / RALLY MIC PODS", title: "Expandable voice coverage", description: "Rally Bar supports additional Rally Mic Pods to extend clear voice pickup through larger collaboration spaces.", features: ["Up to 4 additional Mic Pods", "AEC and voice activity detection", "AI noise suppression"] },
-      { key: "aud-control", code: "04 / LOGITECH TAP IP", title: "Simple session control", description: "Tap IP provides a purpose-built network controller for starting calls and managing supported room platforms.", features: ["10-point multi-touch", "PoE connectivity", "Logitech Sync management"] }
-    ]
-  }
-];
-
-const rooms = [roomCatalog[2], roomCatalog[0], roomCatalog[1]];
-
 const capabilities = [
-  { number: "01", tag: "TEACH", title: "Interactive learning", image: "/assets/interactive-learning.png", alt: "Teacher using an interactive display in a Kenyan classroom", description: "Practical digital classrooms that teachers can use confidently.", items: ["Interactive flat panels", "Digital classroom software", "Wireless content sharing", "Teacher onboarding and training"] },
-  { number: "02", tag: "MEET", title: "Hybrid collaboration", image: "/assets/hybrid-collaboration.png", alt: "Professional hybrid meeting in a modern boardroom", description: "Simple, professional meeting spaces for teams in the room and beyond.", items: ["Huddle rooms and boardrooms", "Video, camera and audio", "Teams, Zoom and Google Meet", "Room booking and control"] },
-  { number: "03", tag: "DISPLAY", title: "Visual communication", image: "/assets/digital-display.png", alt: "Large-format LED display in a corporate environment", description: "High-impact visual environments that inform, engage and command attention.", items: ["Indoor and outdoor LED walls", "Fine-pitch corporate displays", "Digital signage networks", "Content management systems"] },
-  { number: "04", tag: "SUPPORT", title: "Integration & lifecycle", image: "/assets/av-support.png", alt: "AV technician commissioning a professional meeting-room system", description: "Confidence from the first site survey through every day of operation.", items: ["Site surveys and system design", "Installation and commissioning", "User and teacher training", "Remote and on-site support"] }
+  { tag: "TEACH", title: "Interactive learning", image: "/assets/interactive-learning.png", alt: "Teacher using an interactive display in a Kenyan classroom", description: "Practical digital classrooms that teachers can use confidently.", items: ["Interactive flat panels", "Digital classroom software", "Wireless content sharing", "Teacher onboarding and training"] },
+  { tag: "MEET", title: "Hybrid collaboration", image: "/assets/hybrid-collaboration.png", alt: "Professional hybrid meeting in a modern boardroom", description: "Simple, professional meeting spaces for teams in the room and beyond.", items: ["Huddle rooms and boardrooms", "Video, camera and audio", "Teams, Zoom and Google Meet", "Room booking and control"] },
+  { tag: "DISPLAY", title: "Visual communication", image: "/assets/digital-display.png", alt: "Large-format LED display in a corporate environment", description: "High-impact visual environments that inform, engage and command attention.", items: ["Indoor and outdoor LED walls", "Fine-pitch corporate displays", "Digital signage networks", "Content management systems"] },
+  { tag: "SUPPORT", title: "Integration & lifecycle", image: "/assets/av-support.png", alt: "AV technician commissioning a professional meeting-room system", description: "Confidence from the first site survey through every day of operation.", items: ["Site surveys and system design", "Installation and commissioning", "User and teacher training", "Remote and on-site support"] }
 ];
 
 const reasons = [
@@ -222,7 +181,7 @@ export default function Home() {
           </div>
           <div className="hero-showcase-main compact-delivery">
             <div className="hero-copy">
-              <p className="eyebrow"><span>01</span> WHAT WE DELIVER</p>
+              <p className="eyebrow">WHAT WE DELIVER</p>
               <h1>Smarter spaces, built around you.</h1>
               <p className="hero-subcopy">Professional AV solutions for classrooms, meeting rooms and digital environments across East Africa.</p>
               <div className="hero-actions">
@@ -234,12 +193,12 @@ export default function Home() {
         </section>
 
         <section className="finder" id="finder" aria-labelledby="finder-title">
-          <div className="finder-head"><p>02 / SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
+          <div className="finder-head"><p>SOLUTION FINDER</p><h2 id="finder-title">Not sure what<br /><em>your room needs?</em></h2><p>Enter the room’s approximate floor area and capacity. We’ll suggest a practical starting system for education or video conferencing.</p></div>
           <div className="finder-tool">
             <form className="finder-form" onSubmit={(event) => event.preventDefault()}>
-              <fieldset><legend>01 / ROOM PURPOSE</legend><div className="finder-options"><button type="button" className={finderUse === "conferencing" ? "active" : ""} aria-pressed={finderUse === "conferencing"} onClick={() => setFinderUse("conferencing")}>Video conferencing</button><button type="button" className={finderUse === "education" ? "active" : ""} aria-pressed={finderUse === "education"} onClick={() => setFinderUse("education")}>Education</button></div></fieldset>
-              <label><span>02 / FLOOR AREA</span><strong>{finderArea || 0} m²</strong><input type="range" min="8" max="220" step="1" value={finderArea} onChange={(event) => setFinderArea(event.target.value)} aria-label="Room floor area in square metres" /><small>Approximate length × width</small></label>
-              <label><span>03 / PEOPLE</span><strong>{finderSeats}</strong><input type="range" min="2" max="150" step="1" value={finderSeats} onChange={(event) => setFinderSeats(event.target.value)} aria-label="Maximum number of people" /><small>Maximum expected capacity</small></label>
+              <fieldset><legend>ROOM PURPOSE</legend><div className="finder-options"><button type="button" className={finderUse === "conferencing" ? "active" : ""} aria-pressed={finderUse === "conferencing"} onClick={() => setFinderUse("conferencing")}>Video conferencing</button><button type="button" className={finderUse === "education" ? "active" : ""} aria-pressed={finderUse === "education"} onClick={() => setFinderUse("education")}>Education</button></div></fieldset>
+              <label><span>FLOOR AREA</span><strong>{finderArea || 0} m²</strong><input type="range" min="8" max="220" step="1" value={finderArea} onChange={(event) => setFinderArea(event.target.value)} aria-label="Room floor area in square metres" /><small>Approximate length × width</small></label>
+              <label><span>PEOPLE</span><strong>{finderSeats}</strong><input type="range" min="2" max="150" step="1" value={finderSeats} onChange={(event) => setFinderSeats(event.target.value)} aria-label="Maximum number of people" /><small>Maximum expected capacity</small></label>
             </form>
             <div className="finder-result" aria-live="polite">
               <div className="result-intro"><span>STARTING RECOMMENDATION · {recommendation.products.length} COMPONENT SYSTEM</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
@@ -254,23 +213,23 @@ export default function Home() {
           </div>
           <div className="partner-strip partner-strip-finder" aria-label="Technology partners">
             <div className="partner-strip-head"><p className="partner-label">TECHNOLOGY PARTNERS</p><p>Globally trusted platforms.<br />Locally designed and supported.</p></div>
-            <div className="partner-grid">{partnerBrands.map((partner, index) => <a className="partner-pill" href={partner.href} aria-label={`View the ${partner.name} product catalogue`} title={`Explore ${partner.name} products`} key={partner.name}><small>0{index + 1}</small><Image src={partner.logo} alt={`${partner.name} logo`} width={120} height={36} /><span>Explore catalogue <b>↗</b></span></a>)}</div>
+            <div className="partner-grid">{partnerBrands.map((partner) => <a className="partner-pill" href={partner.href} aria-label={`View the ${partner.name} product catalogue`} title={`Explore ${partner.name} products`} key={partner.name}><Image src={partner.logo} alt={`${partner.name} logo`} width={120} height={36} /><span>{partner.name} <b>↗</b></span></a>)}</div>
           </div>
         </section>
 
         <section className="solutions" id="solutions" aria-labelledby="solutions-title">
-          <div className="section-head"><p>02 / WHAT WE DO</p><h2 id="solutions-title">Four capabilities.<br /><em>One integrated partner.</em></h2></div>
+          <div className="section-head"><p>WHAT WE DO</p><h2 id="solutions-title">Four capabilities.<br /><em>One integrated partner.</em></h2></div>
           <div className="capability-list">{capabilities.map((capability) => <article className="capability" key={capability.tag}>
             <div className="capability-image"><Image src={capability.image} alt={capability.alt} fill sizes="(max-width: 760px) 100vw, 48vw" /></div>
-            <div className="capability-copy"><span>{capability.number} / {capability.tag}</span><h3>{capability.title}</h3><p>{capability.description}</p><ul>{capability.items.map((item) => <li key={item}>{item}</li>)}</ul></div>
+            <div className="capability-copy"><span>{capability.tag}</span><h3>{capability.title}</h3><p>{capability.description}</p><ul>{capability.items.map((item) => <li key={item}>{item}</li>)}</ul></div>
           </article>)}</div>
         </section>
 
         <section className="audience-proof" id="sectors" aria-labelledby="audience-proof-title">
-          <div className="audience-proof-head"><p className="eyebrow"><span>03</span> WHO WE SERVE / WHY SETAREZ</p><h2 id="audience-proof-title">Built for your environment.<br /><em>Backed for the long term.</em></h2></div>
+          <div className="audience-proof-head"><p className="eyebrow">WHO WE SERVE / WHY SETAREZ</p><h2 id="audience-proof-title">Built for your environment.<br /><em>Backed for the long term.</em></h2></div>
           <div className="audience-proof-grid">
-            <div className="audience-list"><span>ENVIRONMENTS</span><div>{["Schools & universities", "Corporate organisations", "Government & parastatals", "NGOs & development partners", "Hotels & conference centres", "Retail & commercial spaces", "Healthcare facilities", "Architects & consultants"].map((sector, index) => <p key={sector}><small>{String(index + 1).padStart(2, "0")}</small>{sector}</p>)}</div><strong>From one room to a multi-site rollout.</strong></div>
-            <div className="proof-list"><span>THE SETAREZ DIFFERENCE · PROVEN CAPABILITIES</span><div>{reasons.map(([title, copy], index) => <article className="proof-badge" key={title}><div className="proof-medal" aria-hidden="true"><small>SETAREZ</small><b>{String(index + 1).padStart(2, "0")}</b><i>★</i></div><div><em>CAPABILITY BADGE</em><h3>{title}</h3><p>{copy}</p></div></article>)}</div></div>
+            <div className="audience-list"><span>ENVIRONMENTS</span><div>{["Schools & universities", "Corporate organisations", "Government & parastatals", "NGOs & development partners", "Hotels & conference centres", "Retail & commercial spaces", "Healthcare facilities", "Architects & consultants"].map((sector) => <p key={sector}>{sector}</p>)}</div><strong>From one room to a multi-site rollout.</strong></div>
+            <div className="proof-list"><span>THE SETAREZ DIFFERENCE</span><div>{reasons.map(([title, copy]) => <article className="proof-badge" key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div>
           </div>
         </section>
 
@@ -286,6 +245,7 @@ export default function Home() {
             setContactState({ status: "sent", errors: null });
           }}><label htmlFor={contactNameId}>Name<input id={contactNameId} name="name" autoComplete="name" required aria-invalid={!!contactState.errors?.name} aria-describedby={contactState.errors?.name ? `${contactNameId}-error` : undefined} />{contactState.errors?.name && <small id={`${contactNameId}-error`} className="form-error" role="alert">{contactState.errors.name[0]}</small>}</label><label htmlFor={contactEmailId}>Work email<input id={contactEmailId} type="email" name="email" autoComplete="email" required aria-invalid={!!contactState.errors?.email} aria-describedby={contactState.errors?.email ? `${contactEmailId}-error` : undefined} />{contactState.errors?.email && <small id={`${contactEmailId}-error`} className="form-error" role="alert">{contactState.errors.email[0]}</small>}</label><label htmlFor={contactProjectId}>Tell us about your space<textarea id={contactProjectId} name="project" rows="4" required aria-invalid={!!contactState.errors?.project} aria-describedby={contactState.errors?.project ? `${contactProjectId}-error` : undefined} />{contactState.errors?.project && <small id={`${contactProjectId}-error`} className="form-error" role="alert">{contactState.errors.project[0]}</small>}</label><button type="submit">Chat on WhatsApp <span>↗</span></button>{contactState.status === "sent" && <p className="contact-form-status success">WhatsApp opened — send your message to reach our team.</p>}</form>
           <div className="contact-details"><a href="tel:+254713190778">0713 190 778</a><a href="https://wa.me/254713190778" target="_blank" rel="noreferrer">WhatsApp</a><a href="mailto:sales@setarez.com">sales@setarez.com</a><span>Nairobi, Kenya</span></div>
+          <div className="contact-legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
         </section>
       </main>
 
@@ -317,8 +277,6 @@ export default function Home() {
           <b aria-hidden="true">{chatOpen ? "×" : "↑"}</b>
         </button>
       </aside>
-
-      <footer><a className="brand-logo brand-logo-footer" href="#main" aria-label="Setarez Technologies home"><Image src="/setarez-logo-white.png" alt="Setarez Technologies — Technology, Innovation, Guidance" width={1848} height={1775} /></a><p>Interactive learning, workplace collaboration and professional visual communication across Kenya and East Africa.</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:sales@setarez.com">Contact</a></div><small>© {new Date().getFullYear()} Setarez Technologies. Nairobi, Kenya.</small></footer>
     </>
   );
 }
