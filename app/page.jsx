@@ -153,7 +153,7 @@ export default function Home() {
     if (constrained) return undefined;
     const timer = window.setInterval(() => {
       if (document.visibilityState === "visible") setActiveHero((current) => (current + heroDirection + heroSlides.length) % heroSlides.length);
-    }, 4500);
+    }, 3500);
     return () => window.clearInterval(timer);
   }, [heroDirection]);
 
@@ -213,7 +213,6 @@ export default function Home() {
                   <div className="hero-card-label">{slide.label}</div>
                 </button>;
               })}</div>
-              <div className="hero-carousel-controls" aria-label="Carousel controls"><button type="button" onClick={() => { setActiveHero((current) => (current - 1 + heroSlides.length) % heroSlides.length); setHeroDirection(0); }} aria-label="Previous slide">←</button><span>{String(activeHero + 1).padStart(2, "0")} / {String(heroSlides.length).padStart(2, "0")}</span><button type="button" onClick={() => { setActiveHero((current) => (current + 1) % heroSlides.length); setHeroDirection(0); }} aria-label="Next slide">→</button></div>
             </div>
           </div>
           <div className="hero-showcase-main compact-delivery">

@@ -87,11 +87,6 @@ nav a:hover { color: var(--lilac); }
 .hero-flip-deck button > .hero-card-label { position: absolute; z-index: 2; right: auto; bottom: 18px; left: 18px; width: auto; padding: 9px 13px; border: 1px solid rgba(20, 15, 25, .12); border-radius: 999px; background: rgba(238, 228, 246, .88); color: #241a29; backdrop-filter: blur(12px); font: 500 14px/1 DM Mono; letter-spacing: .1em; text-align: left; box-shadow: 0 7px 20px rgba(0, 0, 0, .16); }
 .hero-flip-deck small { display: block; margin-bottom: 9px; color: var(--lilac); font: 300 11px DM Mono; letter-spacing: .12em; }
 .hero-flip-deck strong { display: block; font: 400 clamp(22px, 2vw, 31px)/1 Georgia; }
-.hero-carousel-controls { position: absolute; z-index: 35; right: 28px; bottom: 24px; display: flex; align-items: center; gap: 10px; padding: 7px; border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; background: rgba(10, 8, 11, .78); backdrop-filter: blur(12px); }
-.hero-carousel-controls button { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid rgba(255, 255, 255, .15); border-radius: 50%; background: rgba(255, 255, 255, .06); color: #fff; transition: color .2s ease, background .2s ease, transform .2s ease; }
-.hero-carousel-controls button:hover, .hero-carousel-controls button:focus-visible { background: var(--lilac); color: #120e15; transform: scale(1.06); }
-.hero-carousel-controls button:active { transform: scale(.92); }
-.hero-carousel-controls span { min-width: 42px; color: var(--lilac); font: 300 11px DM Mono; text-align: center; }
 @keyframes hero-progress { from { width: 0; } to { width: 100%; } }
 .hero-showcase-main { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, .65fr); gap: 7vw; padding: 90px 6vw 105px; }
 .hero-showcase-main.compact-delivery { position: relative; display: block; margin: 0 2vw 26px; padding: 30px 3.5vw; overflow: hidden; border: 1px solid rgba(185, 147, 242, .22); border-radius: 26px; background: radial-gradient(circle at 76% 0%, rgba(131, 78, 205, .2), transparent 34%), linear-gradient(105deg, #17131a, #0f0d11 72%); box-shadow: 0 24px 65px rgba(0, 0, 0, .28), inset 0 1px rgba(255, 255, 255, .035); }
@@ -102,9 +97,8 @@ nav a:hover { color: var(--lilac); }
 .compact-delivery .hero-copy .eyebrow span { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 8px; border-radius: 50%; background: var(--lilac); color: #130f17; }
 .compact-delivery .hero-copy .hero-subcopy { margin: 0; padding-left: 22px; border-left: 1px solid rgba(185, 147, 242, .26); color: rgba(243, 240, 234, .72); font-size: 21px; line-height: 1.6; }
 .compact-delivery .hero-actions { flex-wrap: nowrap; margin: 0; gap: 9px; }
-.compact-delivery .button { min-height: 43px; padding: 13px 17px; white-space: nowrap; }
+.compact-delivery .button { min-height: 48px; padding: 14px 22px; }
 .compact-delivery .button.primary { box-shadow: 0 8px 24px rgba(123, 76, 188, .24); }
-.compact-delivery .button::after { content: "↗"; margin-left: 9px; font-size: 18px; }
 .hero-copy h1 { max-width: 960px; margin: 24px 0 30px; font-size: clamp(56px, 6.7vw, 108px); line-height: .91; letter-spacing: -.065em; }
 .hero-copy .hero-subcopy { max-width: 680px; }
 .hero-quote-card { align-self: end; padding: 30px; border: 1px solid var(--line); background: var(--panel); }
@@ -125,7 +119,7 @@ nav a:hover { color: var(--lilac); }
 .twin-title h1 { max-width: 1100px; margin: 26px 0 14px; font-size: clamp(58px, 7vw, 116px); line-height: .9; letter-spacing: -.065em; }
 .hero-subcopy { max-width: 640px; margin: 0 0 24px; font-size: 16px; line-height: 1.7; color: rgba(243, 240, 234, .8); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
-.button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 999px; border: 1px solid var(--line); font: 300 14px DM Mono; letter-spacing: .12em; text-transform: uppercase; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 14px 22px; border-radius: 999px; border: 1px solid var(--line); font: 600 15px/1.2 Manrope, sans-serif; letter-spacing: 0; text-transform: none; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
 .button:hover { transform: translateY(-1px); border-color: var(--lilac); }
 .button.primary { background: var(--lilac); color: var(--black); border-color: var(--lilac); }
 .button.secondary { background: rgba(255, 255, 255, .06); }
@@ -616,8 +610,6 @@ footer small { grid-column: 2/-1; font: 300 13px DM Mono; opacity: .45; }
   .hero-preview-rail button > span { height: 75px; }
   .hero-slide-progress { left: 22px; bottom: 171px; width: 110px; }
   .hero-direction-cue { top: 15px; right: 15px; }
-  .hero-carousel-controls { right: 12px; bottom: 12px; gap: 6px; padding: 5px; backdrop-filter: none; }
-  .hero-carousel-controls button { width: 32px; height: 32px; }
   .hero-flip-deck { top: 17px; right: 0; left: 0; width: 100%; height: 365px; transform: none; }
   .hero-flip-deck button { width: 240px; height: 355px; border-radius: 22px; }
   .hero-flip-deck button[data-offset="-4"] { --card-x: -280px; }
@@ -639,7 +631,7 @@ footer small { grid-column: 2/-1; font: 300 13px DM Mono; opacity: .45; }
   .hero-showcase-main.compact-delivery .hero-copy h1 { font-size: clamp(32px, 10vw, 46px); }
   .compact-delivery .hero-actions { flex-direction: row; }
   .compact-delivery .hero-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
-  .compact-delivery .button { min-width: 0; width: 100%; padding: 12px 6px; white-space: normal; line-height: 1.35; text-align: center; }
+  .compact-delivery .button { min-width: 0; width: 100%; padding: 14px 12px; text-align: center; }
   .compact-delivery .hero-copy .hero-subcopy { padding-left: 15px; }
   .capability-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .hero-copy h1 { font-size: clamp(48px, 14vw, 72px); }
@@ -784,7 +776,6 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
 
 /* Teachmint brochure flipbook */
 .brochure-cta { margin-top: 30px; }
-.brochure-open::after { content: "↗"; margin-left: 9px; font-size: 18px; }
 
 .flipbook-backdrop { position: fixed; z-index: 120; inset: 0; display: grid; place-items: center; padding: 18px; background: rgba(6, 5, 7, .88); backdrop-filter: blur(8px); }
 .flipbook { display: flex; flex-direction: column; gap: 12px; width: min(680px, 100%); color: #fff; }
@@ -842,7 +833,6 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
 .catalogue-brand-gallery { scroll-margin-top: 154px; }
 
 .mobile-menu-toggle,
-.hero-carousel-controls button,
 .finder-enquiry-button,
 .enquiry-close,
 .flipbook-bar-actions button { min-width: 44px; min-height: 44px; }
@@ -852,7 +842,6 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
   main > section:not(:first-child), footer { content-visibility: visible; }
   .catalogue-brand-gallery { scroll-margin-top: 140px; }
   .mobile-menu-toggle { width: 44px; height: 44px; }
-  .hero-carousel-controls button { width: 44px; height: 44px; }
   .flipbook-nav { width: 44px; height: 44px; }
 
   .catalogue-products { grid-template-columns: 1fr; gap: 12px; border: 0; background: transparent; }
