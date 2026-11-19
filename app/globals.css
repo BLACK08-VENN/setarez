@@ -272,6 +272,10 @@ nav a:hover { color: var(--lilac); }
 .equipment-list span { font: 300 13px DM Mono; letter-spacing: .12em; color: var(--lilac); text-transform: uppercase; }
 .equipment-list h4 { margin: 8px 0 5px; font: 400 24px Georgia; }
 .equipment-list p { margin: 0; font-size: 14px; line-height: 1.7; opacity: .65; }
+.equipment-list article > div { min-width: 0; }
+.spec-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.spec-chips li { padding: 5px 9px; border: 1px solid var(--line); border-radius: 999px; font: 300 11px/1.3 DM Mono; letter-spacing: .03em; opacity: .72; }
+.equipment-more { display: none; }
 .finder-enquiry-button { min-width: 130px; padding: 11px 13px; border: 1px solid var(--lilac); background: transparent; color: var(--lilac); white-space: nowrap; font: 300 13px DM Mono; letter-spacing: .06em; text-transform: uppercase; transition: background .25s ease, color .25s ease; }
 .finder-enquiry-button:hover, .finder-enquiry-button.selected { background: var(--lilac); color: #0a090b; }
 .finder-note { margin-top: 35px; padding: 22px; border: 1px solid rgba(185, 147, 242, .35); background: rgba(106, 69, 160, .1); }
@@ -862,4 +866,61 @@ header .primary-nav.open { max-height: calc(100dvh - 76px); overflow-y: auto; }
   .contact input, .contact textarea { min-height: 48px; padding: 14px 12px; }
   .contact textarea { min-height: 110px; }
   .finder-form input[type="range"] { height: 32px; }
+
+  .finder-head { margin-bottom: 28px; }
+  .finder-head h2 { font-size: clamp(34px, 9vw, 44px); }
+  .finder-head > p:last-child { font-size: 15px; line-height: 1.6; }
+  .finder-form { padding: 22px 18px 24px; }
+  .finder-form fieldset { margin-bottom: 24px; }
+  .finder-form legend, .finder-form label > span { margin-bottom: 12px; font-size: 12px; }
+  .finder-options button { min-height: 46px; font-size: 14px; }
+  .finder-form label { margin-top: 24px; }
+  .finder-form label strong { margin-bottom: 10px; font-size: 30px; }
+  .finder-form small { margin-top: 8px; font-size: 11px; }
+  .finder-result { padding: 22px 18px 24px; }
+  .result-intro > span { font-size: 11px; }
+  .result-intro h3 { margin: 10px 0 8px; font-size: 30px; }
+  .result-intro p { display: -webkit-box; overflow: hidden; font-size: 14px; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  .equipment-list { margin-top: 22px; }
+  .equipment-list article { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; min-height: 0; padding: 15px 0; }
+  .equipment-list article[data-extra="true"] { display: none; }
+  .equipment-list.expanded article[data-extra="true"] { display: grid; }
+  .equipment-list h4 { margin: 4px 0 2px; font-size: 19px; }
+  .equipment-list article > div p { font-size: 12px; line-height: 1.4; }
+  .spec-chips { grid-column: 1 / -1; }
+  .spec-chips li { padding: 4px 7px; font-size: 10px; }
+  .finder-enquiry-button { grid-column: 2; grid-row: 1; min-width: 92px; padding: 9px 10px; white-space: normal; line-height: 1.25; text-align: center; font-size: 11px; }
+  .equipment-more { display: flex; justify-content: space-between; width: 100%; margin-top: 12px; padding: 13px 14px; border: 1px solid var(--line); background: rgba(185, 147, 242, .08); color: var(--lilac); font: 500 12px DM Mono; letter-spacing: .08em; text-transform: uppercase; }
+  .finder-note { margin-top: 18px; padding: 16px; }
+  .finder-note strong { font-size: 14px; }
+  .finder-note p { font-size: 12px; line-height: 1.5; }
+
+  .audience-proof { padding: 56px 20px; }
+  .audience-proof-head { margin-bottom: 22px; }
+  .audience-proof-head .eyebrow { font-size: 12px; }
+  .audience-proof-head h2 { font-size: clamp(32px, 9vw, 44px); }
+  .audience-list, .proof-list { padding: 16px; border-radius: 16px; }
+  .audience-list > span, .proof-list > span { margin-bottom: 12px; font-size: 11px; }
+  .audience-list > div { gap: 0 12px; }
+  .audience-list p { gap: 7px; padding: 9px 0; font: 400 16px Georgia; }
+  .audience-list small { font-size: 10px; }
+  .audience-list strong { margin-top: 14px; font-size: 11px; }
+  .proof-list > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .proof-badge { align-items: flex-start; gap: 8px; min-height: 0; padding: 10px; border-radius: 12px; }
+  .proof-medal { flex: 0 0 42px; width: 42px; height: 42px; box-shadow: inset 0 0 0 3px #f8f3fa, 0 4px 10px rgba(106, 69, 160, .2); }
+  .proof-medal::before, .proof-medal::after { bottom: -10px; width: 12px; height: 20px; }
+  .proof-medal::before { left: 7px; }
+  .proof-medal::after { right: 7px; }
+  .proof-medal small { font-size: 6px; }
+  .proof-medal b { font-size: 14px; }
+  .proof-medal i { font-size: 10px; }
+  .proof-badge em { margin-bottom: 4px; font-size: 8px; letter-spacing: .08em; }
+  .proof-list .proof-badge h3 { margin-bottom: 4px; font-size: 11px; line-height: 1.25; }
+  .proof-list .proof-badge p { font-size: 11px; line-height: 1.35; }
+
+  .contact { padding: 48px 20px 44px; }
+  .contact h2 { margin: 16px 0 24px; font-size: clamp(40px, 11vw, 54px); }
+  .contact form { gap: 10px; }
+  .contact label { font-size: 12px; }
+  .contact-details { gap: 14px; margin-top: 18px; font-size: 12px; }
 }

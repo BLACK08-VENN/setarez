@@ -119,6 +119,7 @@ export default function Home() {
   const [finderUse, setFinderUse] = useState("conferencing");
   const [finderArea, setFinderArea] = useState(20);
   const [finderSeats, setFinderSeats] = useState(6);
+  const [equipmentExpanded, setEquipmentExpanded] = useState(false);
   const [activeHero, setActiveHero] = useState(1);
   const [heroDirection, setHeroDirection] = useState(1);
   const heroTouchX = useRef(null);
@@ -145,6 +146,10 @@ export default function Home() {
       localStorage.removeItem(enquiryStorageKey);
     }
   }, []);
+
+  useEffect(() => {
+    setEquipmentExpanded(false);
+  }, [finderUse, finderArea, finderSeats]);
 
   useEffect(() => {
     if (heroDirection === 0) return undefined;
@@ -238,11 +243,12 @@ export default function Home() {
             </form>
             <div className="finder-result" aria-live="polite">
               <div className="result-intro"><span>STARTING RECOMMENDATION · {recommendation.products.length} COMPONENT SYSTEM</span><h3>{recommendation.size}</h3><p>{recommendation.summary}</p></div>
-              <div className="equipment-list">{recommendation.products.map((product) => {
+              <div id={`${formId}-equipment`} className={`equipment-list${equipmentExpanded ? " expanded" : ""}`}>{recommendation.products.map((product, index) => {
                 const id = `${product.brand.toLowerCase()}:${product.name}`;
                 const inBasket = selectedProducts.some((item) => item.id === id);
-                return <article key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><p>{product.specs}</p><button type="button" className={inBasket ? "finder-enquiry-button selected" : "finder-enquiry-button"} onClick={() => toggleRecommendedProduct(product)} aria-pressed={inBasket}>{inBasket ? "Added ✓" : "Add to enquiry +"}</button></article>;
+                return <article data-extra={index >= 3 ? "true" : undefined} key={product.name}><div><span>{product.brand}</span><h4>{product.name}</h4><p>{product.role}</p></div><ul className="spec-chips">{product.specs.split("·").map((spec) => <li key={spec.trim()}>{spec.trim()}</li>)}</ul><button type="button" className={inBasket ? "finder-enquiry-button selected" : "finder-enquiry-button"} onClick={() => toggleRecommendedProduct(product)} aria-pressed={inBasket}>{inBasket ? "Added ✓" : "Add to enquiry +"}</button></article>;
               })}</div>
+              {recommendation.products.length > 3 && <button type="button" className="equipment-more" aria-expanded={equipmentExpanded} aria-controls={`${formId}-equipment`} onClick={() => setEquipmentExpanded((expanded) => !expanded)}>{equipmentExpanded ? "Show fewer components" : `Show all ${recommendation.products.length} components`}</button>}
               <div className="finder-note"><strong>Planning guidance, not a final specification.</strong><p>Room shape, viewing distance, acoustics, lighting, platform licences, network and mounting must be confirmed through a Setarez site survey.</p><a href="#contact">Request a room assessment ↗</a></div>
             </div>
           </div>
